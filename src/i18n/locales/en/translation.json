@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "EduPay",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search...",
+    "noResults": "No results found",
+    "actions": "Actions",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "This feature is under development and will be available soon.",
+    "goBack": "Go Back",
+    "home": "Home",
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDesc": "Oops! The page you're looking for doesn't exist or has been moved."
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "signInContinue": "Sign in to your EduPay account",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signUp": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createOne": "Create one",
+    "signInLink": "Sign in",
+    "createAccount": "Create your account",
+    "joinEdupay": "Join EduPay to manage school payments",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "confirmPassword": "Confirm Password",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "createPassword": "Create a password",
+    "confirmYourPassword": "Confirm your password",
+    "brandTitle": "Welcome to EduPay",
+    "brandSubtitle": "Simplifying school payments for Iraqi families while empowering educational institutions with modern financial tools."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "roles": "Roles",
+    "schools": "Schools",
+    "payments": "Payments",
+    "collapse": "Collapse"
+  },
+  "header": {
+    "logout": "Logout",
+    "theme": "Theme",
+    "language": "Language"
+  },
+  "dashboard": {
+    "welcomeBack": "Welcome back, {{name}}!",
+    "subtitle": "Here's what's happening on your platform",
+    "totalUsers": "Total Users",
+    "activeRoles": "Active Roles",
+    "totalRoles": "Total Roles",
+    "platformStatus": "Platform Status",
+    "quickOverview": "Quick Overview",
+    "usersManagement": "Users Management",
+    "usersManagementDesc": "View and manage all users on your platform",
+    "rolesPermissions": "Roles & Permissions",
+    "rolesPermissionsDesc": "Configure access control and user roles",
+    "schoolsManagement": "Schools Management",
+    "schoolsManagementDesc": "Manage schools and their configurations",
+    "paymentsOverview": "Payments Overview",
+    "paymentsOverviewDesc": "Track and manage payment transactions"
+  },
+  "users": {
+    "title": "Users",
+    "allUsers": "All Users",
+    "userName": "Name",
+    "userEmail": "Email",
+    "userRoles": "Roles",
+    "userStatus": "Status",
+    "userCreated": "Created",
+    "userDetail": "User Details",
+    "backToUsers": "Back to Users"
+  },
+  "roles": {
+    "title": "Roles",
+    "allRoles": "All Roles",
+    "roleName": "Role Name",
+    "roleDescription": "Description",
+    "roleUsers": "Users",
+    "rolePermissions": "Permissions",
+    "createRole": "Create Role",
+    "roleDetail": "Role Details",
+    "backToRoles": "Back to Roles",
+    "newRole": "New Role",
+    "name": "Name",
+    "description": "Description"
+  },
+  "schools": {
+    "title": "Schools"
+  },
+  "payments": {
+    "title": "Payments"
+  }
+}

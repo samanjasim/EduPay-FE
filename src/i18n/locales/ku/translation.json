@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "ئیدو پەی",
+    "loading": "چاوەڕوان بە...",
+    "save": "پاشەکەوتکردن",
+    "cancel": "هەڵوەشاندنەوە",
+    "delete": "سڕینەوە",
+    "edit": "دەستکاریکردن",
+    "create": "دروستکردن",
+    "search": "گەڕان...",
+    "noResults": "هیچ ئەنجامێک نەدۆزرایەوە",
+    "actions": "کردارەکان",
+    "status": "دۆخ",
+    "active": "چالاک",
+    "inactive": "ناچالاک",
+    "comingSoon": "بەم زووانە",
+    "comingSoonDesc": "ئەم تایبەتمەندیە لە ژێر گەشەپێدانە و بەم زووانە بەردەست دەبێت.",
+    "goBack": "گەڕانەوە",
+    "home": "سەرەتا",
+    "pageNotFound": "پەڕە نەدۆزرایەوە",
+    "pageNotFoundDesc": "ببورە! ئەو پەڕەیەی بەدوایدا دەگەڕێیت بوونی نییە یان گواستراوەتەوە."
+  },
+  "auth": {
+    "welcomeBack": "بەخێربێیتەوە",
+    "signInContinue": "بچۆ ژوورەوە بۆ هەژمارەکەت لە ئیدو پەی",
+    "email": "ئیمەیڵ",
+    "password": "وشەی نهێنی",
+    "signIn": "چوونە ژوورەوە",
+    "signUp": "دروستکردنی هەژمار",
+    "noAccount": "هەژمارت نییە؟",
+    "hasAccount": "هەژمارت هەیە؟",
+    "createOne": "دروستی بکە",
+    "signInLink": "بچۆ ژوورەوە",
+    "createAccount": "دروستکردنی هەژمارەکەت",
+    "joinEdupay": "بەشداربە لە ئیدو پەی بۆ بەڕێوەبردنی پارەدانەکانی قوتابخانە",
+    "firstName": "ناوی یەکەم",
+    "lastName": "ناوی خێزان",
+    "username": "ناوی بەکارهێنەر",
+    "confirmPassword": "دووپاتکردنەوەی وشەی نهێنی",
+    "enterEmail": "ئیمەیڵەکەت بنووسە",
+    "enterPassword": "وشەی نهێنی بنووسە",
+    "createPassword": "وشەی نهێنی دروست بکە",
+    "confirmYourPassword": "وشەی نهێنی دووپات بکەوە",
+    "brandTitle": "بەخێربێیت بۆ ئیدو پەی",
+    "brandSubtitle": "ئاسانکردنی پارەدانەکانی قوتابخانە بۆ خێزانەکانی عێراق لەگەڵ بەهێزکردنی دامەزراوە پەروەردەییەکان بە ئامرازە داراییە نوێیەکان."
+  },
+  "nav": {
+    "dashboard": "داشبۆرد",
+    "users": "بەکارهێنەران",
+    "roles": "ڕۆڵەکان",
+    "schools": "قوتابخانەکان",
+    "payments": "پارەدانەکان",
+    "collapse": "کچکردن"
+  },
+  "header": {
+    "logout": "دەرچوون",
+    "theme": "ڕووکار",
+    "language": "زمان"
+  },
+  "dashboard": {
+    "welcomeBack": "بەخێربێیتەوە، {{name}}!",
+    "subtitle": "ئەمە ڕووداوەکانی سەکۆکەتە",
+    "totalUsers": "کۆی بەکارهێنەران",
+    "activeRoles": "ڕۆڵە چالاکەکان",
+    "totalRoles": "کۆی ڕۆڵەکان",
+    "platformStatus": "دۆخی سەکۆ",
+    "quickOverview": "تێڕوانینێکی خێرا",
+    "usersManagement": "بەڕێوەبردنی بەکارهێنەران",
+    "usersManagementDesc": "بینین و بەڕێوەبردنی هەموو بەکارهێنەرانی سەکۆکەت",
+    "rolesPermissions": "ڕۆڵ و مۆڵەتەکان",
+    "rolesPermissionsDesc": "ڕێکخستنی کۆنتڕۆڵی دەستگەیشتن و ڕۆڵەکانی بەکارهێنەر",
+    "schoolsManagement": "بەڕێوەبردنی قوتابخانەکان",
+    "schoolsManagementDesc": "بەڕێوەبردنی قوتابخانەکان و ڕێکخستنەکانیان",
+    "paymentsOverview": "تێڕوانینی پارەدانەکان",
+    "paymentsOverviewDesc": "بەدواداچوون و بەڕێوەبردنی مامەڵەکانی پارەدان"
+  },
+  "users": {
+    "title": "بەکارهێنەران",
+    "allUsers": "هەموو بەکارهێنەران",
+    "userName": "ناو",
+    "userEmail": "ئیمەیڵ",
+    "userRoles": "ڕۆڵەکان",
+    "userStatus": "دۆخ",
+    "userCreated": "دروستکراو",
+    "userDetail": "وردەکاری بەکارهێنەر",
+    "backToUsers": "گەڕانەوە بۆ بەکارهێنەران"
+  },
+  "roles": {
+    "title": "ڕۆڵەکان",
+    "allRoles": "هەموو ڕۆڵەکان",
+    "roleName": "ناوی ڕۆڵ",
+    "roleDescription": "وەسف",
+    "roleUsers": "بەکارهێنەران",
+    "rolePermissions": "مۆڵەتەکان",
+    "createRole": "دروستکردنی ڕۆڵ",
+    "roleDetail": "وردەکاری ڕۆڵ",
+    "backToRoles": "گەڕانەوە بۆ ڕۆڵەکان",
+    "newRole": "ڕۆڵی نوێ",
+    "name": "ناو",
+    "description": "وەسف"
+  },
+  "schools": {
+    "title": "قوتابخانەکان"
+  },
+  "payments": {
+    "title": "پارەدانەکان"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "إيدو باي",
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "search": "بحث...",
+    "noResults": "لم يتم العثور على نتائج",
+    "actions": "الإجراءات",
+    "status": "الحالة",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "comingSoon": "قريباً",
+    "comingSoonDesc": "هذه الميزة قيد التطوير وستكون متاحة قريباً.",
+    "goBack": "رجوع",
+    "home": "الرئيسية",
+    "pageNotFound": "الصفحة غير موجودة",
+    "pageNotFoundDesc": "عذراً! الصفحة التي تبحث عنها غير موجودة أو تم نقلها."
+  },
+  "auth": {
+    "welcomeBack": "مرحباً بعودتك",
+    "signInContinue": "سجل الدخول إلى حسابك في إيدو باي",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "createOne": "أنشئ واحداً",
+    "signInLink": "تسجيل الدخول",
+    "createAccount": "إنشاء حسابك",
+    "joinEdupay": "انضم إلى إيدو باي لإدارة مدفوعات المدرسة",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "enterPassword": "أدخل كلمة المرور",
+    "createPassword": "أنشئ كلمة مرور",
+    "confirmYourPassword": "أكد كلمة المرور",
+    "brandTitle": "مرحباً بك في إيدو باي",
+    "brandSubtitle": "تبسيط المدفوعات المدرسية للعائلات العراقية مع تمكين المؤسسات التعليمية بأدوات مالية حديثة."
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "roles": "الأدوار",
+    "schools": "المدارس",
+    "payments": "المدفوعات",
+    "collapse": "طي"
+  },
+  "header": {
+    "logout": "تسجيل الخروج",
+    "theme": "المظهر",
+    "language": "اللغة"
+  },
+  "dashboard": {
+    "welcomeBack": "مرحباً بعودتك، {{name}}!",
+    "subtitle": "إليك ما يحدث على منصتك",
+    "totalUsers": "إجمالي المستخدمين",
+    "activeRoles": "الأدوار النشطة",
+    "totalRoles": "إجمالي الأدوار",
+    "platformStatus": "حالة المنصة",
+    "quickOverview": "نظرة سريعة",
+    "usersManagement": "إدارة المستخدمين",
+    "usersManagementDesc": "عرض وإدارة جميع المستخدمين على منصتك",
+    "rolesPermissions": "الأدوار والصلاحيات",
+    "rolesPermissionsDesc": "تكوين التحكم في الوصول وأدوار المستخدم",
+    "schoolsManagement": "إدارة المدارس",
+    "schoolsManagementDesc": "إدارة المدارس وتكويناتها",
+    "paymentsOverview": "نظرة عامة على المدفوعات",
+    "paymentsOverviewDesc": "تتبع وإدارة معاملات الدفع"
+  },
+  "users": {
+    "title": "المستخدمون",
+    "allUsers": "جميع المستخدمين",
+    "userName": "الاسم",
+    "userEmail": "البريد الإلكتروني",
+    "userRoles": "الأدوار",
+    "userStatus": "الحالة",
+    "userCreated": "تاريخ الإنشاء",
+    "userDetail": "تفاصيل المستخدم",
+    "backToUsers": "العودة إلى المستخدمين"
+  },
+  "roles": {
+    "title": "الأدوار",
+    "allRoles": "جميع الأدوار",
+    "roleName": "اسم الدور",
+    "roleDescription": "الوصف",
+    "roleUsers": "المستخدمون",
+    "rolePermissions": "الصلاحيات",
+    "createRole": "إنشاء دور",
+    "roleDetail": "تفاصيل الدور",
+    "backToRoles": "العودة إلى الأدوار",
+    "newRole": "دور جديد",
+    "name": "الاسم",
+    "description": "الوصف"
+  },
+  "schools": {
+    "title": "المدارس"
+  },
+  "payments": {
+    "title": "المدفوعات"
+  }
+}
