@@ -11,6 +11,7 @@ interface UIState {
   sidebarCollapsed: boolean;
   activeModal: string | null;
   modalData: unknown;
+  activeSchoolId: string | null;
 }
 
 interface UIActions {
@@ -21,6 +22,7 @@ interface UIActions {
   toggleSidebarCollapse: () => void;
   openModal: (modalId: string, data?: unknown) => void;
   closeModal: () => void;
+  setActiveSchoolId: (schoolId: string | null) => void;
 }
 
 type UIStore = UIState & UIActions;
@@ -52,6 +54,7 @@ export const useUIStore = create<UIStore>()(
       sidebarCollapsed: false,
       activeModal: null,
       modalData: null,
+      activeSchoolId: null,
 
       setTheme: (theme) => {
         set({ theme });
@@ -73,6 +76,8 @@ export const useUIStore = create<UIStore>()(
       openModal: (activeModal, modalData = null) => set({ activeModal, modalData }),
 
       closeModal: () => set({ activeModal: null, modalData: null }),
+
+      setActiveSchoolId: (activeSchoolId) => set({ activeSchoolId }),
     }),
     {
       name: 'edupay-ui',
@@ -81,6 +86,7 @@ export const useUIStore = create<UIStore>()(
         theme: state.theme,
         language: state.language,
         sidebarCollapsed: state.sidebarCollapsed,
+        activeSchoolId: state.activeSchoolId,
       }),
     }
   )
@@ -92,3 +98,4 @@ export const selectSidebarOpen = (state: UIStore) => state.sidebarOpen;
 export const selectSidebarCollapsed = (state: UIStore) => state.sidebarCollapsed;
 export const selectActiveModal = (state: UIStore) => state.activeModal;
 export const selectModalData = (state: UIStore) => state.modalData;
+export const selectActiveSchoolId = (state: UIStore) => state.activeSchoolId;

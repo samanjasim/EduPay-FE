@@ -14,7 +14,9 @@ const UserDetailPage = lazy(() => import('@/features/users/pages/UserDetailPage'
 const RolesListPage = lazy(() => import('@/features/roles/pages/RolesListPage'));
 const RoleDetailPage = lazy(() => import('@/features/roles/pages/RoleDetailPage'));
 const RoleCreatePage = lazy(() => import('@/features/roles/pages/RoleCreatePage'));
-const SchoolsPage = lazy(() => import('@/features/schools/pages/SchoolsPage'));
+const SchoolsListPage = lazy(() => import('@/features/schools/pages/SchoolsListPage'));
+const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetailPage'));
+const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -51,8 +53,12 @@ export const routes: RouteObject[] = [
           { path: ROUTES.ROLES.CREATE, element: <RoleCreatePage /> },
           { path: ROUTES.ROLES.DETAIL, element: <RoleDetailPage /> },
 
+          // Schools
+          { path: ROUTES.SCHOOLS.LIST, element: <SchoolsListPage /> },
+          { path: ROUTES.SCHOOLS.CREATE, element: <SchoolCreatePage /> },
+          { path: ROUTES.SCHOOLS.DETAIL, element: <SchoolDetailPage /> },
+
           // Placeholder pages
-          { path: ROUTES.SCHOOLS, element: <SchoolsPage /> },
           { path: ROUTES.PAYMENTS, element: <PaymentsPage /> },
         ],
       },

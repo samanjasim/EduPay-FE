@@ -13,17 +13,21 @@ import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
 import { ROUTES } from '@/config';
 import { Button } from '@/components/ui';
+import { useUserRole } from '@/hooks';
 
 export function Sidebar() {
   const { t } = useTranslation();
   const isCollapsed = useUIStore(selectSidebarCollapsed);
   const toggleCollapse = useUIStore((state) => state.toggleSidebarCollapse);
+  const { isPlatformAdmin, isSchoolAdmin } = useUserRole();
 
   const navItems = [
     { label: t('nav.dashboard'), icon: LayoutDashboard, path: ROUTES.DASHBOARD },
     { label: t('nav.users'), icon: Users, path: ROUTES.USERS.LIST },
     { label: t('nav.roles'), icon: Shield, path: ROUTES.ROLES.LIST },
-    { label: t('nav.schools'), icon: School, path: ROUTES.SCHOOLS },
+    ...((isPlatformAdmin || isSchoolAdmin)
+      ? [{ label: t('nav.schools'), icon: School, path: ROUTES.SCHOOLS.LIST }]
+      : []),
     { label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS },
   ];
 

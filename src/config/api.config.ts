@@ -25,4 +25,13 @@ export const API_ENDPOINTS = {
   PERMISSIONS: {
     LIST: '/Permissions',
   },
+  SCHOOLS: {
+    LIST: '/Schools',
+    DETAIL: (id: string) => `/Schools/${id}`,
+    MY_SCHOOL: '/Schools/my-school',
+    STATUS: (id: string) => `/Schools/${id}/status`,
+    SETTINGS: (id: string) => `/Schools/${id}/settings`,
+    ADMINS: (id: string) => `/Schools/${id}/admins`,
+    REMOVE_ADMIN: (id: string, userId: string) => `/Schools/${id}/admins/${userId}`,
+  },
 } as const;
