@@ -13,22 +13,29 @@ import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
 import { ROUTES } from '@/config';
 import { Button } from '@/components/ui';
-import { useUserRole } from '@/hooks';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 
 export function Sidebar() {
   const { t } = useTranslation();
   const isCollapsed = useUIStore(selectSidebarCollapsed);
   const toggleCollapse = useUIStore((state) => state.toggleSidebarCollapse);
-  const { isPlatformAdmin, isSchoolAdmin } = useUserRole();
+  const { hasPermission } = usePermissions();
 
   const navItems = [
     { label: t('nav.dashboard'), icon: LayoutDashboard, path: ROUTES.DASHBOARD },
-    { label: t('nav.users'), icon: Users, path: ROUTES.USERS.LIST },
-    { label: t('nav.roles'), icon: Shield, path: ROUTES.ROLES.LIST },
-    ...((isPlatformAdmin || isSchoolAdmin)
+    ...(hasPermission(PERMISSIONS.Users.View)
+      ? [{ label: t('nav.users'), icon: Users, path: ROUTES.USERS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Roles.View)
+      ? [{ label: t('nav.roles'), icon: Shield, path: ROUTES.ROLES.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Schools.View)
       ? [{ label: t('nav.schools'), icon: School, path: ROUTES.SCHOOLS.LIST }]
       : []),
-    { label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS },
+    ...(hasPermission(PERMISSIONS.Payments.View)
+      ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]
+      : []),
   ];
 
   return (

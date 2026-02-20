@@ -4,10 +4,13 @@ import { Plus, Shield } from 'lucide-react';
 import { Card, CardContent, Badge, Button, Spinner } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useRoles } from '../api';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 
 export default function RolesListPage() {
   const { t } = useTranslation();
+  const { hasPermission } = usePermissions();
   const { data, isLoading } = useRoles();
   const roles = data?.data ?? [];
 
@@ -25,9 +28,11 @@ export default function RolesListPage() {
         title={t('roles.title')}
         subtitle={t('roles.allRoles')}
         actions={
-          <Link to={ROUTES.ROLES.CREATE}>
-            <Button leftIcon={<Plus className="h-4 w-4" />}>{t('roles.createRole')}</Button>
-          </Link>
+          hasPermission(PERMISSIONS.Roles.Create) ? (
+            <Link to={ROUTES.ROLES.CREATE}>
+              <Button leftIcon={<Plus className="h-4 w-4" />}>{t('roles.createRole')}</Button>
+            </Link>
+          ) : undefined
         }
       />
 

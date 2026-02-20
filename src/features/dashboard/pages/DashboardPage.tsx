@@ -4,6 +4,8 @@ import { Card, CardContent } from '@/components/ui';
 import { useAuthStore, selectUser } from '@/stores';
 import { useUsers } from '@/features/users/api';
 import { useRoles } from '@/features/roles/api';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 
 function StatCard({
   icon: Icon,
@@ -43,8 +45,13 @@ function StatCard({
 export default function DashboardPage() {
   const { t } = useTranslation();
   const user = useAuthStore(selectUser);
-  const { data: usersData } = useUsers();
-  const { data: rolesData } = useRoles();
+  const { hasPermission } = usePermissions();
+
+  const canViewUsers = hasPermission(PERMISSIONS.Users.View);
+  const canViewRoles = hasPermission(PERMISSIONS.Roles.View);
+
+  const { data: usersData } = useUsers({ enabled: canViewUsers });
+  const { data: rolesData } = useRoles({ enabled: canViewRoles });
 
   const users = usersData?.data ?? [];
   const roles = rolesData?.data ?? [];

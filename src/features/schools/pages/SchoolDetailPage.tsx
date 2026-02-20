@@ -19,7 +19,8 @@ import {
   useRemoveSchoolAdmin,
 } from '../api';
 import { useUsers } from '@/features/users/api';
-import { useUserRole, useDebounce } from '@/hooks';
+import { usePermissions, useDebounce } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 import {
   updateSchoolSchema,
@@ -51,7 +52,7 @@ export default function SchoolDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isSuperAdmin, isSchoolAdmin, isPlatformAdmin } = useUserRole();
+  const { hasPermission } = usePermissions();
   const { data: school, isLoading } = useSchool(id!);
   const { mutate: updateStatus, isPending: isUpdatingStatus } = useUpdateSchoolStatus();
   const { mutate: deleteSchool, isPending: isDeleting } = useDeleteSchool();
@@ -126,7 +127,7 @@ export default function SchoolDetailPage() {
               <Badge variant={statusBadgeVariant(school.status)}>
                 {t(STATUS_KEY_MAP[school.status])}
               </Badge>
-              {isPlatformAdmin && (
+              {hasPermission(PERMISSIONS.Schools.Update) && (
                 <Button
                   variant="secondary"
                   size="sm"
@@ -136,7 +137,7 @@ export default function SchoolDetailPage() {
                   {t('common.edit')}
                 </Button>
               )}
-              {isSuperAdmin && (
+              {hasPermission(PERMISSIONS.Schools.Delete) && (
                 <Button
                   variant="danger"
                   size="sm"
@@ -165,7 +166,7 @@ export default function SchoolDetailPage() {
           </div>
 
           {/* Status change — SuperAdmin/Admin only */}
-          {isPlatformAdmin && (
+          {hasPermission(PERMISSIONS.Schools.Update) && (
             <div className="flex items-center gap-3 border-t border-border pt-4">
               <label className="text-sm font-medium text-text-muted">{t('schools.changeStatus')}:</label>
               <Select
@@ -181,7 +182,7 @@ export default function SchoolDetailPage() {
       </Card>
 
       {/* Settings Card — SuperAdmin + SchoolAdmin (own school) */}
-      {(isSuperAdmin || isSchoolAdmin) && (
+      {hasPermission(PERMISSIONS.Schools.ManageSettings) && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -226,7 +227,7 @@ export default function SchoolDetailPage() {
             <Users className="h-5 w-5" />
             {t('schools.admins')} ({school.admins.length})
           </CardTitle>
-          {isPlatformAdmin && (
+          {hasPermission(PERMISSIONS.Schools.ManageAdmins) && (
             <Button
               size="sm"
               leftIcon={<UserPlus className="h-4 w-4" />}
@@ -248,7 +249,7 @@ export default function SchoolDetailPage() {
                     <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('schools.adminEmail')}</th>
                     <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('schools.adminRole')}</th>
                     <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('schools.adminAssigned')}</th>
-                    {isPlatformAdmin && (
+                    {hasPermission(PERMISSIONS.Schools.ManageAdmins) && (
                       <th className="px-4 pb-3 text-end text-xs font-medium uppercase tracking-wide text-text-muted">{t('common.actions')}</th>
                     )}
                   </tr>
@@ -266,7 +267,7 @@ export default function SchoolDetailPage() {
                       <td className="px-4 py-3.5 text-text-muted">
                         {format(new Date(admin.assignedAt), 'MMM d, yyyy')}
                       </td>
-                      {isPlatformAdmin && (
+                      {hasPermission(PERMISSIONS.Schools.ManageAdmins) && (
                         <td className="px-4 py-3.5 text-end">
                           <Button
                             variant="ghost"

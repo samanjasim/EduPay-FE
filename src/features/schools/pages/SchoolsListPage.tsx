@@ -5,7 +5,8 @@ import { Plus, School, Search } from 'lucide-react';
 import { Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useSchools } from '../api';
-import { useDebounce, useUserRole } from '@/hooks';
+import { useDebounce, usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 import { format } from 'date-fns';
 import type { SchoolStatus, SchoolListParams } from '@/types';
@@ -31,7 +32,7 @@ const PAGE_SIZE = 9;
 
 export default function SchoolsListPage() {
   const { t } = useTranslation();
-  const { isPlatformAdmin } = useUserRole();
+  const { hasPermission } = usePermissions();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(1);
@@ -72,7 +73,7 @@ export default function SchoolsListPage() {
         title={t('schools.title')}
         subtitle={t('schools.allSchools')}
         actions={
-          isPlatformAdmin ? (
+          hasPermission(PERMISSIONS.Schools.Create) ? (
             <Link to={ROUTES.SCHOOLS.CREATE}>
               <Button leftIcon={<Plus className="h-4 w-4" />}>{t('schools.createSchool')}</Button>
             </Link>

@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores';
 
+/** @deprecated Use `usePermissions` from `@/hooks` instead. */
 export function useUserRole() {
   const user = useAuthStore((state) => state.user);
   const roles = user?.roles ?? [];
