@@ -46,7 +46,7 @@ export function Pagination({ pagination, onPageChange, className }: PaginationPr
           onClick={() => onPageChange(pageNumber - 1)}
           disabled={!hasPreviousPage}
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
         </Button>
 
         {getPageNumbers().map((page, idx) =>
@@ -71,7 +71,7 @@ export function Pagination({ pagination, onPageChange, className }: PaginationPr
           onClick={() => onPageChange(pageNumber + 1)}
           disabled={!hasNextPage}
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4 rtl:rotate-180" />
         </Button>
       </div>
     </div>

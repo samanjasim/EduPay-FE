@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardTitle, Button, Input, Select } from '@/components/ui';
+import { PageHeader } from '@/components/common';
 import { createSchoolSchema, type CreateSchoolFormData } from '@/lib/validation';
 import { useCreateSchool } from '../api';
 import { ROUTES } from '@/config';
@@ -56,23 +56,17 @@ export default function SchoolCreatePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link to={ROUTES.SCHOOLS.LIST}>
-          <Button variant="ghost" size="sm" leftIcon={<ArrowLeft className="h-4 w-4" />}>
-            {t('schools.backToSchools')}
-          </Button>
-        </Link>
-      </div>
-
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('schools.newSchool')}</h1>
-      </div>
+      <PageHeader
+        title={t('schools.newSchool')}
+        backTo={ROUTES.SCHOOLS.LIST}
+        backLabel={t('schools.backToSchools')}
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Basic Information */}
         <Card>
           <CardContent className="py-6">
-            <CardTitle className="mb-4">{t('schools.basicInfo')}</CardTitle>
+            <CardTitle className="mb-5">{t('schools.basicInfo')}</CardTitle>
             <div className="grid gap-4 sm:grid-cols-2 max-w-2xl">
               <Input
                 label={t('schools.name')}
@@ -125,7 +119,7 @@ export default function SchoolCreatePage() {
         {/* Academic Year & Plan */}
         <Card>
           <CardContent className="py-6">
-            <CardTitle className="mb-4">{t('schools.academicYearAndPlan')}</CardTitle>
+            <CardTitle className="mb-5">{t('schools.academicYearAndPlan')}</CardTitle>
             <div className="grid gap-4 sm:grid-cols-3 max-w-2xl">
               <Input
                 label={t('schools.academicYearStart')}

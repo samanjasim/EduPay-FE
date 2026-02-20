@@ -1,7 +1,7 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft } from 'lucide-react';
-import { Card, CardContent, Badge, Button, Spinner } from '@/components/ui';
+import { Card, CardContent, Badge, Spinner } from '@/components/ui';
+import { PageHeader, InfoField } from '@/components/common';
 import { useUser } from '../api';
 import { ROUTES } from '@/config';
 import { format } from 'date-fns';
@@ -25,48 +25,34 @@ export default function UserDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link to={ROUTES.USERS.LIST}>
-          <Button variant="ghost" size="sm" leftIcon={<ArrowLeft className="h-4 w-4" />}>
-            {t('users.backToUsers')}
-          </Button>
-        </Link>
-      </div>
+      <PageHeader
+        title={`${user.firstName} ${user.lastName}`}
+        subtitle={`@${user.username}`}
+        backTo={ROUTES.USERS.LIST}
+        backLabel={t('users.backToUsers')}
+      />
 
       <Card>
-        <CardContent className="space-y-6 py-6">
-          <div>
-            <h1 className="text-2xl font-bold text-text-primary">{user.firstName} {user.lastName}</h1>
-            <p className="text-text-secondary">@{user.username}</p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('users.userEmail')}</label>
-              <p className="text-text-primary">{user.email}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('users.userStatus')}</label>
-              <div className="mt-1">
-                <Badge variant={user.status === 'Active' ? 'success' : 'warning'}>
-                  {user.status || t('common.active')}
-                </Badge>
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('users.userRoles')}</label>
-              <div className="mt-1 flex flex-wrap gap-1">
+        <CardContent className="py-6">
+          <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
+            <InfoField label={t('users.userEmail')}>
+              {user.email}
+            </InfoField>
+            <InfoField label={t('users.userStatus')}>
+              <Badge variant={user.status === 'Active' ? 'success' : 'warning'}>
+                {user.status || t('common.active')}
+              </Badge>
+            </InfoField>
+            <InfoField label={t('users.userRoles')}>
+              <div className="flex flex-wrap gap-1">
                 {user.roles?.map((role) => (
                   <Badge key={role} variant="primary" size="sm">{role}</Badge>
                 )) || <span className="text-text-muted">-</span>}
               </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('users.userCreated')}</label>
-              <p className="text-text-primary">
-                {user.createdAt ? format(new Date(user.createdAt), 'MMMM d, yyyy') : '-'}
-              </p>
-            </div>
+            </InfoField>
+            <InfoField label={t('users.userCreated')}>
+              {user.createdAt ? format(new Date(user.createdAt), 'MMMM d, yyyy') : '-'}
+            </InfoField>
           </div>
         </CardContent>
       </Card>

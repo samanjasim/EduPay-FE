@@ -44,10 +44,11 @@ export default function DashboardPage() {
   const { t } = useTranslation();
   const user = useAuthStore(selectUser);
   const { data: usersData } = useUsers();
-  const { data: roles = [] } = useRoles();
+  const { data: rolesData } = useRoles();
 
-  const users = usersData?.items ?? [];
-  const activeRoles = Array.isArray(roles) ? roles.filter((role) => role.isActive) : [];
+  const users = usersData?.data ?? [];
+  const roles = rolesData?.data ?? [];
+  const activeRoles = roles.filter((role) => role.isActive);
 
   return (
     <div className="space-y-8">

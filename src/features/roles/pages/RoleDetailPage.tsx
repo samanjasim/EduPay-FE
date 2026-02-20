@@ -1,7 +1,8 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Shield } from 'lucide-react';
-import { Card, CardContent, Badge, Button, Spinner } from '@/components/ui';
+import { Shield } from 'lucide-react';
+import { Card, CardContent, Badge, Spinner } from '@/components/ui';
+import { PageHeader, InfoField } from '@/components/common';
 import { useRole } from '../api';
 import { ROUTES } from '@/config';
 import { format } from 'date-fns';
@@ -25,44 +26,37 @@ export default function RoleDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link to={ROUTES.ROLES.LIST}>
-          <Button variant="ghost" size="sm" leftIcon={<ArrowLeft className="h-4 w-4" />}>
-            {t('roles.backToRoles')}
-          </Button>
-        </Link>
-      </div>
+      <PageHeader
+        title={role.name}
+        backTo={ROUTES.ROLES.LIST}
+        backLabel={t('roles.backToRoles')}
+      />
 
       <Card>
         <CardContent className="space-y-6 py-6">
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-500/20">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-500/20">
               <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-text-primary">{role.name}</h1>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-xl font-bold text-text-primary">{role.name}</h2>
               {role.description && <p className="text-text-secondary">{role.description}</p>}
             </div>
-            <Badge variant={role.isActive ? 'success' : 'warning'} className="ltr:ml-auto rtl:mr-auto">
+            <Badge variant={role.isActive ? 'success' : 'warning'} className="shrink-0">
               {role.isActive ? t('common.active') : t('common.inactive')}
             </Badge>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('roles.roleUsers')}</label>
-              <p className="text-lg font-semibold text-text-primary">{role.userCount}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('roles.rolePermissions')}</label>
-              <p className="text-lg font-semibold text-text-primary">{role.permissions?.length || 0}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-text-muted">{t('users.userCreated')}</label>
-              <p className="text-text-primary">
-                {role.createdAt ? format(new Date(role.createdAt), 'MMMM d, yyyy') : '-'}
-              </p>
-            </div>
+          <div className="grid gap-x-6 gap-y-4 sm:grid-cols-3">
+            <InfoField label={t('roles.roleUsers')}>
+              <p className="text-lg font-semibold">{role.userCount}</p>
+            </InfoField>
+            <InfoField label={t('roles.rolePermissions')}>
+              <p className="text-lg font-semibold">{role.permissions?.length || 0}</p>
+            </InfoField>
+            <InfoField label={t('users.userCreated')}>
+              {role.createdAt ? format(new Date(role.createdAt), 'MMMM d, yyyy') : '-'}
+            </InfoField>
           </div>
 
           {role.permissions && role.permissions.length > 0 && (

@@ -111,8 +111,9 @@
     "newSchool": "New School",
     "backToSchools": "Back to Schools",
     "deleteSchool": "Delete School",
-    "deleteConfirmation": "Are you sure you want to delete this school? This action cannot be undone.",
+    "deleteConfirmation": "Are you sure you want to delete <strong>{{name}}</strong>? This action cannot be undone.",
     "filterByStatus": "Filter by status",
+    "allStatuses": "All Statuses",
     "basicInfo": "Basic Information",
     "academicYearAndPlan": "Academic Year & Subscription",
     "name": "School Name",
@@ -128,6 +129,8 @@
     "academicYearStart": "Year Start",
     "academicYearEnd": "Year End",
     "changeStatus": "Change Status",
+    "editSchool": "Edit School",
+    "editSettings": "Edit Settings",
     "settings": "Settings",
     "currency": "Currency",
     "timezone": "Timezone",
@@ -146,7 +149,16 @@
     "primaryAdmin": "Primary",
     "admin": "Admin",
     "userId": "User ID",
-    "userIdPlaceholder": "Enter user ID (GUID)"
+    "userIdPlaceholder": "Enter user ID (GUID)",
+    "searchUsers": "Search users by name or email...",
+    "selectUser": "Select a user",
+    "noUsersFound": "No users found",
+    "removeAdminConfirmation": "Are you sure you want to remove <strong>{{name}}</strong> as an administrator?",
+    "removeAdmin": "Remove Admin",
+    "statusPending": "Pending",
+    "statusActive": "Active",
+    "statusSuspended": "Suspended",
+    "statusDeactivated": "Deactivated"
   },
   "payments": {
     "title": "Payments"

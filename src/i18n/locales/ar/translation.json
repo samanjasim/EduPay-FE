@@ -111,8 +111,9 @@
     "newSchool": "مدرسة جديدة",
     "backToSchools": "العودة إلى المدارس",
     "deleteSchool": "حذف المدرسة",
-    "deleteConfirmation": "هل أنت متأكد من حذف هذه المدرسة؟ لا يمكن التراجع عن هذا الإجراء.",
+    "deleteConfirmation": "هل أنت متأكد من حذف <strong>{{name}}</strong>؟ لا يمكن التراجع عن هذا الإجراء.",
     "filterByStatus": "تصفية حسب الحالة",
+    "allStatuses": "جميع الحالات",
     "basicInfo": "المعلومات الأساسية",
     "academicYearAndPlan": "السنة الدراسية والاشتراك",
     "name": "اسم المدرسة",
@@ -128,6 +129,8 @@
     "academicYearStart": "بداية السنة",
     "academicYearEnd": "نهاية السنة",
     "changeStatus": "تغيير الحالة",
+    "editSchool": "تعديل المدرسة",
+    "editSettings": "تعديل الإعدادات",
     "settings": "الإعدادات",
     "currency": "العملة",
     "timezone": "المنطقة الزمنية",
@@ -146,7 +149,16 @@
     "primaryAdmin": "مسؤول رئيسي",
     "admin": "مسؤول",
     "userId": "معرف المستخدم",
-    "userIdPlaceholder": "أدخل معرف المستخدم"
+    "userIdPlaceholder": "أدخل معرف المستخدم",
+    "searchUsers": "ابحث عن مستخدم بالاسم أو البريد...",
+    "selectUser": "اختر مستخدم",
+    "noUsersFound": "لم يتم العثور على مستخدمين",
+    "removeAdminConfirmation": "هل أنت متأكد من إزالة <strong>{{name}}</strong> كمسؤول؟",
+    "removeAdmin": "إزالة المسؤول",
+    "statusPending": "قيد الانتظار",
+    "statusActive": "نشط",
+    "statusSuspended": "معلّق",
+    "statusDeactivated": "معطّل"
   },
   "payments": {
     "title": "المدفوعات"
