@@ -19,7 +19,7 @@ export interface ApiError {
 }
 
 export interface PaginatedResponse<T> {
-  items: T[];
+  data: T[];
   pagination: PaginationMeta;
   success: boolean;
   message?: string | null;

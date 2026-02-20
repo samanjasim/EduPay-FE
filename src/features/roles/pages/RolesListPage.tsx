@@ -2,13 +2,17 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Plus, Shield } from 'lucide-react';
 import { Card, CardContent, Badge, Button, Spinner } from '@/components/ui';
-import { EmptyState } from '@/components/common';
+import { PageHeader, EmptyState } from '@/components/common';
 import { useRoles } from '../api';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 
 export default function RolesListPage() {
   const { t } = useTranslation();
-  const { data: roles = [], isLoading } = useRoles();
+  const { hasPermission } = usePermissions();
+  const { data, isLoading } = useRoles();
+  const roles = data?.data ?? [];
 
   if (isLoading) {
     return (
@@ -20,15 +24,17 @@ export default function RolesListPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary">{t('roles.title')}</h1>
-          <p className="text-text-secondary">{t('roles.allRoles')}</p>
-        </div>
-        <Link to={ROUTES.ROLES.CREATE}>
-          <Button leftIcon={<Plus className="h-4 w-4" />}>{t('roles.createRole')}</Button>
-        </Link>
-      </div>
+      <PageHeader
+        title={t('roles.title')}
+        subtitle={t('roles.allRoles')}
+        actions={
+          hasPermission(PERMISSIONS.Roles.Create) ? (
+            <Link to={ROUTES.ROLES.CREATE}>
+              <Button leftIcon={<Plus className="h-4 w-4" />}>{t('roles.createRole')}</Button>
+            </Link>
+          ) : undefined
+        }
+      />
 
       {roles.length === 0 ? (
         <EmptyState icon={Shield} title={t('common.noResults')} />

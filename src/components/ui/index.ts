@@ -7,3 +7,4 @@ export * from './Modal';
 export * from './Select';
 export * from './Avatar';
 export * from './Textarea';
+export * from './Pagination';

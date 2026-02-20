@@ -93,7 +93,8 @@ export const setupErrorInterceptor = (client: AxiosInstance): void => {
 
       const isLoginEndpoint = error.config?.url?.includes('/Auth/login');
 
-      if (error.response?.status !== 401 || isLoginEndpoint) {
+      const status = error.response?.status;
+      if ((status !== 401 && status !== 403) || isLoginEndpoint) {
         toast.error(message);
       }
 

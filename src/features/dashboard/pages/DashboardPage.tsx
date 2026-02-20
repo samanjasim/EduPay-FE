@@ -4,6 +4,8 @@ import { Card, CardContent } from '@/components/ui';
 import { useAuthStore, selectUser } from '@/stores';
 import { useUsers } from '@/features/users/api';
 import { useRoles } from '@/features/roles/api';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 
 function StatCard({
   icon: Icon,
@@ -43,11 +45,17 @@ function StatCard({
 export default function DashboardPage() {
   const { t } = useTranslation();
   const user = useAuthStore(selectUser);
-  const { data: usersData } = useUsers();
-  const { data: roles = [] } = useRoles();
+  const { hasPermission } = usePermissions();
 
-  const users = usersData?.items ?? [];
-  const activeRoles = Array.isArray(roles) ? roles.filter((role) => role.isActive) : [];
+  const canViewUsers = hasPermission(PERMISSIONS.Users.View);
+  const canViewRoles = hasPermission(PERMISSIONS.Roles.View);
+
+  const { data: usersData } = useUsers({ enabled: canViewUsers });
+  const { data: rolesData } = useRoles({ enabled: canViewRoles });
+
+  const users = usersData?.data ?? [];
+  const roles = rolesData?.data ?? [];
+  const activeRoles = roles.filter((role) => role.isActive);
 
   return (
     <div className="space-y-8">

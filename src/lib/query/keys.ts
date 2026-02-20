@@ -24,4 +24,13 @@ export const queryKeys = {
     all: ['permissions'] as const,
     list: () => [...queryKeys.permissions.all, 'list'] as const,
   },
+
+  schools: {
+    all: ['schools'] as const,
+    lists: () => [...queryKeys.schools.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.schools.lists(), filters] as const,
+    details: () => [...queryKeys.schools.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.schools.details(), id] as const,
+    mySchool: () => [...queryKeys.schools.all, 'my-school'] as const,
+  },
 } as const;

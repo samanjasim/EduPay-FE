@@ -1,11 +1,11 @@
 import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
-import type { Role, Permission, CreateRoleData, UpdateRoleData, UpdateRolePermissionsData, ApiResponse } from '@/types';
+import type { Role, Permission, CreateRoleData, UpdateRoleData, UpdateRolePermissionsData, ApiResponse, PaginatedResponse } from '@/types';
 
 export const rolesApi = {
-  getRoles: async (): Promise<Role[]> => {
-    const response = await apiClient.get<ApiResponse<Role[]>>(API_ENDPOINTS.ROLES.LIST);
-    return response.data.data;
+  getRoles: async (): Promise<PaginatedResponse<Role>> => {
+    const response = await apiClient.get<PaginatedResponse<Role>>(API_ENDPOINTS.ROLES.LIST);
+    return response.data;
   },
 
   getRoleById: async (id: string): Promise<Role> => {

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, Badge, Spinner } from '@/components/ui';
-import { EmptyState } from '@/components/common';
+import { PageHeader, EmptyState } from '@/components/common';
 import { useUsers } from '../api';
 import { ROUTES } from '@/config';
 import { Users } from 'lucide-react';
@@ -11,7 +11,7 @@ export default function UsersListPage() {
   const { t } = useTranslation();
   const { data, isLoading } = useUsers();
 
-  const users = data?.items ?? [];
+  const users = data?.data ?? [];
 
   if (isLoading) {
     return (
@@ -23,10 +23,7 @@ export default function UsersListPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('users.title')}</h1>
-        <p className="text-text-secondary">{t('users.allUsers')}</p>
-      </div>
+      <PageHeader title={t('users.title')} subtitle={t('users.allUsers')} />
 
       {users.length === 0 ? (
         <EmptyState icon={Users} title={t('common.noResults')} />
@@ -37,10 +34,10 @@ export default function UsersListPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="pb-3 text-left font-medium text-text-secondary">{t('users.userName')}</th>
-                    <th className="pb-3 text-left font-medium text-text-secondary">{t('users.userEmail')}</th>
-                    <th className="pb-3 text-left font-medium text-text-secondary">{t('users.userRoles')}</th>
-                    <th className="pb-3 text-left font-medium text-text-secondary">{t('users.userCreated')}</th>
+                    <th className="pb-3 text-start font-medium text-text-secondary">{t('users.userName')}</th>
+                    <th className="pb-3 text-start font-medium text-text-secondary">{t('users.userEmail')}</th>
+                    <th className="pb-3 text-start font-medium text-text-secondary">{t('users.userRoles')}</th>
+                    <th className="pb-3 text-start font-medium text-text-secondary">{t('users.userCreated')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">

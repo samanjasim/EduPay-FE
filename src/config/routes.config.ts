@@ -21,7 +21,14 @@ export const ROUTES = {
     getDetail: (id: string) => `/roles/${id}`,
   },
 
+  // Schools
+  SCHOOLS: {
+    LIST: '/schools',
+    CREATE: '/schools/new',
+    DETAIL: '/schools/:id',
+    getDetail: (id: string) => `/schools/${id}`,
+  },
+
   // Placeholder pages
-  SCHOOLS: '/schools',
   PAYMENTS: '/payments',
 } as const;
