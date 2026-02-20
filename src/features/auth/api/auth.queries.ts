@@ -25,7 +25,7 @@ export function useLogin() {
 
   return useMutation({
     mutationFn: (credentials: LoginCredentials) => authApi.login(credentials),
-    onSuccess: (loginResponse) => {
+    onSuccess: async (loginResponse) => {
       storage.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
 
       const tokens = {
@@ -33,9 +33,12 @@ export function useLogin() {
         refreshToken: loginResponse.refreshToken,
       };
 
-      login(loginResponse.user, tokens);
-      queryClient.setQueryData(queryKeys.auth.me(), loginResponse.user);
-      toast.success(`Welcome back, ${loginResponse.user.firstName}!`);
+      // Fetch full user with permissions from /me
+      const fullUser = await authApi.getMe(loginResponse.accessToken);
+
+      login(fullUser, tokens);
+      queryClient.setQueryData(queryKeys.auth.me(), fullUser);
+      toast.success(`Welcome back, ${fullUser.firstName}!`);
       navigate(ROUTES.DASHBOARD);
     },
     onError: () => {
