@@ -1,5 +1,6 @@
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { storage } from '@/utils/storage';
+import { useAuthStore } from '@/stores';
 import { API_CONFIG, API_ENDPOINTS } from '@/config';
 import axios from 'axios';
 
@@ -10,6 +11,22 @@ interface FailedRequest {
 
 let isRefreshing = false;
 let failedRequestsQueue: FailedRequest[] = [];
+
+const AUTH_ENDPOINTS = [
+  API_ENDPOINTS.AUTH.LOGIN,
+  API_ENDPOINTS.AUTH.REGISTER,
+  API_ENDPOINTS.AUTH.REFRESH_TOKEN,
+];
+
+const isAuthEndpoint = (url?: string): boolean => {
+  if (!url) return false;
+  return AUTH_ENDPOINTS.some((endpoint) => url.includes(endpoint));
+};
+
+const handleAuthFailure = () => {
+  storage.clearTokens();
+  useAuthStore.getState().logout();
+};
 
 const processQueue = (error: Error | null, token: string | null = null) => {
   failedRequestsQueue.forEach(({ resolve, reject }) => {
@@ -28,7 +45,12 @@ export const setupRefreshInterceptor = (client: AxiosInstance): void => {
     async (error: AxiosError) => {
       const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-      if (error.response?.status !== 401 || originalRequest._retry) {
+      // Don't refresh for non-401 errors, already-retried requests, or auth endpoints
+      if (
+        error.response?.status !== 401 ||
+        originalRequest._retry ||
+        isAuthEndpoint(originalRequest.url)
+      ) {
         return Promise.reject(error);
       }
 
@@ -52,8 +74,7 @@ export const setupRefreshInterceptor = (client: AxiosInstance): void => {
 
       if (!refreshToken) {
         isRefreshing = false;
-        storage.clearTokens();
-        window.location.href = '/login';
+        handleAuthFailure();
         return Promise.reject(error);
       }
 
@@ -64,7 +85,7 @@ export const setupRefreshInterceptor = (client: AxiosInstance): void => {
           { headers: { 'Content-Type': 'application/json' } }
         );
 
-        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.data;
         storage.setTokens(newAccessToken, newRefreshToken);
 
         processQueue(null, newAccessToken);
@@ -75,8 +96,7 @@ export const setupRefreshInterceptor = (client: AxiosInstance): void => {
         return client(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError as Error);
-        storage.clearTokens();
-        window.location.href = '/login';
+        handleAuthFailure();
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
