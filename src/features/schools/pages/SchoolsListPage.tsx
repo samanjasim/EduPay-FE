@@ -131,7 +131,6 @@ export default function SchoolsListPage() {
                     <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
                       <div className="flex items-center gap-3 text-xs text-text-muted">
                         <span>{school.city}</span>
-                        <Badge variant="outline" size="sm">{school.subscriptionPlan}</Badge>
                       </div>
                       <span className="text-xs text-text-muted">
                         {format(new Date(school.createdAt), 'MMM d, yyyy')}
