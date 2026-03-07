@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { rolesApi } from './roles.api';
 import { queryKeys } from '@/lib/query/keys';
-import type { CreateRoleData, UpdateRoleData } from '@/types';
+import type { CreateRoleData, UpdateRoleData, UpdateRolePermissionsData } from '@/types';
 
 export function useRoles(options?: { enabled?: boolean }) {
   return useQuery({
@@ -20,10 +20,11 @@ export function useRole(id: string) {
   });
 }
 
-export function usePermissions() {
+export function useAllPermissions(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: queryKeys.permissions.list(),
     queryFn: () => rolesApi.getPermissions(),
+    enabled: options?.enabled,
   });
 }
 
@@ -44,8 +45,9 @@ export function useUpdateRole() {
 
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateRoleData }) => rolesApi.updateRole(id, data),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.roles.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.roles.detail(variables.id) });
       toast.success('Role updated successfully');
     },
   });
@@ -59,6 +61,48 @@ export function useDeleteRole() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.roles.all });
       toast.success('Role deleted successfully');
+    },
+  });
+}
+
+export function useUpdateRolePermissions() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateRolePermissionsData }) =>
+      rolesApi.updateRolePermissions(id, data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.roles.detail(variables.id) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.roles.all });
+      toast.success('Permissions updated successfully');
+    },
+  });
+}
+
+export function useAssignUserRole() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ roleId, userId }: { roleId: string; userId: string }) =>
+      rolesApi.assignUserToRole(roleId, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.roles.all });
+      toast.success('Role assigned successfully');
+    },
+  });
+}
+
+export function useRemoveUserRole() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ roleId, userId }: { roleId: string; userId: string }) =>
+      rolesApi.removeUserFromRole(roleId, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.roles.all });
+      toast.success('Role removed successfully');
     },
   });
 }

@@ -11,7 +11,6 @@ function AppContent() {
   useEffect(() => {
     const initAuth = async () => {
       const accessToken = storage.getAccessToken();
-      const refreshToken = storage.getRefreshToken();
 
       if (!accessToken) {
         setLoading(false);
@@ -19,25 +18,14 @@ function AppContent() {
       }
 
       try {
+        // The refresh interceptor on apiClient automatically handles
+        // token refresh if getMe returns 401, so no manual refresh needed here.
         const user = await authApi.getMe(accessToken);
         setUser(user);
         setLoading(false);
       } catch {
-        if (refreshToken) {
-          try {
-            const newTokens = await authApi.refreshToken(refreshToken);
-            storage.setTokens(newTokens.accessToken, newTokens.refreshToken);
-            const user = await authApi.getMe(newTokens.accessToken);
-            setUser(user);
-            setLoading(false);
-          } catch {
-            storage.clearTokens();
-            logout();
-          }
-        } else {
-          storage.clearTokens();
-          logout();
-        }
+        storage.clearTokens();
+        logout();
       }
     };
 

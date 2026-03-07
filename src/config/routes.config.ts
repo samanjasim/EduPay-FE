@@ -18,7 +18,9 @@ export const ROUTES = {
     LIST: '/roles',
     CREATE: '/roles/new',
     DETAIL: '/roles/:id',
+    EDIT: '/roles/:id/edit',
     getDetail: (id: string) => `/roles/${id}`,
+    getEdit: (id: string) => `/roles/${id}/edit`,
   },
 
   // Schools

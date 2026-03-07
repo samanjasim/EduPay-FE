@@ -2,6 +2,11 @@ import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
 import type { Role, Permission, CreateRoleData, UpdateRoleData, UpdateRolePermissionsData, ApiResponse, PaginatedResponse } from '@/types';
 
+interface PermissionGroup {
+  module: string;
+  permissions: Permission[];
+}
+
 export const rolesApi = {
   getRoles: async (): Promise<PaginatedResponse<Role>> => {
     const response = await apiClient.get<PaginatedResponse<Role>>(API_ENDPOINTS.ROLES.LIST);
@@ -13,8 +18,8 @@ export const rolesApi = {
     return response.data.data;
   },
 
-  createRole: async (data: CreateRoleData): Promise<Role> => {
-    const response = await apiClient.post<ApiResponse<Role>>(API_ENDPOINTS.ROLES.LIST, data);
+  createRole: async (data: CreateRoleData): Promise<string> => {
+    const response = await apiClient.post<ApiResponse<string>>(API_ENDPOINTS.ROLES.LIST, data);
     return response.data.data;
   },
 
@@ -32,8 +37,8 @@ export const rolesApi = {
   },
 
   getPermissions: async (): Promise<Permission[]> => {
-    const response = await apiClient.get<ApiResponse<Permission[]>>(API_ENDPOINTS.PERMISSIONS.LIST);
-    return response.data.data;
+    const response = await apiClient.get<ApiResponse<PermissionGroup[]>>(API_ENDPOINTS.PERMISSIONS.LIST);
+    return response.data.data.flatMap((group) => group.permissions);
   },
 
   assignUserToRole: async (roleId: string, userId: string): Promise<void> => {

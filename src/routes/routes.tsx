@@ -15,6 +15,7 @@ const UserDetailPage = lazy(() => import('@/features/users/pages/UserDetailPage'
 const RolesListPage = lazy(() => import('@/features/roles/pages/RolesListPage'));
 const RoleDetailPage = lazy(() => import('@/features/roles/pages/RoleDetailPage'));
 const RoleCreatePage = lazy(() => import('@/features/roles/pages/RoleCreatePage'));
+const RoleEditPage = lazy(() => import('@/features/roles/pages/RoleEditPage'));
 const SchoolsListPage = lazy(() => import('@/features/schools/pages/SchoolsListPage'));
 const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetailPage'));
 const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
@@ -66,6 +67,17 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Roles.Create} />,
             children: [
               { path: ROUTES.ROLES.CREATE, element: <RoleCreatePage /> },
+            ],
+          },
+          {
+            element: (
+              <PermissionGuard
+                permissions={[PERMISSIONS.Roles.Update, PERMISSIONS.Roles.ManagePermissions]}
+                mode="any"
+              />
+            ),
+            children: [
+              { path: ROUTES.ROLES.EDIT, element: <RoleEditPage /> },
             ],
           },
 
