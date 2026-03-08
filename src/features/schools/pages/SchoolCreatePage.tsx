@@ -1,19 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardTitle, Button, Input, Select } from '@/components/ui';
+import { Card, CardContent, CardTitle, Button, Input } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { createSchoolSchema, type CreateSchoolFormData } from '@/lib/validation';
 import { useCreateSchool } from '../api';
 import { ROUTES } from '@/config';
-
-const SUBSCRIPTION_OPTIONS = [
-  { value: 'Basic', label: 'Basic' },
-  { value: 'Standard', label: 'Standard' },
-  { value: 'Premium', label: 'Premium' },
-];
 
 export default function SchoolCreatePage() {
   const { t } = useTranslation();
@@ -23,7 +17,6 @@ export default function SchoolCreatePage() {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<CreateSchoolFormData>({
     resolver: zodResolver(createSchoolSchema),
@@ -31,9 +24,6 @@ export default function SchoolCreatePage() {
       name: '',
       code: '',
       city: '',
-      subscriptionPlan: 'Basic',
-      academicYearStart: new Date().getFullYear(),
-      academicYearEnd: new Date().getFullYear() + 1,
       address: '',
       phone: '',
       contactEmail: '',
@@ -112,40 +102,6 @@ export default function SchoolCreatePage() {
                   {...register('logoUrl')}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Academic Year & Plan */}
-        <Card>
-          <CardContent className="py-6">
-            <CardTitle className="mb-5">{t('schools.academicYearAndPlan')}</CardTitle>
-            <div className="grid gap-4 sm:grid-cols-3 max-w-2xl">
-              <Input
-                label={t('schools.academicYearStart')}
-                type="number"
-                error={errors.academicYearStart?.message}
-                {...register('academicYearStart', { valueAsNumber: true })}
-              />
-              <Input
-                label={t('schools.academicYearEnd')}
-                type="number"
-                error={errors.academicYearEnd?.message}
-                {...register('academicYearEnd', { valueAsNumber: true })}
-              />
-              <Controller
-                name="subscriptionPlan"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label={t('schools.subscriptionPlan')}
-                    options={SUBSCRIPTION_OPTIONS}
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={errors.subscriptionPlan?.message}
-                  />
-                )}
-              />
             </div>
           </CardContent>
         </Card>

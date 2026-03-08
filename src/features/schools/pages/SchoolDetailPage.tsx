@@ -155,11 +155,7 @@ export default function SchoolDetailPage() {
             <InfoField label={t('schools.city')}>{school.city}</InfoField>
             <InfoField label={t('schools.contactEmail')}>{school.contactEmail || '—'}</InfoField>
             <InfoField label={t('schools.phone')}>{school.phone || '—'}</InfoField>
-            <InfoField label={t('schools.subscriptionPlan')}>
-              <Badge variant="primary" size="sm">{school.subscriptionPlan}</Badge>
-            </InfoField>
             <InfoField label={t('schools.address')}>{school.address || '—'}</InfoField>
-            <InfoField label={t('schools.academicYear')}>{school.currentAcademicYear.label}</InfoField>
             <InfoField label={t('common.createdAt')}>
               {format(new Date(school.createdAt), 'MMMM d, yyyy')}
             </InfoField>
@@ -203,18 +199,6 @@ export default function SchoolDetailPage() {
               <InfoField label={t('schools.currency')}>{school.settings.currency}</InfoField>
               <InfoField label={t('schools.timezone')}>{school.settings.timezone}</InfoField>
               <InfoField label={t('schools.defaultLanguage')}>{school.settings.defaultLanguage}</InfoField>
-              <InfoField label={t('schools.allowPartialPayments')}>
-                <Badge variant={school.settings.allowPartialPayments ? 'success' : 'default'} size="sm">
-                  {school.settings.allowPartialPayments ? t('common.yes') : t('common.no')}
-                </Badge>
-              </InfoField>
-              <InfoField label={t('schools.allowInstallments')}>
-                <Badge variant={school.settings.allowInstallments ? 'success' : 'default'} size="sm">
-                  {school.settings.allowInstallments ? t('common.yes') : t('common.no')}
-                </Badge>
-              </InfoField>
-              <InfoField label={t('schools.maxInstallments')}>{school.settings.maxInstallments}</InfoField>
-              <InfoField label={t('schools.lateFeePercentage')}>{school.settings.lateFeePercentage}%</InfoField>
             </div>
           </CardContent>
         </Card>
@@ -513,37 +497,6 @@ function EditSettingsModal({
             error={errors.defaultLanguage?.message}
             {...register('defaultLanguage')}
           />
-          <Input
-            label={t('schools.maxInstallments')}
-            type="number"
-            error={errors.maxInstallments?.message}
-            {...register('maxInstallments', { valueAsNumber: true })}
-          />
-          <Input
-            label={t('schools.lateFeePercentage')}
-            type="number"
-            step="0.1"
-            error={errors.lateFeePercentage?.message}
-            {...register('lateFeePercentage', { valueAsNumber: true })}
-          />
-        </div>
-        <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
-          <label className="flex items-center gap-2 text-sm text-text-primary">
-            <input
-              type="checkbox"
-              className="rounded border-border accent-primary-600"
-              {...register('allowPartialPayments')}
-            />
-            {t('schools.allowPartialPayments')}
-          </label>
-          <label className="flex items-center gap-2 text-sm text-text-primary">
-            <input
-              type="checkbox"
-              className="rounded border-border accent-primary-600"
-              {...register('allowInstallments')}
-            />
-            {t('schools.allowInstallments')}
-          </label>
         </div>
         <ModalFooter>
           <Button variant="secondary" type="button" onClick={onClose}>
