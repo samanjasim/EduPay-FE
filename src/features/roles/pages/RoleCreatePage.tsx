@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Info } from 'lucide-react';
+import { ShieldCheck, Info, FileText } from 'lucide-react';
 import { Card, CardContent, Button, Input, Textarea, Spinner } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { createRoleSchema, type CreateRoleFormData } from '@/lib/validation';
@@ -62,7 +62,7 @@ export default function RoleCreatePage() {
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-5">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-500/20">
-                <span className="text-xs font-bold text-primary-600 dark:text-primary-400">1</span>
+                <FileText className="h-3.5 w-3.5 text-primary-600 dark:text-primary-400" />
               </div>
               <h3 className="text-lg font-semibold text-text-primary">Role Details</h3>
             </div>
@@ -90,7 +90,7 @@ export default function RoleCreatePage() {
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
                 <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-500/20">
-                  <span className="text-xs font-bold text-primary-600 dark:text-primary-400">2</span>
+                  <ShieldCheck className="h-3.5 w-3.5 text-primary-600 dark:text-primary-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-text-primary">Assign Permissions</h3>
               </div>
@@ -123,14 +123,14 @@ export default function RoleCreatePage() {
           </CardContent>
         </Card>
 
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <Button type="submit" isLoading={isSaving}>
-            {t('common.create')}
-          </Button>
+        {/* Actions Bar */}
+        <div className="flex items-center justify-end rounded-lg border border-border bg-surface px-4 py-3 gap-3">
           <Link to={ROUTES.ROLES.LIST}>
             <Button variant="secondary" type="button">{t('common.cancel')}</Button>
           </Link>
+          <Button type="submit" isLoading={isSaving}>
+            {t('common.create')}
+          </Button>
         </div>
       </form>
     </div>
