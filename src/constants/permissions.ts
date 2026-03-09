@@ -38,6 +38,27 @@ export const PERMISSIONS = {
     ManageSettings: 'Schools.ManageSettings',
     ManageAdmins: 'Schools.ManageAdmins',
   },
+  AcademicYears: {
+    View: 'AcademicYears.View',
+    Show: 'AcademicYears.Show',
+    Create: 'AcademicYears.Create',
+    Update: 'AcademicYears.Update',
+    Delete: 'AcademicYears.Delete',
+  },
+  Grades: {
+    View: 'Grades.View',
+    Show: 'Grades.Show',
+    Create: 'Grades.Create',
+    Update: 'Grades.Update',
+    Delete: 'Grades.Delete',
+  },
+  Sections: {
+    View: 'Sections.View',
+    Show: 'Sections.Show',
+    Create: 'Sections.Create',
+    Update: 'Sections.Update',
+    Delete: 'Sections.Delete',
+  },
   Students: {
     View: 'Students.View',
     Show: 'Students.Show',

@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   School,
   CreditCard,
+  CalendarRange,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -32,6 +33,9 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Schools.View)
       ? [{ label: t('nav.schools'), icon: School, path: ROUTES.SCHOOLS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.AcademicYears.View)
+      ? [{ label: t('nav.academicYears'), icon: CalendarRange, path: ROUTES.ACADEMIC_YEARS.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

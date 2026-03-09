@@ -31,6 +31,13 @@ export const ROUTES = {
     getDetail: (id: string) => `/schools/${id}`,
   },
 
+  // Academic Years
+  ACADEMIC_YEARS: {
+    LIST: '/academic-years',
+    DETAIL: '/academic-years/:id',
+    getDetail: (id: string) => `/academic-years/${id}`,
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 } as const;

@@ -25,7 +25,10 @@ export function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-sm text-text-secondary">{description}</p>
+      <p
+        className="text-sm text-text-secondary"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
       <ModalFooter>
         <Button variant="secondary" onClick={onClose} disabled={isLoading}>
           {cancelLabel}

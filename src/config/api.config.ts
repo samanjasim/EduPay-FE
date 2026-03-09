@@ -34,4 +34,12 @@ export const API_ENDPOINTS = {
     ADMINS: (id: string) => `/Schools/${id}/admins`,
     REMOVE_ADMIN: (id: string, userId: string) => `/Schools/${id}/admins/${userId}`,
   },
+  ACADEMIC_YEARS: {
+    LIST: '/AcademicYears',
+    DETAIL: (id: string) => `/AcademicYears/${id}`,
+    ACTIVATE: (id: string) => `/AcademicYears/${id}/activate`,
+    COMPLETE: (id: string) => `/AcademicYears/${id}/complete`,
+    SET_CURRENT: (id: string) => `/AcademicYears/${id}/set-current`,
+    LINK_SCHOOL: (id: string) => `/AcademicYears/${id}/link-school`,
+  },
 } as const;

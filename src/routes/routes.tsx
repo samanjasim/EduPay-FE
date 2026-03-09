@@ -19,6 +19,8 @@ const RoleEditPage = lazy(() => import('@/features/roles/pages/RoleEditPage'));
 const SchoolsListPage = lazy(() => import('@/features/schools/pages/SchoolsListPage'));
 const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetailPage'));
 const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
+const AcademicYearsListPage = lazy(() => import('@/features/academic-years/pages/AcademicYearsListPage'));
+const AcademicYearDetailPage = lazy(() => import('@/features/academic-years/pages/AcademicYearDetailPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -93,6 +95,15 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Schools.Create} />,
             children: [
               { path: ROUTES.SCHOOLS.CREATE, element: <SchoolCreatePage /> },
+            ],
+          },
+
+          // Academic Years
+          {
+            element: <PermissionGuard permission={PERMISSIONS.AcademicYears.View} />,
+            children: [
+              { path: ROUTES.ACADEMIC_YEARS.LIST, element: <AcademicYearsListPage /> },
+              { path: ROUTES.ACADEMIC_YEARS.DETAIL, element: <AcademicYearDetailPage /> },
             ],
           },
 
