@@ -4,3 +4,4 @@ export * from './user.types';
 export * from './role.types';
 export * from './school.types';
 export * from './academic-year.types';
+export * from './grade.types';

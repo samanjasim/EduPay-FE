@@ -56,6 +56,7 @@
     "schools": "قوتابخانەکان",
     "payments": "پارەدانەکان",
     "academicYears": "ساڵە خوێندنییەکان",
+    "grades": "قۆناغەکان",
     "collapse": "کچکردن"
   },
   "header": {
@@ -188,6 +189,40 @@
     "current": "ئێستا",
     "selectSchool": "قوتابخانەیەک هەڵبژێرە",
     "searchSchools": "گەڕان بە ناو یان کۆد..."
+  },
+  "grades": {
+    "title": "قۆناغەکان",
+    "allGrades": "هەموو قۆناغەکان",
+    "createGrade": "دروستکردنی قۆناغ",
+    "editGrade": "دەستکاریکردنی قۆناغ",
+    "backToGrades": "گەڕانەوە بۆ قۆناغەکان",
+    "deleteGrade": "سڕینەوەی قۆناغ",
+    "deleteConfirmation": "سڕینەوەی <strong>{{name}}</strong>؟ قۆناغەکە ناچالاک دەکرێت. دەتوانرێت دواتر بگەڕێتەوە.",
+    "deactivateConfirmation": "ناچالاککردنی <strong>{{name}}</strong>؟ قوتابیان و بەشەکانی ئەم قۆناغە دەشاردرێنەوە.",
+    "activateConfirmation": "چالاککردنی <strong>{{name}}</strong>؟ ئەم قۆناغە دووبارە دەبینرێتەوە.",
+    "filterByStatus": "فلتەر بە دۆخ",
+    "allStatuses": "هەموو دۆخەکان",
+    "allSchools": "هەموو قوتابخانەکان",
+    "selectSchool": "قوتابخانەیەک هەڵبژێرە",
+    "selectSchoolToCreate": "قوتابخانەیەک هەڵبژێرە بۆ دروستکردنی قۆناغ",
+    "name": "ناو",
+    "sortOrder": "ڕیزبەندی",
+    "sections": "بەشەکان",
+    "sectionName": "ناوی بەش",
+    "capacity": "گنجایش",
+    "noSections": "هێشتا هیچ بەشێک زیاد نەکراوە.",
+    "addSection": "زیادکردنی بەش",
+    "editSection": "دەستکاریکردنی بەش",
+    "deleteSection": "سڕینەوەی بەش",
+    "sectionDeleteConfirmation": "سڕینەوەی بەشی <strong>{{name}}</strong>؟ بەشەکە ناچالاک دەکرێت. دەتوانرێت دواتر بگەڕێتەوە.",
+    "sectionDeactivateConfirmation": "ناچالاککردنی بەشی <strong>{{name}}</strong>؟ قوتابیانی ئەم بەشە دەشاردرێنەوە.",
+    "sectionActivateConfirmation": "چالاککردنی بەشی <strong>{{name}}</strong>؟ ئەم بەشە دووبارە دەبینرێتەوە.",
+    "active": "چالاک",
+    "inactive": "ناچالاک",
+    "activate": "چالاککردن",
+    "deactivate": "ناچالاککردن",
+    "modifiedAt": "گۆڕدراو",
+    "school": "قوتابخانە"
   },
   "payments": {
     "title": "پارەدانەکان"

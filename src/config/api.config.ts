@@ -42,4 +42,12 @@ export const API_ENDPOINTS = {
     SET_CURRENT: (id: string) => `/AcademicYears/${id}/set-current`,
     LINK_SCHOOL: (id: string) => `/AcademicYears/${id}/link-school`,
   },
+  GRADES: {
+    LIST: '/Grades',
+    DETAIL: (id: string) => `/Grades/${id}`,
+    STATUS: (id: string) => `/Grades/${id}/status`,
+    SECTIONS: (gradeId: string) => `/Grades/${gradeId}/sections`,
+    SECTION: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}`,
+    SECTION_STATUS: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}/status`,
+  },
 } as const;

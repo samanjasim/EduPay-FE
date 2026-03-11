@@ -56,6 +56,7 @@
     "schools": "المدارس",
     "payments": "المدفوعات",
     "academicYears": "السنوات الدراسية",
+    "grades": "المراحل الدراسية",
     "collapse": "طي"
   },
   "header": {
@@ -188,6 +189,40 @@
     "current": "حالية",
     "selectSchool": "اختر مدرسة",
     "searchSchools": "ابحث عن مدرسة بالاسم أو الرمز..."
+  },
+  "grades": {
+    "title": "المراحل الدراسية",
+    "allGrades": "جميع المراحل الدراسية",
+    "createGrade": "إنشاء مرحلة",
+    "editGrade": "تعديل المرحلة",
+    "backToGrades": "العودة إلى المراحل",
+    "deleteGrade": "حذف المرحلة",
+    "deleteConfirmation": "حذف <strong>{{name}}</strong>؟ سيتم تعطيل المرحلة. يمكن استعادتها لاحقاً.",
+    "deactivateConfirmation": "تعطيل <strong>{{name}}</strong>؟ سيتم إخفاء الطلاب والشعب في هذه المرحلة.",
+    "activateConfirmation": "تفعيل <strong>{{name}}</strong>؟ ستكون هذه المرحلة مرئية مرة أخرى.",
+    "filterByStatus": "تصفية حسب الحالة",
+    "allStatuses": "جميع الحالات",
+    "allSchools": "جميع المدارس",
+    "selectSchool": "اختر مدرسة",
+    "selectSchoolToCreate": "اختر مدرسة لإنشاء المراحل",
+    "name": "الاسم",
+    "sortOrder": "ترتيب العرض",
+    "sections": "الشعب",
+    "sectionName": "اسم الشعبة",
+    "capacity": "السعة",
+    "noSections": "لم يتم إضافة شعب بعد.",
+    "addSection": "إضافة شعبة",
+    "editSection": "تعديل الشعبة",
+    "deleteSection": "حذف الشعبة",
+    "sectionDeleteConfirmation": "حذف الشعبة <strong>{{name}}</strong>؟ سيتم تعطيل الشعبة. يمكن استعادتها لاحقاً.",
+    "sectionDeactivateConfirmation": "تعطيل الشعبة <strong>{{name}}</strong>؟ سيتم إخفاء الطلاب في هذه الشعبة.",
+    "sectionActivateConfirmation": "تفعيل الشعبة <strong>{{name}}</strong>؟ ستكون هذه الشعبة مرئية مرة أخرى.",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "activate": "تفعيل",
+    "deactivate": "تعطيل",
+    "modifiedAt": "تاريخ التعديل",
+    "school": "المدرسة"
   },
   "payments": {
     "title": "المدفوعات"

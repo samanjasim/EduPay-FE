@@ -21,6 +21,8 @@ const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetai
 const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
 const AcademicYearsListPage = lazy(() => import('@/features/academic-years/pages/AcademicYearsListPage'));
 const AcademicYearDetailPage = lazy(() => import('@/features/academic-years/pages/AcademicYearDetailPage'));
+const GradesListPage = lazy(() => import('@/features/grades/pages/GradesListPage'));
+const GradeDetailPage = lazy(() => import('@/features/grades/pages/GradeDetailPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -104,6 +106,15 @@ export const routes: RouteObject[] = [
             children: [
               { path: ROUTES.ACADEMIC_YEARS.LIST, element: <AcademicYearsListPage /> },
               { path: ROUTES.ACADEMIC_YEARS.DETAIL, element: <AcademicYearDetailPage /> },
+            ],
+          },
+
+          // Grades
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Grades.View} />,
+            children: [
+              { path: ROUTES.GRADES.LIST, element: <GradesListPage /> },
+              { path: ROUTES.GRADES.DETAIL, element: <GradeDetailPage /> },
             ],
           },
 

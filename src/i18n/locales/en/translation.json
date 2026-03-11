@@ -56,6 +56,7 @@
     "schools": "Schools",
     "payments": "Payments",
     "academicYears": "Academic Years",
+    "grades": "Grades",
     "collapse": "Collapse"
   },
   "header": {
@@ -188,6 +189,40 @@
     "current": "Current",
     "selectSchool": "Select a school",
     "searchSchools": "Search schools by name or code..."
+  },
+  "grades": {
+    "title": "Grades",
+    "allGrades": "All Grades",
+    "createGrade": "Create Grade",
+    "editGrade": "Edit Grade",
+    "backToGrades": "Back to Grades",
+    "deleteGrade": "Delete Grade",
+    "deleteConfirmation": "Delete <strong>{{name}}</strong>? This will deactivate the grade. It can be restored later.",
+    "deactivateConfirmation": "Deactivate <strong>{{name}}</strong>? Students and sections under this grade will be hidden.",
+    "activateConfirmation": "Activate <strong>{{name}}</strong>? This grade will be visible again.",
+    "filterByStatus": "Filter by status",
+    "allStatuses": "All Statuses",
+    "allSchools": "All Schools",
+    "selectSchool": "Select a school",
+    "selectSchoolToCreate": "Select a school to create grades",
+    "name": "Name",
+    "sortOrder": "Sort Order",
+    "sections": "Sections",
+    "sectionName": "Section Name",
+    "capacity": "Capacity",
+    "noSections": "No sections added yet.",
+    "addSection": "Add Section",
+    "editSection": "Edit Section",
+    "deleteSection": "Delete Section",
+    "sectionDeleteConfirmation": "Delete section <strong>{{name}}</strong>? This will deactivate the section. It can be restored later.",
+    "sectionDeactivateConfirmation": "Deactivate section <strong>{{name}}</strong>? Students in this section will be hidden.",
+    "sectionActivateConfirmation": "Activate section <strong>{{name}}</strong>? This section will be visible again.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "modifiedAt": "Modified",
+    "school": "School"
   },
   "payments": {
     "title": "Payments"

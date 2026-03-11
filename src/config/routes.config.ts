@@ -38,6 +38,13 @@ export const ROUTES = {
     getDetail: (id: string) => `/academic-years/${id}`,
   },
 
+  // Grades
+  GRADES: {
+    LIST: '/grades',
+    DETAIL: '/grades/:id',
+    getDetail: (id: string) => `/grades/${id}`,
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 } as const;
