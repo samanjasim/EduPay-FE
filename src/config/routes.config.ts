@@ -45,6 +45,13 @@ export const ROUTES = {
     getDetail: (id: string) => `/grades/${id}`,
   },
 
+  // Students
+  STUDENTS: {
+    LIST: '/students',
+    DETAIL: '/students/:id',
+    getDetail: (id: string) => `/students/${id}`,
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 } as const;

@@ -50,4 +50,9 @@ export const API_ENDPOINTS = {
     SECTION: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}`,
     SECTION_STATUS: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}/status`,
   },
+  STUDENTS: {
+    LIST: '/Students',
+    DETAIL: (id: string) => `/Students/${id}`,
+    STATUS: (id: string) => `/Students/${id}/status`,
+  },
 } as const;

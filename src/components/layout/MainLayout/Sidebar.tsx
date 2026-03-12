@@ -10,6 +10,7 @@ import {
   CreditCard,
   CalendarRange,
   BookOpen,
+  UserRoundSearch,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -40,6 +41,9 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Grades.View)
       ? [{ label: t('nav.grades'), icon: BookOpen, path: ROUTES.GRADES.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Students.View)
+      ? [{ label: t('nav.students'), icon: UserRoundSearch, path: ROUTES.STUDENTS.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]
