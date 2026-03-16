@@ -275,6 +275,7 @@
     "withdrawConfirmation": "Are you sure you want to withdraw <strong>{{name}}</strong>? This action is permanent.",
     "reactivateConfirmation": "Are you sure you want to reactivate <strong>{{name}}</strong>?",
     "terminalWarning": "This is a terminal status change and cannot be reversed.",
+    "currentStatus": "Current Status",
     "terminalStatusMessage": "This student has a terminal status of {{status}}. No further status changes are allowed.",
     "parents": "Parents",
     "parentName": "Parent Name",

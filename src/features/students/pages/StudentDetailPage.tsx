@@ -738,8 +738,8 @@ function StatusModal({
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={t('students.changeStatus')} size="sm">
       <div className="space-y-4">
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-text-primary">{t('students.currentStatus')}</label>
+        <div className="flex items-center justify-between rounded-lg border border-border bg-surface-secondary px-4 py-3">
+          <span className="text-sm font-medium text-text-secondary">{t('students.currentStatus')}</span>
           <Badge variant={STATUS_BADGE_MAP[currentStatus]}>{t(`students.status${currentStatus}`)}</Badge>
         </div>
         <Select
