@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, UserRoundSearch, Search, Pencil, Trash2, ArrowRightLeft, Eye } from 'lucide-react';
+import { Plus, UserRoundSearch, Search, Pencil, Trash2, ArrowRightLeft, Eye, ShieldAlert } from 'lucide-react';
 import {
   Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination, Modal, ModalFooter,
 } from '@/components/ui';
@@ -808,13 +808,19 @@ function ChangeStatusModal({
   if (validStatuses.length === 0) {
     return (
       <Modal isOpen={isOpen} onClose={handleClose} title={t('students.changeStatus')} size="sm">
-        <div className="py-4">
+        <div className="flex flex-col items-center gap-3 py-6 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-500/20">
+            <ShieldAlert className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+          </div>
           <p className="text-sm text-text-secondary">
             {t('students.terminalStatusMessage', { status: t(`students.status${student.status}`) })}
           </p>
+          <Badge variant={STATUS_BADGE_MAP[student.status]}>
+            {t(`students.status${student.status}`)}
+          </Badge>
         </div>
         <ModalFooter>
-          <Button variant="secondary" onClick={handleClose}>{t('common.cancel')}</Button>
+          <Button variant="secondary" onClick={handleClose}>{t('common.close')}</Button>
         </ModalFooter>
       </Modal>
     );

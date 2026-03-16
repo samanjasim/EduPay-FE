@@ -23,7 +23,8 @@
     "no": "لا",
     "remove": "إزالة",
     "createdAt": "تاريخ الإنشاء",
-    "showing": "عرض {{start}}-{{end}} من {{total}}"
+    "showing": "عرض {{start}}-{{end}} من {{total}}",
+    "close": "إغلاق"
   },
   "auth": {
     "welcomeBack": "مرحباً بعودتك",
@@ -274,6 +275,7 @@
     "withdrawConfirmation": "هل أنت متأكد من سحب <strong>{{name}}</strong>؟ هذا الإجراء دائم.",
     "reactivateConfirmation": "هل أنت متأكد من إعادة تفعيل <strong>{{name}}</strong>؟",
     "terminalWarning": "هذا تغيير حالة نهائي ولا يمكن التراجع عنه.",
+    "terminalStatusMessage": "هذا الطالب في حالة نهائية ({{status}}). لا يمكن إجراء أي تغييرات أخرى على الحالة.",
     "parents": "أولياء الأمور",
     "parentName": "اسم ولي الأمر",
     "relation": "صلة القرابة",

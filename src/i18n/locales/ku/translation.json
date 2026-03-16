@@ -23,7 +23,8 @@
     "no": "نەخێر",
     "remove": "لابردن",
     "createdAt": "دروستکراو",
-    "showing": "پیشاندانی {{start}}-{{end}} لە {{total}}"
+    "showing": "پیشاندانی {{start}}-{{end}} لە {{total}}",
+    "close": "داخستن"
   },
   "auth": {
     "welcomeBack": "بەخێربێیتەوە",
@@ -274,6 +275,7 @@
     "withdrawConfirmation": "دڵنیایت لە کشانەوەی <strong>{{name}}</strong>؟ ئەم کردارە هەمیشەییە.",
     "reactivateConfirmation": "دڵنیایت لە چالاککردنەوەی <strong>{{name}}</strong>؟",
     "terminalWarning": "ئەمە گۆڕانکارییەکی دۆخی کۆتاییە و ناگەڕێتەوە.",
+    "terminalStatusMessage": "ئەم قوتابییە لە دۆخی کۆتاییدایە ({{status}}). هیچ گۆڕانکارییەکی تری دۆخ ڕێگەپێدراو نییە.",
     "parents": "دایک و باوکان",
     "parentName": "ناوی دایک/باوک",
     "relation": "پەیوەندی",
