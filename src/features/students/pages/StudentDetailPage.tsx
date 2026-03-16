@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   UserRoundSearch, Pencil, Trash2, ArrowRightLeft, Users, UserPlus, Search, X,
+  Eye, EyeOff,
 } from 'lucide-react';
 import {
   Card, CardContent, CardHeader, CardTitle,
@@ -505,11 +506,14 @@ function CreateParentModal({
 }) {
   const { t } = useTranslation();
   const { mutate: createParent, isPending } = useCreateParent();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<CreateParentFormData>({
     resolver: zodResolver(createParentSchema),
+    mode: 'onChange',
   });
 
   const onSubmit = (data: CreateParentFormData) => {
@@ -543,8 +547,28 @@ function CreateParentModal({
           {...register('phoneNumber')}
         />
         <div className="grid gap-4 sm:grid-cols-2">
-          <Input label={t('parents.password')} type="password" error={errors.password?.message} {...register('password')} />
-          <Input label={t('parents.confirmPassword')} type="password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
+          <Input
+            label={t('parents.password')}
+            type={showPassword ? 'text' : 'password'}
+            error={errors.password?.message}
+            rightIcon={
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="hover:text-text-primary">
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            }
+            {...register('password')}
+          />
+          <Input
+            label={t('parents.confirmPassword')}
+            type={showConfirmPassword ? 'text' : 'password'}
+            error={errors.confirmPassword?.message}
+            rightIcon={
+              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="hover:text-text-primary">
+                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            }
+            {...register('confirmPassword')}
+          />
         </div>
         <ModalFooter>
           <Button variant="secondary" type="button" onClick={onClose}>{t('common.cancel')}</Button>
