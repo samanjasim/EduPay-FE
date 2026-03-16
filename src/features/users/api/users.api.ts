@@ -1,10 +1,13 @@
 import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
-import type { User, PaginatedResponse } from '@/types';
+import type { User, UserListParams, PaginatedResponse } from '@/types';
 
 export const usersApi = {
-  getUsers: async (): Promise<PaginatedResponse<User>> => {
-    const response = await apiClient.get<PaginatedResponse<User>>(API_ENDPOINTS.USERS.LIST);
+  getUsers: async (params?: UserListParams): Promise<PaginatedResponse<User>> => {
+    const response = await apiClient.get<PaginatedResponse<User>>(
+      API_ENDPOINTS.USERS.LIST,
+      { params },
+    );
     return response.data;
   },
 

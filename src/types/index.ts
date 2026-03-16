@@ -6,3 +6,4 @@ export * from './school.types';
 export * from './academic-year.types';
 export * from './grade.types';
 export * from './student.types';
+export * from './parent.types';

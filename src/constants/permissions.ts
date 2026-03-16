@@ -65,6 +65,7 @@ export const PERMISSIONS = {
     Create: 'Students.Create',
     Update: 'Students.Update',
     Delete: 'Students.Delete',
+    ManageParents: 'Students.ManageParents',
   },
   Fees: {
     View: 'Fees.View',

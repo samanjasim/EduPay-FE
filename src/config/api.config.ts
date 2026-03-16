@@ -54,5 +54,10 @@ export const API_ENDPOINTS = {
     LIST: '/Students',
     DETAIL: (id: string) => `/Students/${id}`,
     STATUS: (id: string) => `/Students/${id}/status`,
+    PARENTS: (studentId: string) => `/Students/${studentId}/parents`,
+    PARENT: (studentId: string, parentUserId: string) => `/Students/${studentId}/parents/${parentUserId}`,
+  },
+  PARENTS: {
+    CREATE: '/Parents',
   },
 } as const;

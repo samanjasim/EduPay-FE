@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  UserRoundSearch, Pencil, Trash2, ArrowRightLeft, Users,
+  UserRoundSearch, Pencil, Trash2, ArrowRightLeft, Users, UserPlus, Search, X,
 } from 'lucide-react';
 import {
   Card, CardContent, CardHeader, CardTitle,
@@ -14,13 +14,18 @@ import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
 import {
   useStudent, useUpdateStudent, useDeleteStudent, useChangeStudentStatus,
 } from '../api';
+import { useCreateParent, useLinkParent, useUnlinkParent } from '@/features/parents/api';
+import { useSearchUsers } from '@/features/users/api';
 import { useGrades, useGrade } from '@/features/grades/api';
-import { usePermissions } from '@/hooks';
+import { usePermissions, useDebounce } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
-import { updateStudentSchema, type UpdateStudentFormData } from '@/lib/validation';
+import {
+  updateStudentSchema, type UpdateStudentFormData,
+  createParentSchema, type CreateParentFormData,
+} from '@/lib/validation';
 import { format } from 'date-fns';
-import type { StudentStatus } from '@/types';
+import type { StudentStatus, ParentRelation } from '@/types';
 
 const STATUS_BADGE_MAP: Record<StudentStatus, 'success' | 'warning' | 'primary' | 'default' | 'error'> = {
   Active: 'success',
@@ -48,12 +53,16 @@ export default function StudentDetailPage() {
   const { data: student, isLoading } = useStudent(id!);
 
   const { mutate: deleteStudentMutation, isPending: isDeleting } = useDeleteStudent();
+  const { mutate: unlinkParentMutation, isPending: isUnlinking } = useUnlinkParent();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showLinkParentModal, setShowLinkParentModal] = useState(false);
+  const [unlinkTarget, setUnlinkTarget] = useState<{ parentUserId: string; parentName: string } | null>(null);
 
   const canUpdate = hasPermission(PERMISSIONS.Students.Update);
   const canDelete = hasPermission(PERMISSIONS.Students.Delete);
+  const canManageParents = hasPermission(PERMISSIONS.Students.ManageParents);
 
   if (isLoading) {
     return (
@@ -73,6 +82,14 @@ export default function StudentDetailPage() {
     deleteStudentMutation(id!, {
       onSuccess: () => navigate(ROUTES.STUDENTS.LIST),
     });
+  };
+
+  const handleUnlink = () => {
+    if (!unlinkTarget) return;
+    unlinkParentMutation(
+      { studentId: id!, parentUserId: unlinkTarget.parentUserId },
+      { onSuccess: () => setUnlinkTarget(null) },
+    );
   };
 
   return (
@@ -173,10 +190,21 @@ export default function StudentDetailPage() {
       {/* Parents Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            {t('students.parents')} ({student.parents.length})
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              {t('students.parents')} ({student.parents.length})
+            </CardTitle>
+            {canManageParents && (
+              <Button
+                size="sm"
+                onClick={() => setShowLinkParentModal(true)}
+                leftIcon={<UserPlus className="h-4 w-4" />}
+              >
+                {t('parents.linkParent')}
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           {student.parents.length === 0 ? (
@@ -195,6 +223,11 @@ export default function StudentDetailPage() {
                     <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">
                       {t('students.linkedAt')}
                     </th>
+                    {canManageParents && (
+                      <th className="px-4 pb-3 text-end text-xs font-medium uppercase tracking-wide text-text-muted">
+                        {t('common.actions')}
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -202,11 +235,23 @@ export default function StudentDetailPage() {
                     <tr key={parent.parentUserId} className="hover:bg-hover/50 transition-colors">
                       <td className="px-4 py-3.5 font-medium text-text-primary">{parent.parentName}</td>
                       <td className="px-4 py-3.5 text-text-secondary">
-                        {t(`students.relation${parent.relation}`)}
+                        {t(`parents.relation${parent.relation}`)}
                       </td>
                       <td className="px-4 py-3.5 text-text-muted">
                         {format(new Date(parent.linkedAt), 'MMM d, yyyy')}
                       </td>
+                      {canManageParents && (
+                        <td className="px-4 py-3.5 text-end">
+                          <button
+                            type="button"
+                            onClick={() => setUnlinkTarget({ parentUserId: parent.parentUserId, parentName: parent.parentName })}
+                            className="inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                            {t('parents.unlink')}
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -229,6 +274,19 @@ export default function StudentDetailPage() {
         isLoading={isDeleting}
       />
 
+      {/* Unlink Parent Modal */}
+      <ConfirmModal
+        isOpen={!!unlinkTarget}
+        onClose={() => setUnlinkTarget(null)}
+        onConfirm={handleUnlink}
+        title={t('parents.unlinkParent')}
+        description={t('parents.unlinkConfirmation', { parent: unlinkTarget?.parentName, student: student.fullNameEn })}
+        confirmLabel={t('parents.unlink')}
+        cancelLabel={t('common.cancel')}
+        variant="danger"
+        isLoading={isUnlinking}
+      />
+
       {/* Edit Modal */}
       {showEditModal && (
         <EditStudentDetailModal
@@ -248,7 +306,252 @@ export default function StudentDetailPage() {
           currentStatus={student.status}
         />
       )}
+
+      {/* Link Parent Modal */}
+      {showLinkParentModal && (
+        <LinkParentModal
+          isOpen={showLinkParentModal}
+          onClose={() => setShowLinkParentModal(false)}
+          studentId={id!}
+        />
+      )}
     </div>
+  );
+}
+
+/* ─── Link Parent Modal ─── */
+
+function LinkParentModal({
+  isOpen, onClose, studentId,
+}: {
+  isOpen: boolean; onClose: () => void; studentId: string;
+}) {
+  const { t } = useTranslation();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState('');
+  const [selectedUserName, setSelectedUserName] = useState('');
+  const [relation, setRelation] = useState('');
+  const [showCreateParent, setShowCreateParent] = useState(false);
+  const debouncedSearch = useDebounce(searchTerm, 300);
+  const { mutate: linkParent, isPending } = useLinkParent();
+
+  const { data: usersData, isLoading: isLoadingUsers } = useSearchUsers(
+    { searchTerm: debouncedSearch, role: 'Parent', pageSize: 10 },
+    { enabled: debouncedSearch.length >= 2 },
+  );
+
+  const users = usersData?.data ?? [];
+
+  const relationOptions = [
+    { value: 'Father', label: t('parents.relationFather') },
+    { value: 'Mother', label: t('parents.relationMother') },
+    { value: 'Guardian', label: t('parents.relationGuardian') },
+  ];
+
+  const handleSubmit = () => {
+    if (!selectedUserId || !relation) return;
+    linkParent(
+      { studentId, data: { parentUserId: selectedUserId, relation: relation as ParentRelation } },
+      {
+        onSuccess: () => {
+          handleClose();
+        },
+      },
+    );
+  };
+
+  const handleClose = () => {
+    setSearchTerm('');
+    setSelectedUserId('');
+    setSelectedUserName('');
+    setRelation('');
+    onClose();
+  };
+
+  const handleParentCreated = (parentId: string, parentName: string) => {
+    setSelectedUserId(parentId);
+    setSelectedUserName(parentName);
+    setSearchTerm(parentName);
+    setShowCreateParent(false);
+  };
+
+  if (showCreateParent) {
+    return (
+      <CreateParentModal
+        isOpen
+        onClose={() => setShowCreateParent(false)}
+        onCreated={handleParentCreated}
+      />
+    );
+  }
+
+  return (
+    <Modal isOpen={isOpen} onClose={handleClose} title={t('parents.linkParent')} size="md">
+      <div className="space-y-4">
+        {/* Parent search */}
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-text-primary">
+            {t('parents.selectParent')}
+          </label>
+          <Input
+            placeholder={t('parents.searchParents')}
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              if (selectedUserId) {
+                setSelectedUserId('');
+                setSelectedUserName('');
+              }
+            }}
+            leftIcon={<Search className="h-4 w-4" />}
+          />
+          {/* Dropdown results */}
+          {debouncedSearch.length >= 2 && !selectedUserId && (
+            <div className="mt-1.5 max-h-52 overflow-y-auto rounded-xl border border-border bg-surface py-1.5 shadow-soft-lg">
+              {isLoadingUsers ? (
+                <div className="flex justify-center py-4">
+                  <Spinner size="sm" />
+                </div>
+              ) : users.length === 0 ? (
+                <p className="px-4 py-3 text-sm text-text-muted">{t('parents.noParentsFound')}</p>
+              ) : (
+                users.map((user) => (
+                  <button
+                    key={user.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedUserId(user.id);
+                      const name = `${user.firstName} ${user.lastName}`;
+                      setSelectedUserName(name);
+                      setSearchTerm(name);
+                    }}
+                    className="flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-hover text-start"
+                  >
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-xs font-medium text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
+                      {user.firstName[0]}{user.lastName[0]}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-text-primary truncate">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="text-xs text-text-muted truncate">{user.email}</p>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
+          )}
+          {/* Selected parent chip */}
+          {selectedUserId && (
+            <div className="mt-2.5 flex items-center gap-2.5 rounded-xl border border-primary-200 bg-primary-50 px-3.5 py-2.5 dark:border-primary-500/30 dark:bg-primary-500/10">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-200 text-xs font-medium text-primary-700 dark:bg-primary-500/30 dark:text-primary-300">
+                {selectedUserName.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+              </div>
+              <span className="text-sm font-medium text-primary-700 dark:text-primary-300 flex-1 min-w-0 truncate">
+                {selectedUserName}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedUserId('');
+                  setSelectedUserName('');
+                  setSearchTerm('');
+                }}
+                className="text-primary-400 hover:text-primary-600 dark:hover:text-primary-200 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Relation */}
+        <Select
+          label={t('parents.relation')}
+          options={relationOptions}
+          value={relation}
+          onChange={setRelation}
+          placeholder={t('parents.selectRelation')}
+        />
+
+        {/* Create new parent link */}
+        <div className="border-t border-border pt-3">
+          <button
+            type="button"
+            onClick={() => setShowCreateParent(true)}
+            className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
+          >
+            + {t('parents.createNew')}
+          </button>
+        </div>
+      </div>
+      <ModalFooter>
+        <Button variant="secondary" onClick={handleClose}>{t('common.cancel')}</Button>
+        <Button onClick={handleSubmit} isLoading={isPending} disabled={!selectedUserId || !relation}>
+          {t('parents.linkParent')}
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
+}
+
+/* ─── Create Parent Modal ─── */
+
+function CreateParentModal({
+  isOpen, onClose, onCreated,
+}: {
+  isOpen: boolean; onClose: () => void;
+  onCreated: (parentId: string, parentName: string) => void;
+}) {
+  const { t } = useTranslation();
+  const { mutate: createParent, isPending } = useCreateParent();
+
+  const {
+    register, handleSubmit, formState: { errors },
+  } = useForm<CreateParentFormData>({
+    resolver: zodResolver(createParentSchema),
+  });
+
+  const onSubmit = (data: CreateParentFormData) => {
+    const { confirmPassword: _, ...payload } = data;
+    const cleanPayload = {
+      ...payload,
+      phoneNumber: payload.phoneNumber || undefined,
+    };
+    createParent(cleanPayload, {
+      onSuccess: (parentId) => {
+        onCreated(parentId, `${data.firstName} ${data.lastName}`);
+      },
+    });
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={t('parents.createParent')} size="lg">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.firstName')} error={errors.firstName?.message} {...register('firstName')} />
+          <Input label={t('parents.lastName')} error={errors.lastName?.message} {...register('lastName')} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.username')} error={errors.username?.message} {...register('username')} />
+          <Input label={t('parents.email')} type="email" error={errors.email?.message} {...register('email')} />
+        </div>
+        <Input
+          label={t('parents.phoneNumber')}
+          placeholder="+9647XXXXXXXXX"
+          error={errors.phoneNumber?.message}
+          {...register('phoneNumber')}
+        />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.password')} type="password" error={errors.password?.message} {...register('password')} />
+          <Input label={t('parents.confirmPassword')} type="password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
+        </div>
+        <ModalFooter>
+          <Button variant="secondary" type="button" onClick={onClose}>{t('common.cancel')}</Button>
+          <Button type="submit" isLoading={isPending}>{t('parents.createParent')}</Button>
+        </ModalFooter>
+      </form>
+    </Modal>
   );
 }
 
