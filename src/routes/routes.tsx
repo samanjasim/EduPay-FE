@@ -19,6 +19,21 @@ const RoleEditPage = lazy(() => import('@/features/roles/pages/RoleEditPage'));
 const SchoolsListPage = lazy(() => import('@/features/schools/pages/SchoolsListPage'));
 const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetailPage'));
 const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
+const ParentsListPage = lazy(() => import('@/features/parents/pages/ParentsListPage'));
+const ParentDetailPage = lazy(() => import('@/features/parents/pages/ParentDetailPage'));
+const NotificationsPage = lazy(() => import('@/features/notifications/pages/NotificationsPage'));
+const NotificationDetailPage = lazy(() => import('@/features/notifications/pages/NotificationDetailPage'));
+const SendNotificationPage = lazy(() => import('@/features/notifications/pages/SendNotificationPage'));
+const PlansListPage = lazy(() => import('@/features/plans/pages/PlansListPage'));
+const PlanCreatePage = lazy(() => import('@/features/plans/pages/PlanCreatePage'));
+const PlanDetailPage = lazy(() => import('@/features/plans/pages/PlanDetailPage'));
+const PlanEditPage = lazy(() => import('@/features/plans/pages/PlanEditPage'));
+const FilesPage = lazy(() => import('@/features/files/pages/FilesPage'));
+const FileCategoriesPage = lazy(() => import('@/features/files/pages/FileCategoriesPage'));
+const ProductsListPage = lazy(() => import('@/features/products/pages/ProductsListPage'));
+const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
+const ProductCreatePage = lazy(() => import('@/features/products/pages/ProductCreatePage'));
+const ProductEditPage = lazy(() => import('@/features/products/pages/ProductEditPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -93,6 +108,71 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Schools.Create} />,
             children: [
               { path: ROUTES.SCHOOLS.CREATE, element: <SchoolCreatePage /> },
+            ],
+          },
+
+          // Parents
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Fees.View} />,
+            children: [
+              { path: ROUTES.PARENTS.LIST, element: <ParentsListPage /> },
+              { path: ROUTES.PARENTS.DETAIL, element: <ParentDetailPage /> },
+            ],
+          },
+
+          // Notifications
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Notifications.View} />,
+            children: [
+              { path: ROUTES.NOTIFICATIONS.LIST, element: <NotificationsPage /> },
+              { path: ROUTES.NOTIFICATIONS.DETAIL, element: <NotificationDetailPage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Notifications.Send} />,
+            children: [
+              { path: ROUTES.NOTIFICATIONS.SEND, element: <SendNotificationPage /> },
+            ],
+          },
+
+          // Subscription Plans
+          {
+            element: <PermissionGuard permission={PERMISSIONS.System.ViewDashboard} />,
+            children: [
+              { path: ROUTES.PLANS.LIST, element: <PlansListPage /> },
+              { path: ROUTES.PLANS.CREATE, element: <PlanCreatePage /> },
+              { path: ROUTES.PLANS.DETAIL, element: <PlanDetailPage /> },
+              { path: ROUTES.PLANS.EDIT, element: <PlanEditPage /> },
+            ],
+          },
+
+          // Files
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Files.View} />,
+            children: [
+              { path: ROUTES.FILES, element: <FilesPage /> },
+              { path: ROUTES.FILE_CATEGORIES, element: <FileCategoriesPage /> },
+            ],
+          },
+
+          // Products
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.View} />,
+            children: [
+              { path: ROUTES.PRODUCTS.LIST, element: <ProductsListPage /> },
+              { path: ROUTES.PRODUCTS.DETAIL, element: <ProductDetailPage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.Create} />,
+            children: [
+              { path: ROUTES.PRODUCTS.CREATE, element: <ProductCreatePage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.Update} />,
+            children: [
+              { path: ROUTES.PRODUCTS.EDIT, element: <ProductEditPage /> },
             ],
           },
 
