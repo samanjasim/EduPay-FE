@@ -234,6 +234,7 @@
     "backToStudents": "العودة إلى الطلاب",
     "deleteStudent": "حذف الطالب",
     "deleteConfirmation": "هل أنت متأكد من حذف <strong>{{name}}</strong>؟ سيتم تعطيل سجل الطالب.",
+    "name": "الاسم",
     "fullNameAr": "الاسم الكامل (عربي)",
     "fullNameEn": "الاسم الكامل (إنجليزي)",
     "nationalId": "الرقم الوطني",

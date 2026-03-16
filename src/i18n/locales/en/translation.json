@@ -234,6 +234,7 @@
     "backToStudents": "Back to Students",
     "deleteStudent": "Delete Student",
     "deleteConfirmation": "Are you sure you want to delete <strong>{{name}}</strong>? This action will deactivate the student record.",
+    "name": "Name",
     "fullNameAr": "Full Name (Arabic)",
     "fullNameEn": "Full Name (English)",
     "nationalId": "National ID",

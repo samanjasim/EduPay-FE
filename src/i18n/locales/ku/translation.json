@@ -234,6 +234,7 @@
     "backToStudents": "گەڕانەوە بۆ قوتابیان",
     "deleteStudent": "سڕینەوەی قوتابی",
     "deleteConfirmation": "دڵنیایت لە سڕینەوەی <strong>{{name}}</strong>؟ تۆماری قوتابییەکە ناچالاک دەکرێت.",
+    "name": "ناو",
     "fullNameAr": "ناوی تەواو (عەرەبی)",
     "fullNameEn": "ناوی تەواو (ئینگلیزی)",
     "nationalId": "ژمارەی نیشتمانی",
