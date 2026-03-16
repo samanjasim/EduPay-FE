@@ -277,6 +277,7 @@
     "transferConfirmation": "دڵنیایت لە گواستنەوەی <strong>{{name}}</strong>؟ ئەم کردارە هەمیشەییە.",
     "withdrawConfirmation": "دڵنیایت لە کشانەوەی <strong>{{name}}</strong>؟ ئەم کردارە هەمیشەییە.",
     "reactivateConfirmation": "دڵنیایت لە چالاککردنەوەی <strong>{{name}}</strong>؟",
+    "terminal": "هەمیشەیی",
     "terminalWarning": "ئەمە گۆڕانکارییەکی دۆخی کۆتاییە و ناگەڕێتەوە.",
     "currentStatus": "دۆخی ئێستا",
     "terminalStatusMessage": "ئەم قوتابییە لە دۆخی کۆتاییدایە ({{status}}). هیچ گۆڕانکارییەکی تری دۆخ ڕێگەپێدراو نییە.",

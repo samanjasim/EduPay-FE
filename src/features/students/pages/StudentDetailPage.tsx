@@ -742,10 +742,40 @@ function StatusModal({
           <span className="text-sm font-medium text-text-secondary">{t('students.currentStatus')}</span>
           <Badge variant={STATUS_BADGE_MAP[currentStatus]}>{t(`students.status${currentStatus}`)}</Badge>
         </div>
-        <Select
-          label={t('students.newStatus')} options={statusOptions} value={selectedStatus}
-          onChange={setSelectedStatus} placeholder={t('students.selectStatus')}
-        />
+        <div>
+          <label className="mb-2 block text-sm font-medium text-text-primary">{t('students.newStatus')}</label>
+          <div className="space-y-1.5">
+            {statusOptions.map((option) => {
+              const isSelected = selectedStatus === option.value;
+              const optionIsTerminal = TERMINAL_STATUSES.includes(option.value as StudentStatus);
+              return (
+                <label
+                  key={option.value}
+                  className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm transition-colors ${
+                    isSelected
+                      ? optionIsTerminal
+                        ? 'border-red-300 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10'
+                        : 'border-primary-300 bg-primary-50 dark:border-primary-500/30 dark:bg-primary-500/10'
+                      : 'border-border hover:bg-hover/50'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="newStatus"
+                    value={option.value}
+                    checked={isSelected}
+                    onChange={() => setSelectedStatus(option.value)}
+                    className="accent-primary-600"
+                  />
+                  <span className="font-medium text-text-primary">{option.label}</span>
+                  {optionIsTerminal && (
+                    <span className="text-xs text-red-500">({t('students.terminal')})</span>
+                  )}
+                </label>
+              );
+            })}
+          </div>
+        </div>
         {isTerminal && selectedStatus && (
           <p className="text-xs text-red-500 font-medium">{t('students.terminalWarning')}</p>
         )}

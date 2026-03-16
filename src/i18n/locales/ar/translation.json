@@ -277,6 +277,7 @@
     "transferConfirmation": "هل أنت متأكد من نقل <strong>{{name}}</strong>؟ هذا الإجراء دائم.",
     "withdrawConfirmation": "هل أنت متأكد من سحب <strong>{{name}}</strong>؟ هذا الإجراء دائم.",
     "reactivateConfirmation": "هل أنت متأكد من إعادة تفعيل <strong>{{name}}</strong>؟",
+    "terminal": "دائم",
     "terminalWarning": "هذا تغيير حالة نهائي ولا يمكن التراجع عنه.",
     "currentStatus": "الحالة الحالية",
     "terminalStatusMessage": "هذا الطالب في حالة نهائية ({{status}}). لا يمكن إجراء أي تغييرات أخرى على الحالة.",
