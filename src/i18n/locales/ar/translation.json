@@ -285,6 +285,14 @@
     "filterByGender": "تصفية حسب الجنس",
     "filterByGrade": "تصفية حسب المرحلة"
   },
+  "validation": {
+    "required": "{{field}} مطلوب",
+    "minLength": "{{field}} يجب أن يكون {{min}} أحرف على الأقل",
+    "maxLength": "{{field}} يجب أن لا يتجاوز {{max}} حرف",
+    "invalidEmail": "عنوان البريد الإلكتروني غير صالح",
+    "invalidPhone": "رقم الهاتف يجب أن يكون بصيغة E.164 (مثال: +9647701234567)",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+  },
   "parents": {
     "linkParent": "ربط ولي أمر",
     "unlinkParent": "إلغاء ربط ولي الأمر",

@@ -285,6 +285,14 @@
     "filterByGender": "فلتەر بە ڕەگەز",
     "filterByGrade": "فلتەر بە قۆناغ"
   },
+  "validation": {
+    "required": "{{field}} پێویستە",
+    "minLength": "{{field}} دەبێت لانیکەم {{min}} پیت بێت",
+    "maxLength": "{{field}} دەبێت زۆرترین {{max}} پیت بێت",
+    "invalidEmail": "ناونیشانی ئیمەیل نادروستە",
+    "invalidPhone": "ژمارەی مۆبایل دەبێت بە شێوازی E.164 بێت (وەک: +9647701234567)",
+    "passwordsMismatch": "وشەی نهێنییەکان یەک ناگرنەوە"
+  },
   "parents": {
     "linkParent": "بەستنی دایک/باوک",
     "unlinkParent": "لابردنی بەستن",

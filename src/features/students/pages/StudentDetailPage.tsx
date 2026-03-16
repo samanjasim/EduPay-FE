@@ -512,7 +512,7 @@ function CreateParentModal({
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<CreateParentFormData>({
-    resolver: zodResolver(createParentSchema),
+    resolver: zodResolver(createParentSchema(t)),
     mode: 'onChange',
   });
 
