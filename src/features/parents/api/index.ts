@@ -1,2 +1,2 @@
 export { parentsApi } from './parents.api';
-export { useEnrollParent, useLinkParent, useUnlinkParent, useParents } from './parents.queries';
+export { useEnrollParent, useLinkParent, useUnlinkParent, useUpdateParent, useParents } from './parents.queries';

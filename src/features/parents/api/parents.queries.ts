@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tansta
 import { toast } from 'sonner';
 import { parentsApi } from './parents.api';
 import { queryKeys } from '@/lib/query';
-import type { EnrollParentData, LinkParentData, ParentListParams, EnrollParentResult } from '@/types';
+import type { EnrollParentData, LinkParentData, UpdateParentData, ParentListParams, EnrollParentResult } from '@/types';
 import { useUIStore } from '@/stores';
 
 export function useParents(params?: ParentListParams) {
@@ -48,6 +48,19 @@ export function useUnlinkParent() {
       queryClient.invalidateQueries({ queryKey: queryKeys.students.all });
       queryClient.invalidateQueries({ queryKey: queryKeys.parents.all });
       toast.success('Parent unlinked successfully');
+    },
+  });
+}
+
+export function useUpdateParent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ parentUserId, data }: { parentUserId: string; data: UpdateParentData }) =>
+      parentsApi.updateParent(parentUserId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.parents.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.students.all });
+      toast.success('Parent updated successfully');
     },
   });
 }

@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { UserPlus, X, Mail, Phone, Clock, ShieldCheck } from 'lucide-react';
-import { Card, CardContent, Badge, Spinner, Button } from '@/components/ui';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserPlus, Pencil, X, Mail, Phone, Clock, ShieldCheck } from 'lucide-react';
+import { Card, CardContent, Badge, Spinner, Button, Input, Modal, ModalFooter } from '@/components/ui';
 import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
-import { useUser } from '../api';
+import { useUser, useUpdateUser } from '../api';
 import { useRoles, useRemoveUserRole } from '@/features/roles/api';
 import { RoleAssignModal } from '../components';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
+import { updateUserSchema, type UpdateUserFormData } from '@/lib/validation';
 import { format } from 'date-fns';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
@@ -32,9 +35,11 @@ export default function UserDetailPage() {
   const { hasPermission } = usePermissions();
 
   const [showAssignModal, setShowAssignModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [roleToRemove, setRoleToRemove] = useState<{ roleId: string; roleName: string } | null>(null);
 
   const canManageRoles = hasPermission(PERMISSIONS.Users.ManageRoles);
+  const canUpdate = hasPermission(PERMISSIONS.Users.Update);
 
   const allRoles = rolesData?.data ?? [];
 
@@ -132,6 +137,19 @@ export default function UserDetailPage() {
               </InfoField>
             )}
           </div>
+
+          {canUpdate && (
+            <div className="flex items-center gap-2 border-t border-border pt-4 mt-6">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowEditModal(true)}
+                leftIcon={<Pencil className="h-4 w-4" />}
+              >
+                {t('users.editUser')}
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -229,6 +247,72 @@ export default function UserDetailPage() {
         confirmLabel="Remove Role"
         isLoading={isRemovingRole}
       />
+
+      {/* Edit User Modal */}
+      {showEditModal && (
+        <EditUserModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          user={user}
+        />
+      )}
     </div>
+  );
+}
+
+/* ─── Edit User Modal ─── */
+
+function EditUserModal({
+  isOpen, onClose, user,
+}: {
+  isOpen: boolean; onClose: () => void;
+  user: { id: string; firstName: string; lastName: string; email: string; phoneNumber?: string | null; username: string };
+}) {
+  const { t } = useTranslation();
+  const { mutate: updateUser, isPending } = useUpdateUser();
+
+  const {
+    register, handleSubmit, formState: { errors },
+  } = useForm<UpdateUserFormData>({
+    resolver: zodResolver(updateUserSchema(t)),
+    defaultValues: {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber ?? '',
+    },
+  });
+
+  const onSubmit = (data: UpdateUserFormData) => {
+    const payload = {
+      ...data,
+      phoneNumber: data.phoneNumber || null,
+    };
+    updateUser({ id: user.id, data: payload }, { onSuccess: onClose });
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={t('users.editUser')} size="md">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-3">
+          <span className="text-sm text-text-muted">@{user.username}</span>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.firstName')} error={errors.firstName?.message} {...register('firstName')} />
+          <Input label={t('parents.lastName')} error={errors.lastName?.message} {...register('lastName')} />
+        </div>
+        <Input label={t('parents.email')} type="email" error={errors.email?.message} {...register('email')} />
+        <Input
+          label={t('parents.phoneNumber')}
+          placeholder="+9647XXXXXXXXX"
+          error={errors.phoneNumber?.message}
+          {...register('phoneNumber')}
+        />
+        <ModalFooter>
+          <Button variant="secondary" type="button" onClick={onClose}>{t('common.cancel')}</Button>
+          <Button type="submit" isLoading={isPending}>{t('common.save')}</Button>
+        </ModalFooter>
+      </form>
+    </Modal>
   );
 }

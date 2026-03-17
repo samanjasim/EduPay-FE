@@ -93,7 +93,9 @@
     "userStatus": "الحالة",
     "userCreated": "تاريخ الإنشاء",
     "userDetail": "تفاصيل المستخدم",
-    "backToUsers": "العودة إلى المستخدمين"
+    "backToUsers": "العودة إلى المستخدمين",
+    "editUser": "تعديل المستخدم",
+    "userUpdated": "تم تحديث المستخدم بنجاح"
   },
   "roles": {
     "title": "الأدوار",
@@ -328,7 +330,9 @@
     "lastName": "اسم العائلة",
     "email": "البريد الإلكتروني",
     "phoneNumber": "رقم الهاتف",
-    "password": "كلمة المرور"
+    "password": "كلمة المرور",
+    "editParent": "تعديل ولي الأمر",
+    "parentUpdated": "تم تحديث ولي الأمر بنجاح"
   },
   "payments": {
     "title": "المدفوعات"

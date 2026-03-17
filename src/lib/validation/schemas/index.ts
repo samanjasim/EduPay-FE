@@ -5,3 +5,4 @@ export * from './academic-year.schema';
 export * from './grade.schema';
 export * from './student.schema';
 export * from './parent.schema';
+export * from './user.schema';

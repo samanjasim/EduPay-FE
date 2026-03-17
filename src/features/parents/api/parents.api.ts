@@ -4,6 +4,7 @@ import type {
   EnrollParentData,
   EnrollParentResult,
   LinkParentData,
+  UpdateParentData,
   ParentListParams,
   ParentSummary,
   ApiResponse,
@@ -33,5 +34,9 @@ export const parentsApi = {
 
   unlinkParent: async (studentId: string, parentUserId: string): Promise<void> => {
     await apiClient.delete(API_ENDPOINTS.STUDENTS.PARENT(studentId, parentUserId));
+  },
+
+  updateParent: async (parentUserId: string, data: UpdateParentData): Promise<void> => {
+    await apiClient.put(API_ENDPOINTS.PARENTS.UPDATE(parentUserId), data);
   },
 };

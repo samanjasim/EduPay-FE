@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
-import type { User, UserListParams, PaginatedResponse } from '@/types';
+import type { User, UserListParams, UpdateUserData, PaginatedResponse } from '@/types';
 
 export const usersApi = {
   getUsers: async (params?: UserListParams): Promise<PaginatedResponse<User>> => {
@@ -14,5 +14,9 @@ export const usersApi = {
   getUserById: async (id: string): Promise<User> => {
     const response = await apiClient.get<{ data: User }>(API_ENDPOINTS.USERS.DETAIL(id));
     return response.data.data;
+  },
+
+  updateUser: async (id: string, data: UpdateUserData): Promise<void> => {
+    await apiClient.put(API_ENDPOINTS.USERS.DETAIL(id), data);
   },
 };

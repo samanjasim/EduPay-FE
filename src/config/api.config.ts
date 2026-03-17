@@ -60,5 +60,6 @@ export const API_ENDPOINTS = {
   },
   PARENTS: {
     LIST: '/Parents',
+    UPDATE: (parentUserId: string) => `/Parents/${parentUserId}`,
   },
 } as const;

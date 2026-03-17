@@ -93,7 +93,9 @@
     "userStatus": "Status",
     "userCreated": "Created",
     "userDetail": "User Details",
-    "backToUsers": "Back to Users"
+    "backToUsers": "Back to Users",
+    "editUser": "Edit User",
+    "userUpdated": "User updated successfully"
   },
   "roles": {
     "title": "Roles",
@@ -328,7 +330,9 @@
     "lastName": "Last Name",
     "email": "Email",
     "phoneNumber": "Phone Number",
-    "password": "Password"
+    "password": "Password",
+    "editParent": "Edit Parent",
+    "parentUpdated": "Parent updated successfully"
   },
   "payments": {
     "title": "Payments"

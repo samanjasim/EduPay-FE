@@ -1,4 +1,7 @@
 import type { ParentRelation } from './student.types';
+import type { UpdateUserData } from './user.types';
+
+export type UpdateParentData = UpdateUserData;
 
 // Enroll = atomic create-or-reuse + link
 export interface EnrollParentData {
