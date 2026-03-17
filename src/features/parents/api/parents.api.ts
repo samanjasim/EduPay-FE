@@ -1,13 +1,28 @@
 import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
-import type { CreateParentData, LinkParentData, ApiResponse } from '@/types';
+import type {
+  EnrollParentData,
+  EnrollParentResult,
+  LinkParentData,
+  ParentListParams,
+  ParentSummary,
+  ApiResponse,
+  PaginatedResponse,
+} from '@/types';
 
 export const parentsApi = {
-  createParent: async (data: CreateParentData): Promise<string> => {
-    const response = await apiClient.post<ApiResponse<string>>(
-      API_ENDPOINTS.PARENTS.CREATE,
+  getParents: async (params?: ParentListParams): Promise<PaginatedResponse<ParentSummary>> => {
+    const response = await apiClient.get<PaginatedResponse<ParentSummary>>(
+      API_ENDPOINTS.PARENTS.LIST,
+      { params },
+    );
+    return response.data;
+  },
+
+  enrollParent: async (studentId: string, data: EnrollParentData): Promise<EnrollParentResult> => {
+    const response = await apiClient.post<ApiResponse<EnrollParentResult>>(
+      API_ENDPOINTS.STUDENTS.ENROLL_PARENT(studentId),
       data,
-      { headers: { 'X-School-Id': '' } },
     );
     return response.data.data;
   },

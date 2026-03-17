@@ -57,4 +57,10 @@ export const queryKeys = {
     details: () => [...queryKeys.students.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.students.details(), id] as const,
   },
+
+  parents: {
+    all: ['parents'] as const,
+    lists: () => [...queryKeys.parents.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.parents.lists(), filters] as const,
+  },
 } as const;

@@ -59,6 +59,7 @@
     "academicYears": "Academic Years",
     "grades": "Grades",
     "students": "Students",
+    "parents": "Parents",
     "collapse": "Collapse"
   },
   "header": {
@@ -301,15 +302,23 @@
     "passwordsMismatch": "Passwords do not match"
   },
   "parents": {
+    "title": "Parents",
+    "allParents": "All Parents",
+    "noParents": "No parents found.",
+    "enrollParent": "Enroll Parent",
+    "enrollHint": "If this parent already has an account, only email and relation are needed.",
+    "accountCreated": "Parent account created and linked. Share these credentials with the parent.",
+    "existingLinked": "Existing parent {{name}} linked to this student.",
     "linkParent": "Link Parent",
+    "linkExisting": "Link Existing",
     "unlinkParent": "Unlink Parent",
     "unlink": "Unlink",
     "unlinkConfirmation": "Are you sure you want to unlink <strong>{{parent}}</strong> from <strong>{{student}}</strong>? The parent will no longer see this student.",
-    "createParent": "Create Parent Account",
     "searchParents": "Search parents by name or email...",
     "selectParent": "Select a parent",
-    "noParentsFound": "No parent users found",
-    "createNew": "Create New Parent",
+    "noParentsFound": "No parents found",
+    "linkedStudents": "Linked Students",
+    "firstLinkedAt": "First Linked",
     "relation": "Relation",
     "selectRelation": "Select relation",
     "relationFather": "Father",
@@ -317,11 +326,9 @@
     "relationGuardian": "Guardian",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "username": "Username",
     "email": "Email",
     "phoneNumber": "Phone Number",
-    "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "password": "Password"
   },
   "payments": {
     "title": "Payments"

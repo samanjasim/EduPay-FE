@@ -59,6 +59,7 @@
     "academicYears": "السنوات الدراسية",
     "grades": "المراحل الدراسية",
     "students": "الطلاب",
+    "parents": "أولياء الأمور",
     "collapse": "طي"
   },
   "header": {
@@ -301,15 +302,23 @@
     "passwordsMismatch": "كلمتا المرور غير متطابقتين"
   },
   "parents": {
+    "title": "أولياء الأمور",
+    "allParents": "جميع أولياء الأمور",
+    "noParents": "لم يتم العثور على أولياء أمور.",
+    "enrollParent": "تسجيل ولي أمر",
+    "enrollHint": "إذا كان لدى ولي الأمر حساب بالفعل، يكفي إدخال البريد الإلكتروني وصلة القرابة فقط.",
+    "accountCreated": "تم إنشاء حساب ولي الأمر وربطه. شارك بيانات الدخول مع ولي الأمر.",
+    "existingLinked": "تم ربط ولي الأمر الحالي {{name}} بهذا الطالب.",
     "linkParent": "ربط ولي أمر",
+    "linkExisting": "ربط حالي",
     "unlinkParent": "إلغاء ربط ولي الأمر",
     "unlink": "إلغاء الربط",
     "unlinkConfirmation": "هل أنت متأكد من إلغاء ربط <strong>{{parent}}</strong> عن <strong>{{student}}</strong>؟ لن يتمكن ولي الأمر من رؤية هذا الطالب.",
-    "createParent": "إنشاء حساب ولي أمر",
     "searchParents": "البحث عن أولياء الأمور بالاسم أو البريد...",
     "selectParent": "اختر ولي أمر",
     "noParentsFound": "لم يتم العثور على أولياء أمور",
-    "createNew": "إنشاء ولي أمر جديد",
+    "linkedStudents": "الطلاب المرتبطون",
+    "firstLinkedAt": "تاريخ أول ربط",
     "relation": "صلة القرابة",
     "selectRelation": "اختر صلة القرابة",
     "relationFather": "أب",
@@ -317,11 +326,9 @@
     "relationGuardian": "ولي أمر",
     "firstName": "الاسم الأول",
     "lastName": "اسم العائلة",
-    "username": "اسم المستخدم",
     "email": "البريد الإلكتروني",
     "phoneNumber": "رقم الهاتف",
-    "password": "كلمة المرور",
-    "confirmPassword": "تأكيد كلمة المرور"
+    "password": "كلمة المرور"
   },
   "payments": {
     "title": "المدفوعات"

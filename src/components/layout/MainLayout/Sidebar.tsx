@@ -11,6 +11,7 @@ import {
   CalendarRange,
   BookOpen,
   UserRoundSearch,
+  UsersRound,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -44,6 +45,9 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Students.View)
       ? [{ label: t('nav.students'), icon: UserRoundSearch, path: ROUTES.STUDENTS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Students.ManageParents)
+      ? [{ label: t('nav.parents'), icon: UsersRound, path: ROUTES.PARENTS.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

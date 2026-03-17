@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  UserRoundSearch, Pencil, Trash2, ArrowRightLeft, Users, UserPlus, Search, X,
+  UserRoundSearch, Pencil, Trash2, ArrowRightLeft, Users, UserPlus, Link2, Search, X,
   Eye, EyeOff,
 } from 'lucide-react';
 import {
@@ -15,16 +15,16 @@ import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
 import {
   useStudent, useUpdateStudent, useDeleteStudent, useChangeStudentStatus,
 } from '../api';
-import { useCreateParent, useLinkParent, useUnlinkParent } from '@/features/parents/api';
-import { useSearchUsers } from '@/features/users/api';
+import { useEnrollParent, useLinkParent, useUnlinkParent, useParents } from '@/features/parents/api';
 import { useGrades, useGrade } from '@/features/grades/api';
 import { usePermissions, useDebounce } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 import {
   updateStudentSchema, type UpdateStudentFormData,
-  createParentSchema, type CreateParentFormData,
+  enrollParentSchema, type EnrollParentFormData,
 } from '@/lib/validation';
+import { toast } from 'sonner';
 import { format } from 'date-fns';
 import type { StudentStatus, ParentRelation } from '@/types';
 
@@ -58,7 +58,8 @@ export default function StudentDetailPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
-  const [showLinkParentModal, setShowLinkParentModal] = useState(false);
+  const [showEnrollModal, setShowEnrollModal] = useState(false);
+  const [showLinkExistingModal, setShowLinkExistingModal] = useState(false);
   const [unlinkTarget, setUnlinkTarget] = useState<{ parentUserId: string; parentName: string } | null>(null);
 
   const canUpdate = hasPermission(PERMISSIONS.Students.Update);
@@ -197,13 +198,23 @@ export default function StudentDetailPage() {
               {t('students.parents')} ({student.parents.length})
             </CardTitle>
             {canManageParents && (
-              <Button
-                size="sm"
-                onClick={() => setShowLinkParentModal(true)}
-                leftIcon={<UserPlus className="h-4 w-4" />}
-              >
-                {t('parents.linkParent')}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  onClick={() => setShowEnrollModal(true)}
+                  leftIcon={<UserPlus className="h-4 w-4" />}
+                >
+                  {t('parents.enrollParent')}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setShowLinkExistingModal(true)}
+                  leftIcon={<Link2 className="h-4 w-4" />}
+                >
+                  {t('parents.linkExisting')}
+                </Button>
+              </div>
             )}
           </div>
         </CardHeader>
@@ -308,11 +319,20 @@ export default function StudentDetailPage() {
         />
       )}
 
-      {/* Link Parent Modal */}
-      {showLinkParentModal && (
-        <LinkParentModal
-          isOpen={showLinkParentModal}
-          onClose={() => setShowLinkParentModal(false)}
+      {/* Enroll Parent Modal */}
+      {showEnrollModal && (
+        <EnrollParentModal
+          isOpen={showEnrollModal}
+          onClose={() => setShowEnrollModal(false)}
+          studentId={id!}
+        />
+      )}
+
+      {/* Link Existing Parent Modal */}
+      {showLinkExistingModal && (
+        <LinkExistingModal
+          isOpen={showLinkExistingModal}
+          onClose={() => setShowLinkExistingModal(false)}
           studentId={id!}
         />
       )}
@@ -320,28 +340,122 @@ export default function StudentDetailPage() {
   );
 }
 
-/* ─── Link Parent Modal ─── */
+/* ─── Enroll Parent Modal ─── */
 
-function LinkParentModal({
+function EnrollParentModal({
+  isOpen, onClose, studentId,
+}: {
+  isOpen: boolean; onClose: () => void; studentId: string;
+}) {
+  const { t } = useTranslation();
+  const { mutate: enrollParent, isPending } = useEnrollParent();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register, handleSubmit, formState: { errors }, setValue, watch,
+  } = useForm<EnrollParentFormData>({
+    resolver: zodResolver(enrollParentSchema(t)),
+    mode: 'onChange',
+  });
+
+  const relationOptions = [
+    { value: 'Father', label: t('parents.relationFather') },
+    { value: 'Mother', label: t('parents.relationMother') },
+    { value: 'Guardian', label: t('parents.relationGuardian') },
+  ];
+
+  const onSubmit = (data: EnrollParentFormData) => {
+    const payload = {
+      email: data.email,
+      relation: data.relation as ParentRelation,
+      firstName: data.firstName || null,
+      lastName: data.lastName || null,
+      phoneNumber: data.phoneNumber || null,
+      password: data.password || null,
+    };
+    enrollParent(
+      { studentId, data: payload },
+      {
+        onSuccess: (result) => {
+          if (result.isNewAccount) {
+            toast.success(t('parents.accountCreated'));
+          } else {
+            toast.success(t('parents.existingLinked', { name: result.parentName }));
+          }
+          onClose();
+        },
+      },
+    );
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={t('parents.enrollParent')} size="lg">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <p className="text-sm text-text-muted">{t('parents.enrollHint')}</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.email')} type="email" error={errors.email?.message} {...register('email')} />
+          <Select
+            label={t('parents.relation')}
+            options={relationOptions}
+            value={watch('relation') ?? ''}
+            onChange={(v) => setValue('relation', v as ParentRelation, { shouldValidate: true })}
+            placeholder={t('parents.selectRelation')}
+            error={errors.relation?.message}
+          />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label={t('parents.firstName')} error={errors.firstName?.message} {...register('firstName')} />
+          <Input label={t('parents.lastName')} error={errors.lastName?.message} {...register('lastName')} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label={t('parents.phoneNumber')}
+            placeholder="+9647XXXXXXXXX"
+            error={errors.phoneNumber?.message}
+            {...register('phoneNumber')}
+          />
+          <Input
+            label={t('parents.password')}
+            type={showPassword ? 'text' : 'password'}
+            error={errors.password?.message}
+            rightIcon={
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="hover:text-text-primary">
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            }
+            {...register('password')}
+          />
+        </div>
+        <ModalFooter>
+          <Button variant="secondary" type="button" onClick={onClose}>{t('common.cancel')}</Button>
+          <Button type="submit" isLoading={isPending}>{t('parents.enrollParent')}</Button>
+        </ModalFooter>
+      </form>
+    </Modal>
+  );
+}
+
+/* ─── Link Existing Parent Modal ─── */
+
+function LinkExistingModal({
   isOpen, onClose, studentId,
 }: {
   isOpen: boolean; onClose: () => void; studentId: string;
 }) {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedUserId, setSelectedUserId] = useState('');
-  const [selectedUserName, setSelectedUserName] = useState('');
+  const [selectedParentId, setSelectedParentId] = useState('');
+  const [selectedParentName, setSelectedParentName] = useState('');
   const [relation, setRelation] = useState('');
-  const [showCreateParent, setShowCreateParent] = useState(false);
   const debouncedSearch = useDebounce(searchTerm, 300);
   const { mutate: linkParent, isPending } = useLinkParent();
 
-  const { data: usersData, isLoading: isLoadingUsers } = useSearchUsers(
-    { searchTerm: debouncedSearch, role: 'Parent', pageSize: 10 },
-    { enabled: debouncedSearch.length >= 2 },
+  const { data: parentsData, isLoading: isLoadingParents } = useParents(
+    { searchTerm: debouncedSearch, pageSize: 10 },
   );
 
-  const users = usersData?.data ?? [];
+  const parents = parentsData?.data ?? [];
+  const showResults = debouncedSearch.length >= 2 && !selectedParentId;
 
   const relationOptions = [
     { value: 'Father', label: t('parents.relationFather') },
@@ -350,44 +464,23 @@ function LinkParentModal({
   ];
 
   const handleSubmit = () => {
-    if (!selectedUserId || !relation) return;
+    if (!selectedParentId || !relation) return;
     linkParent(
-      { studentId, data: { parentUserId: selectedUserId, relation: relation as ParentRelation } },
-      {
-        onSuccess: () => {
-          handleClose();
-        },
-      },
+      { studentId, data: { parentUserId: selectedParentId, relation: relation as ParentRelation } },
+      { onSuccess: () => handleClose() },
     );
   };
 
   const handleClose = () => {
     setSearchTerm('');
-    setSelectedUserId('');
-    setSelectedUserName('');
+    setSelectedParentId('');
+    setSelectedParentName('');
     setRelation('');
     onClose();
   };
 
-  const handleParentCreated = (parentId: string, parentName: string) => {
-    setSelectedUserId(parentId);
-    setSelectedUserName(parentName);
-    setSearchTerm(parentName);
-    setShowCreateParent(false);
-  };
-
-  if (showCreateParent) {
-    return (
-      <CreateParentModal
-        isOpen
-        onClose={() => setShowCreateParent(false)}
-        onCreated={handleParentCreated}
-      />
-    );
-  }
-
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title={t('parents.linkParent')} size="md">
+    <Modal isOpen={isOpen} onClose={handleClose} title={t('parents.linkExisting')} size="md">
       <div className="space-y-4">
         {/* Parent search */}
         <div>
@@ -399,63 +492,66 @@ function LinkParentModal({
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              if (selectedUserId) {
-                setSelectedUserId('');
-                setSelectedUserName('');
+              if (selectedParentId) {
+                setSelectedParentId('');
+                setSelectedParentName('');
               }
             }}
             leftIcon={<Search className="h-4 w-4" />}
           />
           {/* Dropdown results */}
-          {debouncedSearch.length >= 2 && !selectedUserId && (
+          {showResults && (
             <div className="mt-1.5 max-h-52 overflow-y-auto rounded-xl border border-border bg-surface py-1.5 shadow-soft-lg">
-              {isLoadingUsers ? (
+              {isLoadingParents ? (
                 <div className="flex justify-center py-4">
                   <Spinner size="sm" />
                 </div>
-              ) : users.length === 0 ? (
+              ) : parents.length === 0 ? (
                 <p className="px-4 py-3 text-sm text-text-muted">{t('parents.noParentsFound')}</p>
               ) : (
-                users.map((user) => (
-                  <button
-                    key={user.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedUserId(user.id);
-                      const name = `${user.firstName} ${user.lastName}`;
-                      setSelectedUserName(name);
-                      setSearchTerm(name);
-                    }}
-                    className="flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-hover text-start"
-                  >
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-xs font-medium text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
-                      {user.firstName[0]}{user.lastName[0]}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-text-primary truncate">
-                        {user.firstName} {user.lastName}
-                      </p>
-                      <p className="text-xs text-text-muted truncate">{user.email}</p>
-                    </div>
-                  </button>
-                ))
+                parents.map((parent) => {
+                  const name = `${parent.firstName} ${parent.lastName}`;
+                  return (
+                    <button
+                      key={parent.parentUserId}
+                      type="button"
+                      onClick={() => {
+                        setSelectedParentId(parent.parentUserId);
+                        setSelectedParentName(name);
+                        setSearchTerm(name);
+                      }}
+                      className="flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-hover text-start"
+                    >
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-xs font-medium text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
+                        {parent.firstName[0]}{parent.lastName[0]}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-text-primary truncate">{name}</p>
+                        <p className="text-xs text-text-muted truncate">{parent.email}</p>
+                      </div>
+                      <Badge variant="default" className="shrink-0">
+                        {parent.linkedStudentCount} {t('parents.linkedStudents').toLowerCase()}
+                      </Badge>
+                    </button>
+                  );
+                })
               )}
             </div>
           )}
           {/* Selected parent chip */}
-          {selectedUserId && (
+          {selectedParentId && (
             <div className="mt-2.5 flex items-center gap-2.5 rounded-xl border border-primary-200 bg-primary-50 px-3.5 py-2.5 dark:border-primary-500/30 dark:bg-primary-500/10">
               <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-200 text-xs font-medium text-primary-700 dark:bg-primary-500/30 dark:text-primary-300">
-                {selectedUserName.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                {selectedParentName.split(' ').map((n) => n[0]).join('').slice(0, 2)}
               </div>
               <span className="text-sm font-medium text-primary-700 dark:text-primary-300 flex-1 min-w-0 truncate">
-                {selectedUserName}
+                {selectedParentName}
               </span>
               <button
                 type="button"
                 onClick={() => {
-                  setSelectedUserId('');
-                  setSelectedUserName('');
+                  setSelectedParentId('');
+                  setSelectedParentName('');
                   setSearchTerm('');
                 }}
                 className="text-primary-400 hover:text-primary-600 dark:hover:text-primary-200 transition-colors"
@@ -474,107 +570,13 @@ function LinkParentModal({
           onChange={setRelation}
           placeholder={t('parents.selectRelation')}
         />
-
-        {/* Create new parent link */}
-        <div className="border-t border-border pt-3">
-          <button
-            type="button"
-            onClick={() => setShowCreateParent(true)}
-            className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
-          >
-            + {t('parents.createNew')}
-          </button>
-        </div>
       </div>
       <ModalFooter>
         <Button variant="secondary" onClick={handleClose}>{t('common.cancel')}</Button>
-        <Button onClick={handleSubmit} isLoading={isPending} disabled={!selectedUserId || !relation}>
+        <Button onClick={handleSubmit} isLoading={isPending} disabled={!selectedParentId || !relation}>
           {t('parents.linkParent')}
         </Button>
       </ModalFooter>
-    </Modal>
-  );
-}
-
-/* ─── Create Parent Modal ─── */
-
-function CreateParentModal({
-  isOpen, onClose, onCreated,
-}: {
-  isOpen: boolean; onClose: () => void;
-  onCreated: (parentId: string, parentName: string) => void;
-}) {
-  const { t } = useTranslation();
-  const { mutate: createParent, isPending } = useCreateParent();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const {
-    register, handleSubmit, formState: { errors },
-  } = useForm<CreateParentFormData>({
-    resolver: zodResolver(createParentSchema(t)),
-    mode: 'onChange',
-  });
-
-  const onSubmit = (data: CreateParentFormData) => {
-    const { confirmPassword: _, ...payload } = data;
-    const cleanPayload = {
-      ...payload,
-      phoneNumber: payload.phoneNumber || undefined,
-    };
-    createParent(cleanPayload, {
-      onSuccess: (parentId) => {
-        onCreated(parentId, `${data.firstName} ${data.lastName}`);
-      },
-    });
-  };
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title={t('parents.createParent')} size="lg">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input label={t('parents.firstName')} error={errors.firstName?.message} {...register('firstName')} />
-          <Input label={t('parents.lastName')} error={errors.lastName?.message} {...register('lastName')} />
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input label={t('parents.username')} error={errors.username?.message} {...register('username')} />
-          <Input label={t('parents.email')} type="email" error={errors.email?.message} {...register('email')} />
-        </div>
-        <Input
-          label={t('parents.phoneNumber')}
-          placeholder="+9647XXXXXXXXX"
-          error={errors.phoneNumber?.message}
-          {...register('phoneNumber')}
-        />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            label={t('parents.password')}
-            type={showPassword ? 'text' : 'password'}
-            error={errors.password?.message}
-            rightIcon={
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="hover:text-text-primary">
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            }
-            {...register('password')}
-          />
-          <Input
-            label={t('parents.confirmPassword')}
-            type={showConfirmPassword ? 'text' : 'password'}
-            error={errors.confirmPassword?.message}
-            rightIcon={
-              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="hover:text-text-primary">
-                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            }
-            {...register('confirmPassword')}
-          />
-        </div>
-        <ModalFooter>
-          <Button variant="secondary" type="button" onClick={onClose}>{t('common.cancel')}</Button>
-          <Button type="submit" isLoading={isPending}>{t('parents.createParent')}</Button>
-        </ModalFooter>
-      </form>
     </Modal>
   );
 }

@@ -25,6 +25,7 @@ const GradesListPage = lazy(() => import('@/features/grades/pages/GradesListPage
 const GradeDetailPage = lazy(() => import('@/features/grades/pages/GradeDetailPage'));
 const StudentsListPage = lazy(() => import('@/features/students/pages/StudentsListPage'));
 const StudentDetailPage = lazy(() => import('@/features/students/pages/StudentDetailPage'));
+const ParentsListPage = lazy(() => import('@/features/parents/pages/ParentsListPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -126,6 +127,14 @@ export const routes: RouteObject[] = [
             children: [
               { path: ROUTES.STUDENTS.LIST, element: <StudentsListPage /> },
               { path: ROUTES.STUDENTS.DETAIL, element: <StudentDetailPage /> },
+            ],
+          },
+
+          // Parents
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Students.ManageParents} />,
+            children: [
+              { path: ROUTES.PARENTS.LIST, element: <ParentsListPage /> },
             ],
           },
 

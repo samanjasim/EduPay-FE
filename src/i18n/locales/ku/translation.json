@@ -59,6 +59,7 @@
     "academicYears": "ساڵە خوێندنییەکان",
     "grades": "قۆناغەکان",
     "students": "قوتابیان",
+    "parents": "دایک و باوکان",
     "collapse": "کچکردن"
   },
   "header": {
@@ -301,15 +302,23 @@
     "passwordsMismatch": "وشەی نهێنییەکان یەک ناگرنەوە"
   },
   "parents": {
+    "title": "دایک و باوکان",
+    "allParents": "هەموو دایک و باوکان",
+    "noParents": "هیچ دایک و باوکێک نەدۆزرایەوە.",
+    "enrollParent": "تۆمارکردنی دایک/باوک",
+    "enrollHint": "ئەگەر دایک/باوک هەژمارێکی هەیە، تەنها ئیمەیل و پەیوەندی پێویستە.",
+    "accountCreated": "هەژماری دایک/باوک دروستکرا و بەسترا. زانیاری چوونەژوورەوە لەگەڵ دایک/باوک هاوبەشی بکە.",
+    "existingLinked": "دایک/باوکی بوونی پێشوو {{name}} بە ئەم قوتابییە بەسترا.",
     "linkParent": "بەستنی دایک/باوک",
+    "linkExisting": "بەستنی بوونی پێشوو",
     "unlinkParent": "لابردنی بەستن",
     "unlink": "لابردن",
     "unlinkConfirmation": "دڵنیایت لە لابردنی بەستنی <strong>{{parent}}</strong> لە <strong>{{student}}</strong>؟ دایک/باوک ئیتر ئەم قوتابییە نابینێت.",
-    "createParent": "دروستکردنی هەژماری دایک/باوک",
     "searchParents": "گەڕان بە ناو یان ئیمەیل...",
     "selectParent": "دایک/باوک هەڵبژێرە",
     "noParentsFound": "هیچ دایک و باوکێک نەدۆزرایەوە",
-    "createNew": "دروستکردنی دایک/باوکی نوێ",
+    "linkedStudents": "قوتابیانی بەسترا",
+    "firstLinkedAt": "یەکەم بەستن",
     "relation": "پەیوەندی",
     "selectRelation": "پەیوەندی هەڵبژێرە",
     "relationFather": "باوک",
@@ -317,11 +326,9 @@
     "relationGuardian": "سەرپەرشتیار",
     "firstName": "ناوی یەکەم",
     "lastName": "ناوی خێزان",
-    "username": "ناوی بەکارهێنەر",
     "email": "ئیمەیل",
     "phoneNumber": "ژمارەی مۆبایل",
-    "password": "وشەی نهێنی",
-    "confirmPassword": "دووپاتکردنەوەی وشەی نهێنی"
+    "password": "وشەی نهێنی"
   },
   "payments": {
     "title": "پارەدانەکان"
