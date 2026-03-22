@@ -57,6 +57,9 @@ export const ROUTES = {
     LIST: '/parents',
   },
 
+  // Parent Fees (self-service)
+  PARENT_FEES: '/parent/fees',
+
   // Fee Types
   FEE_TYPES: {
     LIST: '/fee-types',

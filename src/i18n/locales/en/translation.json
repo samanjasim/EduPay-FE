@@ -63,6 +63,7 @@
     "feeTypes": "Fee Types",
     "feeStructures": "Fee Structures",
     "feeInstances": "Fee Instances",
+    "myFees": "My Fees",
     "collapse": "Collapse"
   },
   "header": {
@@ -360,7 +361,14 @@
     "paid": "Paid",
     "overdue": "Overdue",
     "waived": "Waived",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "applyDiscount": "Apply Discount",
+    "waiveFee": "Waive Fee",
+    "cancelFee": "Cancel Fee",
+    "discountAmountLabel": "Discount Amount",
+    "reason": "Reason",
+    "waiveConfirmation": "Are you sure you want to waive this fee? This action cannot be undone.",
+    "cancelConfirmation": "Are you sure you want to cancel this fee? This action cannot be undone."
   },
   "feeStructures": {
     "title": "Fee Structures",
@@ -420,6 +428,24 @@
     "deactivate": "Deactivate",
     "activateConfirmation": "Are you sure you want to activate the fee type \"{{name}}\"?",
     "deactivateConfirmation": "Are you sure you want to deactivate the fee type \"{{name}}\"? It will no longer be available for new fee structures."
+  },
+  "parentFees": {
+    "title": "My Fees",
+    "subtitle": "View your children's fee details and payment status",
+    "totalOutstanding": "Total Outstanding",
+    "totalPaid": "Total Paid",
+    "totalOverdue": "Total Overdue",
+    "outstanding": "Outstanding",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "feeType": "Fee Type",
+    "structureName": "Structure",
+    "amount": "Amount",
+    "discount": "Discount",
+    "remaining": "Remaining",
+    "dueDate": "Due Date",
+    "noFees": "No fees found for your children.",
+    "errorLoading": "Failed to load fee data. Please try again."
   },
   "payments": {
     "title": "Payments"

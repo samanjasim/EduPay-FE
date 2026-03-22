@@ -31,6 +31,7 @@ const FeeStructuresListPage = lazy(() => import('@/features/fees/pages/FeeStruct
 const FeeStructureDetailPage = lazy(() => import('@/features/fees/pages/FeeStructureDetailPage'));
 const FeeInstancesListPage = lazy(() => import('@/features/fees/pages/FeeInstancesListPage'));
 const FeeInstanceDetailPage = lazy(() => import('@/features/fees/pages/FeeInstanceDetailPage'));
+const ParentFeeDashboardPage = lazy(() => import('@/features/parents/pages/ParentFeeDashboardPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -150,6 +151,9 @@ export const routes: RouteObject[] = [
               { path: ROUTES.FEE_TYPES.LIST, element: <FeeTypesListPage /> },
             ],
           },
+
+          // Parent Fees (self-service)
+          { path: ROUTES.PARENT_FEES, element: <ParentFeeDashboardPage /> },
 
           // Fee Structures
           {

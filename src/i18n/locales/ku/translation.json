@@ -62,6 +62,8 @@
     "parents": "دایک و باوکان",
     "feeTypes": "جۆرەکانی کرێ",
     "feeStructures": "پێکهاتەکانی کرێ",
+    "feeInstances": "تۆمارەکانی کرێ",
+    "myFees": "کرێکانم",
     "collapse": "کچکردن"
   },
   "header": {
@@ -336,6 +338,38 @@
     "editParent": "دەستکاری دایک/باوک",
     "parentUpdated": "دایک/باوک بە سەرکەوتوویی نوێکرایەوە"
   },
+  "feeInstances": {
+    "title": "تۆمارەکانی کرێ",
+    "subtitle": "بینین و بەڕێوەبردنی تۆمارەکانی کرێی قوتابیان",
+    "detailSubtitle": "وردەکارییەکانی تۆماری کرێ",
+    "backToList": "گەڕانەوە بۆ تۆمارەکانی کرێ",
+    "student": "قوتابی",
+    "feeStructure": "پێکهاتەی کرێ",
+    "feeType": "جۆری کرێ",
+    "amount": "بڕ",
+    "discount": "داشکاندن",
+    "netAmount": "بڕی تەواو",
+    "paidAmount": "دراو",
+    "remaining": "ماوە",
+    "dueDate": "بەرواری دوایین وادە",
+    "paidAt": "بەرواری پارەدان",
+    "discountReason": "هۆکاری داشکاندن",
+    "statusHistory": "مێژووی دۆخ",
+    "allSchools": "هەموو قوتابخانەکان",
+    "allStatuses": "هەموو دۆخەکان",
+    "pending": "چاوەڕوانی",
+    "paid": "دراو",
+    "overdue": "دواکەوتوو",
+    "waived": "خۆشکراو",
+    "cancelled": "هەڵوەشێنراو",
+    "applyDiscount": "داشکاندن بکە",
+    "waiveFee": "کرێ ببوورە",
+    "cancelFee": "کرێ هەڵبوەشێنەوە",
+    "discountAmountLabel": "بڕی داشکاندن",
+    "reason": "هۆکار",
+    "waiveConfirmation": "دڵنیایت لە بووردنی ئەم کرێیە؟ ناتوانرێت ئەم کارە پووچەڵ بکرێتەوە.",
+    "cancelConfirmation": "دڵنیایت لە هەڵوەشاندنەوەی ئەم کرێیە؟ ناتوانرێت ئەم کارە پووچەڵ بکرێتەوە."
+  },
   "feeStructures": {
     "title": "پێکهاتەکانی کرێ",
     "subtitle": "بەڕێوەبردنی قاڵبەکانی پێکهاتەی کرێی قوتابخانە",
@@ -375,6 +409,7 @@
     "archive": "ئەرشیفکردن",
     "activateConfirmation": "دڵنیایت لە چالاککردنی \"{{name}}\"؟",
     "archiveConfirmation": "دڵنیایت لە ئەرشیفکردنی \"{{name}}\"؟",
+    "generateFees": "دروستکردنی کرێکان",
     "modifiedAt": "گۆڕدراو"
   },
   "feeTypes": {
@@ -393,6 +428,24 @@
     "deactivate": "ناچالاککردن",
     "activateConfirmation": "دڵنیایت لە چالاککردنی جۆری کرێ \"{{name}}\"؟",
     "deactivateConfirmation": "دڵنیایت لە ناچالاککردنی جۆری کرێ \"{{name}}\"؟ بەردەست نابێت بۆ پێکهاتەکانی کرێی نوێ."
+  },
+  "parentFees": {
+    "title": "کرێکانم",
+    "subtitle": "بینینی وردەکاری کرێکانی منداڵەکانت و دۆخی پارەدان",
+    "totalOutstanding": "کۆی ماوە",
+    "totalPaid": "کۆی دراو",
+    "totalOverdue": "کۆی دواکەوتوو",
+    "outstanding": "ماوە",
+    "paid": "دراو",
+    "overdue": "دواکەوتوو",
+    "feeType": "جۆری کرێ",
+    "structureName": "پێکهاتە",
+    "amount": "بڕ",
+    "discount": "داشکاندن",
+    "remaining": "ماوە",
+    "dueDate": "بەرواری دوایین وادە",
+    "noFees": "هیچ کرێیەک بۆ منداڵەکانت نەدۆزرایەوە.",
+    "errorLoading": "نەتوانرا داتای کرێکان بار بکرێت. تکایە دووبارە هەوڵبدەوە."
   },
   "payments": {
     "title": "پارەدانەکان"
