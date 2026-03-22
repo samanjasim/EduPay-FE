@@ -65,6 +65,17 @@ export function useDeleteFeeStructure() {
   });
 }
 
+export function useGenerateFeeInstances() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => feeStructuresApi.generateFeeInstances(id),
+    onSuccess: (count) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.feeStructures.all });
+      toast.success(`Generated ${count} fee instances`);
+    },
+  });
+}
+
 export function useUpdateFeeStructureStatus() {
   const queryClient = useQueryClient();
   return useMutation({

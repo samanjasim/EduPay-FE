@@ -46,4 +46,11 @@ export const feeStructuresApi = {
   updateFeeStructureStatus: async (id: string, data: UpdateFeeStructureStatusData): Promise<void> => {
     await apiClient.patch(API_ENDPOINTS.FEE_STRUCTURES.STATUS(id), data);
   },
+
+  generateFeeInstances: async (id: string): Promise<number> => {
+    const response = await apiClient.post<ApiResponse<number>>(
+      `${API_ENDPOINTS.FEE_STRUCTURES.DETAIL(id)}/generate`
+    );
+    return response.data.data;
+  },
 };

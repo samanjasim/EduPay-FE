@@ -91,6 +91,10 @@ export interface UpdateFeeStructureStatusData {
   status: FeeStructureStatus;
 }
 
+// ─── Fee Instances ───
+
+export type FeeInstanceStatus = 'Pending' | 'Paid' | 'Overdue' | 'Waived' | 'Cancelled';
+
 export interface FeeStructureListParams {
   pageNumber?: number;
   pageSize?: number;

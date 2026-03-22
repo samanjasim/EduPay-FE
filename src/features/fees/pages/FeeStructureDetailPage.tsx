@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Receipt, Pencil, Trash2, CheckCircle, Archive,
+  Receipt, Pencil, Trash2, CheckCircle, Archive, Zap,
 } from 'lucide-react';
 import {
   Card, CardContent,
@@ -16,6 +16,7 @@ import {
   useUpdateFeeStructure,
   useDeleteFeeStructure,
   useUpdateFeeStructureStatus,
+  useGenerateFeeInstances,
 } from '../api';
 import { useFeeTypes } from '@/features/fee-types/api';
 import { useAcademicYears } from '@/features/academic-years/api';
@@ -53,6 +54,7 @@ export default function FeeStructureDetailPage() {
 
   const { mutate: deleteMutation, isPending: isDeleting } = useDeleteFeeStructure();
   const { mutate: statusMutation, isPending: isUpdatingStatus } = useUpdateFeeStructureStatus();
+  const { mutate: generateMutation, isPending: isGenerating } = useGenerateFeeInstances();
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -170,14 +172,24 @@ export default function FeeStructureDetailPage() {
                 </>
               )}
               {canUpdate && feeStructure.status === 'Active' && (
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setStatusAction('Archived')}
-                  leftIcon={<Archive className="h-4 w-4" />}
-                >
-                  {t('feeStructures.archive')}
-                </Button>
+                <>
+                  <Button
+                    size="sm"
+                    onClick={() => generateMutation(feeStructure.id)}
+                    leftIcon={<Zap className="h-4 w-4" />}
+                    isLoading={isGenerating}
+                  >
+                    {t('feeStructures.generateFees')}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setStatusAction('Archived')}
+                    leftIcon={<Archive className="h-4 w-4" />}
+                  >
+                    {t('feeStructures.archive')}
+                  </Button>
+                </>
               )}
               {canDelete && feeStructure.status === 'Draft' && (
                 <Button

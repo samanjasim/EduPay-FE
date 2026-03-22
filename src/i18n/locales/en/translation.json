@@ -374,7 +374,9 @@
     "activate": "Activate",
     "archive": "Archive",
     "activateConfirmation": "Are you sure you want to activate \"{{name}}\"? Students will be able to see this fee.",
-    "archiveConfirmation": "Are you sure you want to archive \"{{name}}\"? No new fee instances can be generated."
+    "archiveConfirmation": "Are you sure you want to archive \"{{name}}\"? No new fee instances can be generated.",
+    "generateFees": "Generate Fees",
+    "modifiedAt": "Modified"
   },
   "feeTypes": {
     "title": "Fee Types",

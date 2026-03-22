@@ -374,7 +374,8 @@
     "activate": "تفعيل",
     "archive": "أرشفة",
     "activateConfirmation": "هل أنت متأكد من تفعيل \"{{name}}\"؟",
-    "archiveConfirmation": "هل أنت متأكد من أرشفة \"{{name}}\"؟"
+    "archiveConfirmation": "هل أنت متأكد من أرشفة \"{{name}}\"؟",
+    "modifiedAt": "تاريخ التعديل"
   },
   "feeTypes": {
     "title": "أنواع الرسوم",
