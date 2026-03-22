@@ -23,4 +23,21 @@ export const feeInstancesApi = {
     );
     return response.data.data;
   },
+
+  applyDiscount: async (id: string, data: { discountAmount: number; reason: string }): Promise<void> => {
+    await apiClient.patch(API_ENDPOINTS.FEE_INSTANCES.DISCOUNT(id), data);
+  },
+
+  waiveFee: async (id: string, data: { reason: string }): Promise<void> => {
+    await apiClient.patch(API_ENDPOINTS.FEE_INSTANCES.WAIVE(id), data);
+  },
+
+  cancelFee: async (id: string, data: { reason: string }): Promise<void> => {
+    await apiClient.patch(API_ENDPOINTS.FEE_INSTANCES.CANCEL(id), data);
+  },
+
+  detectOverdue: async (): Promise<number> => {
+    const response = await apiClient.post<ApiResponse<number>>(API_ENDPOINTS.FEE_INSTANCES.DETECT_OVERDUE);
+    return response.data.data;
+  },
 };

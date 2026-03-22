@@ -61,6 +61,7 @@ export const API_ENDPOINTS = {
   PARENTS: {
     LIST: '/Parents',
     UPDATE: (parentUserId: string) => `/Parents/${parentUserId}`,
+    MY_FEES: '/Parents/my-fees',
   },
   FEE_TYPES: {
     LIST: '/FeeTypes',
@@ -75,5 +76,9 @@ export const API_ENDPOINTS = {
   FEE_INSTANCES: {
     LIST: '/FeeInstances',
     DETAIL: (id: string) => `/FeeInstances/${id}`,
+    DISCOUNT: (id: string) => `/FeeInstances/${id}/discount`,
+    WAIVE: (id: string) => `/FeeInstances/${id}/waive`,
+    CANCEL: (id: string) => `/FeeInstances/${id}/cancel`,
+    DETECT_OVERDUE: '/FeeInstances/detect-overdue',
   },
 } as const;
