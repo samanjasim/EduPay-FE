@@ -60,6 +60,7 @@
     "grades": "قۆناغەکان",
     "students": "قوتابیان",
     "parents": "دایک و باوکان",
+    "feeTypes": "جۆرەکانی کرێ",
     "collapse": "کچکردن"
   },
   "header": {
@@ -333,6 +334,23 @@
     "password": "وشەی نهێنی",
     "editParent": "دەستکاری دایک/باوک",
     "parentUpdated": "دایک/باوک بە سەرکەوتوویی نوێکرایەوە"
+  },
+  "feeTypes": {
+    "title": "جۆرەکانی کرێ",
+    "subtitle": "بەڕێوەبردنی پۆلەکانی جۆری کرێی گشتی",
+    "name": "ناو",
+    "active": "چالاک",
+    "inactive": "ناچالاک",
+    "allStatuses": "هەموو بارەکان",
+    "filterByStatus": "فلتەر بەپێی بار",
+    "createFeeType": "دروستکردنی جۆری کرێ",
+    "editFeeType": "دەستکاریکردنی جۆری کرێ",
+    "deleteFeeType": "سڕینەوەی جۆری کرێ",
+    "deleteConfirmation": "دڵنیایت لە سڕینەوەی جۆری کرێ \"{{name}}\"؟ ناتوانرێت ئەم کارە پووچەڵ بکرێتەوە.",
+    "activate": "چالاککردن",
+    "deactivate": "ناچالاککردن",
+    "activateConfirmation": "دڵنیایت لە چالاککردنی جۆری کرێ \"{{name}}\"؟",
+    "deactivateConfirmation": "دڵنیایت لە ناچالاککردنی جۆری کرێ \"{{name}}\"؟ بەردەست نابێت بۆ پێکهاتەکانی کرێی نوێ."
   },
   "payments": {
     "title": "پارەدانەکان"

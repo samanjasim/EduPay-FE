@@ -60,6 +60,7 @@
     "grades": "المراحل الدراسية",
     "students": "الطلاب",
     "parents": "أولياء الأمور",
+    "feeTypes": "أنواع الرسوم",
     "collapse": "طي"
   },
   "header": {
@@ -333,6 +334,23 @@
     "password": "كلمة المرور",
     "editParent": "تعديل ولي الأمر",
     "parentUpdated": "تم تحديث ولي الأمر بنجاح"
+  },
+  "feeTypes": {
+    "title": "أنواع الرسوم",
+    "subtitle": "إدارة فئات أنواع الرسوم العامة",
+    "name": "الاسم",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "allStatuses": "جميع الحالات",
+    "filterByStatus": "تصفية حسب الحالة",
+    "createFeeType": "إنشاء نوع رسوم",
+    "editFeeType": "تعديل نوع الرسوم",
+    "deleteFeeType": "حذف نوع الرسوم",
+    "deleteConfirmation": "هل أنت متأكد من حذف نوع الرسوم \"{{name}}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+    "activate": "تفعيل",
+    "deactivate": "إلغاء التفعيل",
+    "activateConfirmation": "هل أنت متأكد من تفعيل نوع الرسوم \"{{name}}\"؟",
+    "deactivateConfirmation": "هل أنت متأكد من إلغاء تفعيل نوع الرسوم \"{{name}}\"؟ لن يكون متاحاً لهياكل الرسوم الجديدة."
   },
   "payments": {
     "title": "المدفوعات"

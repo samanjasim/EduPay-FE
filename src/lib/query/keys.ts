@@ -63,4 +63,12 @@ export const queryKeys = {
     lists: () => [...queryKeys.parents.all, 'list'] as const,
     list: <T extends object>(filters?: T) => [...queryKeys.parents.lists(), filters] as const,
   },
+
+  feeTypes: {
+    all: ['feeTypes'] as const,
+    lists: () => [...queryKeys.feeTypes.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeTypes.lists(), filters] as const,
+    details: () => [...queryKeys.feeTypes.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeTypes.details(), id] as const,
+  },
 } as const;

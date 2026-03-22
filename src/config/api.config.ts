@@ -62,4 +62,9 @@ export const API_ENDPOINTS = {
     LIST: '/Parents',
     UPDATE: (parentUserId: string) => `/Parents/${parentUserId}`,
   },
+  FEE_TYPES: {
+    LIST: '/FeeTypes',
+    DETAIL: (id: string) => `/FeeTypes/${id}`,
+    STATUS: (id: string) => `/FeeTypes/${id}/status`,
+  },
 } as const;

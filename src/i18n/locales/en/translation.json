@@ -60,6 +60,7 @@
     "grades": "Grades",
     "students": "Students",
     "parents": "Parents",
+    "feeTypes": "Fee Types",
     "collapse": "Collapse"
   },
   "header": {
@@ -333,6 +334,23 @@
     "password": "Password",
     "editParent": "Edit Parent",
     "parentUpdated": "Parent updated successfully"
+  },
+  "feeTypes": {
+    "title": "Fee Types",
+    "subtitle": "Manage global fee type categories",
+    "name": "Name",
+    "active": "Active",
+    "inactive": "Inactive",
+    "allStatuses": "All Statuses",
+    "filterByStatus": "Filter by status",
+    "createFeeType": "Create Fee Type",
+    "editFeeType": "Edit Fee Type",
+    "deleteFeeType": "Delete Fee Type",
+    "deleteConfirmation": "Are you sure you want to delete the fee type \"{{name}}\"? This action cannot be undone.",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "activateConfirmation": "Are you sure you want to activate the fee type \"{{name}}\"?",
+    "deactivateConfirmation": "Are you sure you want to deactivate the fee type \"{{name}}\"? It will no longer be available for new fee structures."
   },
   "payments": {
     "title": "Payments"
