@@ -55,7 +55,10 @@ export function Sidebar() {
       ? [{ label: t('nav.feeTypes'), icon: Tags, path: ROUTES.FEE_TYPES.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Fees.View)
-      ? [{ label: t('nav.feeStructures'), icon: Receipt, path: ROUTES.FEE_STRUCTURES.LIST }]
+      ? [
+          { label: t('nav.feeStructures'), icon: Receipt, path: ROUTES.FEE_STRUCTURES.LIST },
+          { label: t('nav.feeInstances'), icon: Receipt, path: ROUTES.FEE_INSTANCES.LIST },
+        ]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

@@ -79,4 +79,12 @@ export const queryKeys = {
     details: () => [...queryKeys.feeStructures.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.feeStructures.details(), id] as const,
   },
+
+  feeInstances: {
+    all: ['feeInstances'] as const,
+    lists: () => [...queryKeys.feeInstances.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeInstances.lists(), filters] as const,
+    details: () => [...queryKeys.feeInstances.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeInstances.details(), id] as const,
+  },
 } as const;

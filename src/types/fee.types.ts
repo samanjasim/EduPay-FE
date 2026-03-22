@@ -95,6 +95,68 @@ export interface UpdateFeeStructureStatusData {
 
 export type FeeInstanceStatus = 'Pending' | 'Paid' | 'Overdue' | 'Waived' | 'Cancelled';
 
+export interface FeeInstanceSummaryDto {
+  id: string;
+  studentName: string;
+  feeStructureName: string;
+  feeTypeName: string;
+  amount: number;
+  discountAmount: number;
+  netAmount: number;
+  paidAmount: number;
+  remainingAmount: number;
+  status: FeeInstanceStatus;
+  dueDate: string;
+  paidAt: string | null;
+  createdAt: string;
+}
+
+export interface FeeStatusHistoryDto {
+  id: string;
+  oldStatus: string;
+  newStatus: string;
+  reason: string | null;
+  changedByUserId: string | null;
+  createdAt: string;
+}
+
+export interface FeeInstanceDetailDto {
+  id: string;
+  feeStructureId: string;
+  feeStructureName: string;
+  studentId: string;
+  studentName: string;
+  feeTypeName: string;
+  amount: number;
+  discountAmount: number;
+  discountReason: string | null;
+  netAmount: number;
+  paidAmount: number;
+  remainingAmount: number;
+  status: FeeInstanceStatus;
+  dueDate: string;
+  paidAt: string | null;
+  createdAt: string;
+  modifiedAt: string | null;
+  statusHistory: FeeStatusHistoryDto[];
+}
+
+export interface FeeInstanceListParams {
+  pageNumber?: number;
+  pageSize?: number;
+  searchTerm?: string;
+  studentId?: string;
+  gradeId?: string;
+  sectionId?: string;
+  feeStructureId?: string;
+  status?: FeeInstanceStatus;
+  dueDateFrom?: string;
+  dueDateTo?: string;
+  academicYearId?: string;
+  sortBy?: string;
+  sortDescending?: boolean;
+}
+
 export interface FeeStructureListParams {
   pageNumber?: number;
   pageSize?: number;

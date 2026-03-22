@@ -72,4 +72,8 @@ export const API_ENDPOINTS = {
     DETAIL: (id: string) => `/FeeStructures/${id}`,
     STATUS: (id: string) => `/FeeStructures/${id}/status`,
   },
+  FEE_INSTANCES: {
+    LIST: '/FeeInstances',
+    DETAIL: (id: string) => `/FeeInstances/${id}`,
+  },
 } as const;

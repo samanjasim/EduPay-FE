@@ -62,6 +62,7 @@
     "parents": "Parents",
     "feeTypes": "Fee Types",
     "feeStructures": "Fee Structures",
+    "feeInstances": "Fee Instances",
     "collapse": "Collapse"
   },
   "header": {
@@ -335,6 +336,31 @@
     "password": "Password",
     "editParent": "Edit Parent",
     "parentUpdated": "Parent updated successfully"
+  },
+  "feeInstances": {
+    "title": "Fee Instances",
+    "subtitle": "View and manage student fee records",
+    "detailSubtitle": "Fee instance details",
+    "backToList": "Back to Fee Instances",
+    "student": "Student",
+    "feeStructure": "Fee Structure",
+    "feeType": "Fee Type",
+    "amount": "Amount",
+    "discount": "Discount",
+    "netAmount": "Net Amount",
+    "paidAmount": "Paid",
+    "remaining": "Remaining",
+    "dueDate": "Due Date",
+    "paidAt": "Paid At",
+    "discountReason": "Discount Reason",
+    "statusHistory": "Status History",
+    "allSchools": "All Schools",
+    "allStatuses": "All Statuses",
+    "pending": "Pending",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "waived": "Waived",
+    "cancelled": "Cancelled"
   },
   "feeStructures": {
     "title": "Fee Structures",
