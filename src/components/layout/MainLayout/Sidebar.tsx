@@ -13,6 +13,7 @@ import {
   UserRoundSearch,
   UsersRound,
   Tags,
+  Receipt,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -52,6 +53,9 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.FeeTypes.View)
       ? [{ label: t('nav.feeTypes'), icon: Tags, path: ROUTES.FEE_TYPES.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Fees.View)
+      ? [{ label: t('nav.feeStructures'), icon: Receipt, path: ROUTES.FEE_STRUCTURES.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

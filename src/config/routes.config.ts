@@ -62,6 +62,13 @@ export const ROUTES = {
     LIST: '/fee-types',
   },
 
+  // Fee Structures
+  FEE_STRUCTURES: {
+    LIST: '/fee-structures',
+    DETAIL: '/fee-structures/:id',
+    getDetail: (id: string) => `/fee-structures/${id}`,
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 } as const;
