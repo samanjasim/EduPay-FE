@@ -12,6 +12,7 @@ import {
   BookOpen,
   UserRoundSearch,
   UsersRound,
+  Tags,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -48,6 +49,9 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Students.ManageParents)
       ? [{ label: t('nav.parents'), icon: UsersRound, path: ROUTES.PARENTS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.FeeTypes.View)
+      ? [{ label: t('nav.feeTypes'), icon: Tags, path: ROUTES.FEE_TYPES.LIST }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

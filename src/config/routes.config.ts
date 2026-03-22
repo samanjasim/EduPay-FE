@@ -57,6 +57,11 @@ export const ROUTES = {
     LIST: '/parents',
   },
 
+  // Fee Types
+  FEE_TYPES: {
+    LIST: '/fee-types',
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 } as const;
