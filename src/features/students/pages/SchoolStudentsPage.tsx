@@ -1,12 +1,13 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Search, Eye, UserRoundSearch, LayoutGrid, LayoutList, User } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Search, Eye, UserRoundSearch, LayoutGrid, LayoutList, User, Plus, AlertCircle } from 'lucide-react';
 import {
   Card, Badge, Button, Input, Select, Spinner, Pagination,
 } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useStudents } from '../api';
+import { CreateStudentModal } from '../components/CreateStudentModal';
 import { useGrades } from '@/features/grades/api';
 import { useDebounce } from '@/hooks';
 import { ROUTES } from '@/config';
@@ -21,6 +22,7 @@ const PAGE_SIZE = 12;
 
 export default function SchoolStudentsPage() {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [gradeFilter, setGradeFilter] = useState('');
@@ -28,9 +30,12 @@ export default function SchoolStudentsPage() {
   const [page, setPage] = useState(1);
   const [viewMode, setViewMode] = useState<'table' | 'card'>('table');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showCreateModal, setShowCreateModal] = useState(searchParams.get('create') === 'true');
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   const { data: gradesData } = useGrades();
+  const grades = gradesData?.data ?? [];
+  const hasGrades = grades.length > 0;
   const gradeOptions = useMemo(() => {
     const opts = (gradesData?.data ?? []).map((g) => ({ value: g.id, label: g.name }));
     opts.unshift({ value: '', label: t('students.allGrades') });
@@ -82,7 +87,28 @@ export default function SchoolStudentsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title={t('students.title')} subtitle={t('students.allStudents')} />
+      <PageHeader
+        title={t('students.title')}
+        subtitle={t('students.allStudents')}
+        actions={
+          hasGrades ? (
+            <Button onClick={() => setShowCreateModal(true)}>
+              <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+              {t('students.addStudent')}
+            </Button>
+          ) : undefined
+        }
+      />
+
+      {/* Prerequisite banner */}
+      {!hasGrades && (
+        <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
+          <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-sm text-amber-700 dark:text-amber-400">
+            No grades configured yet. Set up grades first via Settings → Setup Wizard before adding students.
+          </p>
+        </div>
+      )}
 
       {/* Filters + View toggle */}
       <div className="flex flex-wrap items-center gap-3">
@@ -137,6 +163,18 @@ export default function SchoolStudentsPage() {
         <TableView students={students} pagination={pagination} selectedIds={selectedIds} toggleSelect={toggleSelect} toggleSelectAll={toggleSelectAll} setPage={setPage} />
       ) : (
         <CardView students={students} pagination={pagination} setPage={setPage} />
+      )}
+
+      {/* Create Student Modal */}
+      {showCreateModal && (
+        <CreateStudentModal
+          isOpen={showCreateModal}
+          onClose={() => {
+            setShowCreateModal(false);
+            searchParams.delete('create');
+            setSearchParams(searchParams, { replace: true });
+          }}
+        />
       )}
     </div>
   );

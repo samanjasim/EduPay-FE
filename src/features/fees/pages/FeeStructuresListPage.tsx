@@ -1,24 +1,19 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Receipt, Search, Trash2, CheckCircle, Archive } from 'lucide-react';
 import {
-  Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination, Modal, ModalFooter, Textarea,
+  Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination,
 } from '@/components/ui';
 import { PageHeader, EmptyState, ConfirmModal } from '@/components/common';
-import { useFeeStructures, useDeleteFeeStructure, useUpdateFeeStructureStatus, useCreateFeeStructure } from '../api';
+import { useFeeStructures, useDeleteFeeStructure, useUpdateFeeStructureStatus } from '../api';
 import { useFeeTypes } from '@/features/fee-types/api';
 import { useSchools } from '@/features/schools/api';
-import { useAcademicYears } from '@/features/academic-years/api';
-import { useGrades } from '@/features/grades/api';
 import { useDebounce, usePermissions } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { useUIStore } from '@/stores/ui.store';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
-import { createFeeStructureSchema, type CreateFeeStructureFormData } from '@/lib/validation';
 import type { FeeStructureListParams, FeeStructureSummaryDto, FeeStructureStatus } from '@/types';
 
 const PAGE_SIZE = 10;
@@ -287,229 +282,5 @@ export default function FeeStructuresListPage() {
   );
 }
 
-/* ─── Create Fee Structure Modal ─── */
-
-const FREQUENCY_OPTIONS = [
-  { value: 'OneTime', labelKey: 'feeStructures.freq_OneTime' },
-  { value: 'Monthly', labelKey: 'feeStructures.freq_Monthly' },
-  { value: 'Quarterly', labelKey: 'feeStructures.freq_Quarterly' },
-  { value: 'Semester', labelKey: 'feeStructures.freq_Semester' },
-  { value: 'Annual', labelKey: 'feeStructures.freq_Annual' },
-];
-
-const CURRENCY_OPTIONS = [
-  { value: 'IQD', label: 'IQD' },
-  { value: 'USD', label: 'USD' },
-];
-
-function CreateFeeStructureModal({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
-  const { t } = useTranslation();
-  const { mutate: createFeeStructure, isPending } = useCreateFeeStructure();
-
-  const { data: feeTypesData } = useFeeTypes({ pageSize: 100 });
-  const feeTypeOptions = (feeTypesData?.data ?? [])
-    .filter((ft) => ft.isActive)
-    .map((ft) => ({ value: ft.id, label: ft.name }));
-
-  const { data: academicYearsData } = useAcademicYears({ pageSize: 100 });
-  const academicYearOptions = (academicYearsData?.data ?? []).map((ay) => ({
-    value: ay.id,
-    label: ay.label,
-  }));
-
-  const { data: gradesData } = useGrades({ pageSize: 100 });
-  const allGrades = gradesData?.data ?? [];
-  const gradeOptions = [
-    { value: '', label: t('feeStructures.allGrades') },
-    ...allGrades.map((g) => ({ value: g.id, label: g.name })),
-  ];
-
-  const frequencyOptions = FREQUENCY_OPTIONS.map((f) => ({
-    value: f.value,
-    label: t(f.labelKey),
-  }));
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-  } = useForm<CreateFeeStructureFormData>({
-    resolver: zodResolver(createFeeStructureSchema),
-    defaultValues: {
-      name: '',
-      description: null,
-      feeTypeId: '',
-      amount: 0,
-      currency: 'IQD',
-      academicYearId: '',
-      frequency: 'OneTime',
-      applicableGradeId: null,
-      applicableSectionId: null,
-      dueDate: '',
-      lateFeePercentage: 0,
-    },
-  });
-
-  const selectedGradeId = watch('applicableGradeId');
-  const selectedGrade = allGrades.find((g) => g.id === selectedGradeId);
-  const sectionOptions = [
-    { value: '', label: t('feeStructures.allSections') },
-    ...((selectedGrade as any)?.sections ?? [])
-      .filter((s: any) => s.isActive)
-      .map((s: any) => ({ value: s.id, label: s.name })),
-  ];
-
-  const onSubmit = (data: CreateFeeStructureFormData) => {
-    createFeeStructure(data, { onSuccess: onClose });
-  };
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title={t('feeStructures.createFeeStructure')} size="lg">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            label={t('feeStructures.name')}
-            error={errors.name?.message}
-            {...register('name')}
-          />
-          <div>
-            <Textarea
-              label={t('feeStructures.description')}
-              rows={2}
-              error={errors.description?.message}
-              {...register('description')}
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Controller
-            name="feeTypeId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.feeType')}
-                options={feeTypeOptions}
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.feeTypeId?.message}
-              />
-            )}
-          />
-          <Controller
-            name="academicYearId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.academicYear')}
-                options={academicYearOptions}
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.academicYearId?.message}
-              />
-            )}
-          />
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Input
-            label={t('feeStructures.amount')}
-            type="number"
-            step="0.01"
-            error={errors.amount?.message}
-            {...register('amount', { valueAsNumber: true })}
-          />
-          <Controller
-            name="currency"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.currency')}
-                options={CURRENCY_OPTIONS}
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.currency?.message}
-              />
-            )}
-          />
-          <Controller
-            name="frequency"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.frequency')}
-                options={frequencyOptions}
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.frequency?.message}
-              />
-            )}
-          />
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Controller
-            name="applicableGradeId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.grade')}
-                options={gradeOptions}
-                value={field.value ?? ''}
-                onChange={(v) => field.onChange(v || null)}
-              />
-            )}
-          />
-          <Controller
-            name="applicableSectionId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label={t('feeStructures.section')}
-                options={sectionOptions}
-                value={field.value ?? ''}
-                onChange={(v) => field.onChange(v || null)}
-                disabled={!selectedGradeId}
-              />
-            )}
-          />
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            label={t('feeStructures.dueDate')}
-            type="date"
-            error={errors.dueDate?.message}
-            {...register('dueDate')}
-          />
-          <Input
-            label={t('feeStructures.lateFeePercentage')}
-            type="number"
-            step="0.01"
-            min="0"
-            max="100"
-            error={errors.lateFeePercentage?.message}
-            {...register('lateFeePercentage', { valueAsNumber: true })}
-          />
-        </div>
-
-        <ModalFooter>
-          <Button variant="secondary" type="button" onClick={onClose}>
-            {t('common.cancel')}
-          </Button>
-          <Button type="submit" isLoading={isPending}>
-            {t('common.create')}
-          </Button>
-        </ModalFooter>
-      </form>
-    </Modal>
-  );
-}
+/* ─── Create Fee Structure Modal (extracted to shared component) ─── */
+import { CreateFeeStructureModal } from '../components/CreateFeeStructureModal';

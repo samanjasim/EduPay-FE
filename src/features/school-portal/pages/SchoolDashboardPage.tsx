@@ -95,11 +95,11 @@ export default function SchoolDashboardPage() {
 
           {/* Quick actions */}
           <div className="flex flex-wrap gap-3">
-            <Button variant="outline" onClick={() => navigate(ROUTES.SCHOOL.STUDENTS.LIST)}>
+            <Button variant="outline" onClick={() => navigate(`${ROUTES.SCHOOL.STUDENTS.LIST}?create=true`)}>
               <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
               {t('schoolPortal.dashboard.addStudent')}
             </Button>
-            <Button variant="outline" onClick={() => navigate(ROUTES.SCHOOL.FEES)}>
+            <Button variant="outline" onClick={() => navigate(`${ROUTES.SCHOOL.FEES}?create=true`)}>
               <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
               {t('schoolPortal.dashboard.createFeeStructure')}
             </Button>

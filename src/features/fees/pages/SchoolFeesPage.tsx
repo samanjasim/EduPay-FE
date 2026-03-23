@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Receipt, Search, Eye, CheckCircle, Archive, Trash2, Ban, ShieldOff } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Receipt, Search, Eye, CheckCircle, Archive, Trash2, Ban, ShieldOff, Plus } from 'lucide-react';
 import {
   Card, Badge, Button, Input, Select, Spinner, Pagination,
 } from '@/components/ui';
@@ -12,6 +12,7 @@ import {
 import {
   useFeeInstances, useWaiveFee, useCancelFee,
 } from '../api';
+import { CreateFeeStructureModal } from '../components/CreateFeeStructureModal';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { useSchoolDashboard } from '@/features/school-portal/api';
 import { useDebounce } from '@/hooks';
@@ -69,10 +70,12 @@ export default function SchoolFeesPage() {
 
 function StructuresTab() {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(searchTerm, 300);
+  const [showCreateModal, setShowCreateModal] = useState(searchParams.get('create') === 'true');
   const [deleteTarget, setDeleteTarget] = useState<FeeStructureSummaryDto | null>(null);
   const [statusAction, setStatusAction] = useState<{ structure: FeeStructureSummaryDto; target: FeeStructureStatus } | null>(null);
   const [generateTarget, setGenerateTarget] = useState<FeeStructureSummaryDto | null>(null);
@@ -106,6 +109,10 @@ function StructuresTab() {
           <Input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setPage(1); }} placeholder={t('common.search')} className="ltr:pl-9 rtl:pr-9" />
         </div>
         <Select options={statusOptions} value={statusFilter} onChange={(v) => { setStatusFilter(v); setPage(1); }} placeholder={t('feeStructures.allStatuses')} className="w-40" />
+        <Button onClick={() => setShowCreateModal(true)}>
+          <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+          {t('feeStructures.createFeeStructure')}
+        </Button>
       </div>
 
       {isLoading ? (
@@ -212,6 +219,18 @@ function StructuresTab() {
         description={`Generate fee instances for all applicable students from "${generateTarget?.name}"?`}
         confirmLabel={t('feeStructures.generateFees')}
       />
+
+      {/* Create Fee Structure Modal */}
+      {showCreateModal && (
+        <CreateFeeStructureModal
+          isOpen={showCreateModal}
+          onClose={() => {
+            setShowCreateModal(false);
+            searchParams.delete('create');
+            setSearchParams(searchParams, { replace: true });
+          }}
+        />
+      )}
     </div>
   );
 }
