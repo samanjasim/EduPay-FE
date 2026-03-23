@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { authApi } from './auth.api';
 import { queryKeys } from '@/lib/query/keys';
-import { useAuthStore } from '@/stores';
+import { useAuthStore, useUIStore } from '@/stores';
 import { storage } from '@/utils';
 import { ROUTES } from '@/config';
 import type { LoginCredentials, RegisterData, ChangePasswordData } from '@/types';
@@ -26,6 +26,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: (credentials: LoginCredentials) => authApi.login(credentials),
     onSuccess: async (loginResponse) => {
+      useUIStore.getState().setActiveSchoolId(null);
       storage.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
 
       const tokens = {
@@ -67,6 +68,7 @@ export function useLogout() {
   return () => {
     storage.clearTokens();
     logout();
+    useUIStore.getState().setActiveSchoolId(null);
     queryClient.clear();
     navigate(ROUTES.LOGIN);
   };
