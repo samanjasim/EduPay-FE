@@ -62,6 +62,7 @@ export const queryKeys = {
     all: ['parents'] as const,
     lists: () => [...queryKeys.parents.all, 'list'] as const,
     list: <T extends object>(filters?: T) => [...queryKeys.parents.lists(), filters] as const,
+    fees: () => [...queryKeys.parents.all, 'fees'] as const,
   },
 
   feeTypes: {
@@ -70,5 +71,21 @@ export const queryKeys = {
     list: <T extends object>(filters?: T) => [...queryKeys.feeTypes.lists(), filters] as const,
     details: () => [...queryKeys.feeTypes.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.feeTypes.details(), id] as const,
+  },
+
+  feeStructures: {
+    all: ['feeStructures'] as const,
+    lists: () => [...queryKeys.feeStructures.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeStructures.lists(), filters] as const,
+    details: () => [...queryKeys.feeStructures.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeStructures.details(), id] as const,
+  },
+
+  feeInstances: {
+    all: ['feeInstances'] as const,
+    lists: () => [...queryKeys.feeInstances.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeInstances.lists(), filters] as const,
+    details: () => [...queryKeys.feeInstances.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeInstances.details(), id] as const,
   },
 } as const;

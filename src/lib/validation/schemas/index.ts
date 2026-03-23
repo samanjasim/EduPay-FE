@@ -7,3 +7,4 @@ export * from './student.schema';
 export * from './parent.schema';
 export * from './user.schema';
 export * from './fee-type.schema';
+export * from './fee-structure.schema';
