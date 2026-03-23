@@ -81,4 +81,27 @@ export const ROUTES = {
 
   // Placeholder pages
   PAYMENTS: '/payments',
+
+  // School Admin Portal
+  SCHOOL: {
+    DASHBOARD: '/school',
+    SETUP: '/school/setup',
+    STUDENTS: {
+      LIST: '/school/students',
+      DETAIL: '/school/students/:id',
+      getDetail: (id: string) => `/school/students/${id}`,
+    },
+    FEES: '/school/fees',
+    FEE_STRUCTURES: {
+      DETAIL: '/school/fees/structures/:id',
+      getDetail: (id: string) => `/school/fees/structures/${id}`,
+    },
+    FEE_INSTANCES: {
+      DETAIL: '/school/fees/instances/:id',
+      getDetail: (id: string) => `/school/fees/instances/${id}`,
+    },
+    PAYMENTS: '/school/payments',
+    REPORTS: '/school/reports',
+    SETTINGS: '/school/settings',
+  },
 } as const;

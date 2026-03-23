@@ -449,5 +449,79 @@
   },
   "payments": {
     "title": "Payments"
+  },
+  "schoolPortal": {
+    "title": "School Portal",
+    "subtitle": "School Management",
+    "nav": {
+      "dashboard": "Dashboard",
+      "students": "Students",
+      "fees": "Fees",
+      "payments": "Payments",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "dashboard": {
+      "welcome": "Welcome, {{name}}!",
+      "subtitle": "Here's an overview of your school's activity",
+      "totalStudents": "Active Students",
+      "activeFeeStructures": "Fee Structures",
+      "collectionRate": "Collection Rate",
+      "overdueAmount": "Overdue Amount",
+      "feeStatusBreakdown": "Fee Status Breakdown",
+      "recentActivity": "Recent Activity",
+      "addStudent": "Add Student",
+      "createFeeStructure": "Create Fee Structure",
+      "viewOverdue": "View Overdue",
+      "setupIncomplete": "Complete your school setup",
+      "setupIncompleteDesc": "Some setup steps are still pending. Complete them to get the most out of EduPay.",
+      "completeSetup": "Complete Setup"
+    },
+    "payments": {
+      "comingSoonDesc": "Payment tracking, cash collections, and receipt management will be available here soon."
+    },
+    "reports": {
+      "comingSoonDesc": "Fee collection reports, overdue aging, and financial summaries will be available here soon."
+    },
+    "setup": {
+      "title": "School Setup",
+      "subtitle": "Let's get your school ready to use EduPay",
+      "step": "Step {{current}} of {{total}}",
+      "required": "Required",
+      "optional": "Optional",
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "finish": "Finish Setup",
+      "settings": {
+        "title": "School Settings",
+        "description": "Configure your school's basic settings"
+      },
+      "grades": {
+        "title": "Grades & Sections",
+        "description": "Set up your school's grade levels and class sections"
+      },
+      "fees": {
+        "title": "Fee Structures",
+        "description": "Define the fees your school charges students"
+      },
+      "students": {
+        "title": "Students",
+        "description": "Add your students to the system"
+      },
+      "complete": {
+        "title": "Setup Complete!",
+        "description": "Your school is ready to use EduPay. You can always update these settings later.",
+        "goToDashboard": "Go to Dashboard"
+      }
+    },
+    "settings": {
+      "general": "General",
+      "configuration": "Configuration",
+      "admins": "Administrators",
+      "setupWizard": "Setup Wizard",
+      "rerunSetup": "Re-run Setup Wizard",
+      "rerunSetupDesc": "Go through the initial setup process again to update your school configuration."
+    }
   }
 }

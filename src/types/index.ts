@@ -8,3 +8,4 @@ export * from './grade.types';
 export * from './student.types';
 export * from './parent.types';
 export * from './fee.types';
+export * from './school-portal.types';

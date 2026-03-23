@@ -3,7 +3,8 @@ import type { RouteObject } from 'react-router-dom';
 import { ROUTES } from '@/config';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { AuthLayout } from '@/components/layout/AuthLayout';
-import { AuthGuard, GuestGuard, PermissionGuard } from '@/components/guards';
+import { SchoolLayout } from '@/components/layout/SchoolLayout';
+import { AuthGuard, GuestGuard, PermissionGuard, SchoolAdminGuard } from '@/components/guards';
 import { PERMISSIONS } from '@/constants';
 
 // Lazy-loaded pages
@@ -35,6 +36,16 @@ const ParentFeeDashboardPage = lazy(() => import('@/features/parents/pages/Paren
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
+// School Portal pages (lazy-loaded)
+const SchoolDashboardPage = lazy(() => import('@/features/school-portal/pages/SchoolDashboardPage'));
+const SchoolPaymentsPage = lazy(() => import('@/features/school-portal/pages/SchoolPaymentsPage'));
+const SchoolReportsPage = lazy(() => import('@/features/school-portal/pages/SchoolReportsPage'));
+const SchoolSettingsPage = lazy(() => import('@/features/school-portal/pages/SchoolSettingsPage'));
+const SetupWizardPage = lazy(() => import('@/features/school-portal/pages/SetupWizardPage'));
+const SchoolStudentsPage = lazy(() => import('@/features/students/pages/SchoolStudentsPage'));
+const SchoolStudentDetailPage = lazy(() => import('@/features/students/pages/SchoolStudentDetailPage'));
+const SchoolFeesPage = lazy(() => import('@/features/fees/pages/SchoolFeesPage'));
+
 export const routes: RouteObject[] = [
   // Public routes (guest only)
   {
@@ -54,6 +65,27 @@ export const routes: RouteObject[] = [
   {
     element: <AuthGuard />,
     children: [
+      // School Admin Portal
+      {
+        element: <SchoolAdminGuard />,
+        children: [
+          {
+            element: <SchoolLayout />,
+            children: [
+              { path: ROUTES.SCHOOL.DASHBOARD, element: <SchoolDashboardPage /> },
+              { path: ROUTES.SCHOOL.SETUP, element: <SetupWizardPage /> },
+              { path: ROUTES.SCHOOL.STUDENTS.LIST, element: <SchoolStudentsPage /> },
+              { path: ROUTES.SCHOOL.STUDENTS.DETAIL, element: <SchoolStudentDetailPage /> },
+              { path: ROUTES.SCHOOL.FEES, element: <SchoolFeesPage /> },
+              { path: ROUTES.SCHOOL.PAYMENTS, element: <SchoolPaymentsPage /> },
+              { path: ROUTES.SCHOOL.REPORTS, element: <SchoolReportsPage /> },
+              { path: ROUTES.SCHOOL.SETTINGS, element: <SchoolSettingsPage /> },
+            ],
+          },
+        ],
+      },
+
+      // Platform Admin routes
       {
         element: <MainLayout />,
         children: [

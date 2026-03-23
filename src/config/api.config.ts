@@ -33,6 +33,8 @@ export const API_ENDPOINTS = {
     SETTINGS: (id: string) => `/Schools/${id}/settings`,
     ADMINS: (id: string) => `/Schools/${id}/admins`,
     REMOVE_ADMIN: (id: string, userId: string) => `/Schools/${id}/admins/${userId}`,
+    SETUP_STATUS: (id: string) => `/Schools/${id}/setup-status`,
+    DASHBOARD: (id: string) => `/Schools/${id}/dashboard`,
   },
   ACADEMIC_YEARS: {
     LIST: '/AcademicYears',
