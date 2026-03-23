@@ -3,16 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Receipt, Search } from 'lucide-react';
 import {
-  Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination,
+  Card, CardContent, Badge, Input, Select, Spinner, Pagination,
 } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useFeeInstances } from '../api';
 import { useSchools } from '@/features/schools/api';
-import { useDebounce, usePermissions } from '@/hooks';
+import { useDebounce } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { useUIStore } from '@/stores/ui.store';
 import { ROUTES } from '@/config';
-import { format } from 'date-fns';
 import type { FeeInstanceListParams, FeeInstanceStatus } from '@/types';
 
 const PAGE_SIZE = 10;

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Tag, Ban, XCircle } from 'lucide-react';
 import { Card, CardContent, Badge, Spinner, Button, Input, Textarea, Modal, ModalFooter } from '@/components/ui';
-import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
+import { PageHeader, InfoField } from '@/components/common';
 import { useFeeInstance, useApplyDiscount, useWaiveFee, useCancelFee } from '../api';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
@@ -36,7 +36,6 @@ type ReasonFormData = z.infer<typeof reasonSchema>;
 export default function FeeInstanceDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { hasPermission } = usePermissions();
   const { data: feeInstance, isLoading } = useFeeInstance(id!);
 
@@ -56,7 +55,8 @@ export default function FeeInstanceDetailPage() {
       <PageHeader
         title={`${feeInstance.feeTypeName} - ${feeInstance.studentName}`}
         subtitle={t('feeInstances.detailSubtitle')}
-        backButton={{ label: t('feeInstances.backToList'), onClick: () => navigate(ROUTES.FEE_INSTANCES.LIST) }}
+        backTo={ROUTES.FEE_INSTANCES.LIST}
+        backLabel={t('feeInstances.backToList')}
       />
 
       <Card>
@@ -76,7 +76,7 @@ export default function FeeInstanceDetailPage() {
           <InfoField label={t('feeInstances.remaining')}>{feeInstance.remainingAmount.toLocaleString()}</InfoField>
           <InfoField label={t('feeInstances.dueDate')}>{feeInstance.dueDate}</InfoField>
           {feeInstance.paidAt && <InfoField label={t('feeInstances.paidAt')}>{format(new Date(feeInstance.paidAt), 'MMM d, yyyy')}</InfoField>}
-          {feeInstance.discountReason && <InfoField label={t('feeInstances.discountReason')} className="sm:col-span-2">{feeInstance.discountReason}</InfoField>}
+          {feeInstance.discountReason && <div className="sm:col-span-2"><InfoField label={t('feeInstances.discountReason')}>{feeInstance.discountReason}</InfoField></div>}
         </CardContent>
       </Card>
 

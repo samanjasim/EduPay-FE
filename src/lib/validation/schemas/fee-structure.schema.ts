@@ -11,7 +11,7 @@ export const createFeeStructureSchema = z.object({
   applicableGradeId: z.string().nullable().optional(),
   applicableSectionId: z.string().nullable().optional(),
   dueDate: z.string().min(1, 'Due date is required'),
-  lateFeePercentage: z.number().min(0).max(100).optional().default(0),
+  lateFeePercentage: z.number().min(0).max(100),
 });
 
 export type CreateFeeStructureFormData = z.infer<typeof createFeeStructureSchema>;

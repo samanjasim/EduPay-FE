@@ -6,7 +6,6 @@ import {
 } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useParentFees } from '../hooks/useParentFees';
-import type { FeeInstanceStatus } from '@/types';
 
 const STATUS_BADGE_VARIANT: Record<string, 'default' | 'success' | 'warning' | 'error'> = {
   Pending: 'warning',

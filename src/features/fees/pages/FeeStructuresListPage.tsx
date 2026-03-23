@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Receipt, Search, Trash2, CheckCircle, Archive } from 'lucide-react';
@@ -19,7 +19,6 @@ import { useUIStore } from '@/stores/ui.store';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
 import { createFeeStructureSchema, type CreateFeeStructureFormData } from '@/lib/validation';
-import { format } from 'date-fns';
 import type { FeeStructureListParams, FeeStructureSummaryDto, FeeStructureStatus } from '@/types';
 
 const PAGE_SIZE = 10;
@@ -32,7 +31,6 @@ const STATUS_BADGE_VARIANT: Record<FeeStructureStatus, 'default' | 'success' | '
 
 export default function FeeStructuresListPage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { hasPermission } = usePermissions();
   const user = useAuthStore((s) => s.user);
   const activeSchoolId = useUIStore((s) => s.activeSchoolId);
