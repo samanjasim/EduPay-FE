@@ -8,12 +8,21 @@ import {
   ChevronLeft,
   School,
   CreditCard,
+  CalendarRange,
+  BookOpen,
+  UserRoundSearch,
+  UsersRound,
+  Tags,
+  Receipt,
+  ClipboardList,
+  Wallet,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
 import { ROUTES } from '@/config';
 import { Button } from '@/components/ui';
 import { usePermissions } from '@/hooks';
+import { useAuthStore } from '@/stores';
 import { PERMISSIONS } from '@/constants';
 
 export function Sidebar() {
@@ -21,6 +30,8 @@ export function Sidebar() {
   const isCollapsed = useUIStore(selectSidebarCollapsed);
   const toggleCollapse = useUIStore((state) => state.toggleSidebarCollapse);
   const { hasPermission } = usePermissions();
+  const user = useAuthStore((s) => s.user);
+  const isParent = user?.roles?.includes('Parent');
 
   const navItems = [
     { label: t('nav.dashboard'), icon: LayoutDashboard, path: ROUTES.DASHBOARD },
@@ -32,6 +43,30 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Schools.View)
       ? [{ label: t('nav.schools'), icon: School, path: ROUTES.SCHOOLS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.AcademicYears.View)
+      ? [{ label: t('nav.academicYears'), icon: CalendarRange, path: ROUTES.ACADEMIC_YEARS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Grades.View)
+      ? [{ label: t('nav.grades'), icon: BookOpen, path: ROUTES.GRADES.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Students.View)
+      ? [{ label: t('nav.students'), icon: UserRoundSearch, path: ROUTES.STUDENTS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Students.ManageParents)
+      ? [{ label: t('nav.parents'), icon: UsersRound, path: ROUTES.PARENTS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.FeeTypes.View)
+      ? [{ label: t('nav.feeTypes'), icon: Tags, path: ROUTES.FEE_TYPES.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Fees.View)
+      ? [
+          { label: t('nav.feeStructures'), icon: Receipt, path: ROUTES.FEE_STRUCTURES.LIST },
+          { label: t('nav.feeInstances'), icon: ClipboardList, path: ROUTES.FEE_INSTANCES.LIST },
+        ]
+      : []),
+    ...((isParent || hasPermission(PERMISSIONS.Fees.View))
+      ? [{ label: t('nav.myFees'), icon: Wallet, path: ROUTES.PARENT_FEES }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]

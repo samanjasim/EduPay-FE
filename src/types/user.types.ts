@@ -16,6 +16,13 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface UpdateUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string | null;
+}
+
 export interface UserListParams {
   status?: string;
   role?: string;

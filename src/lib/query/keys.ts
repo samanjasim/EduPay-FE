@@ -33,4 +33,59 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.schools.details(), id] as const,
     mySchool: () => [...queryKeys.schools.all, 'my-school'] as const,
   },
+
+  academicYears: {
+    all: ['academicYears'] as const,
+    lists: () => [...queryKeys.academicYears.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.academicYears.lists(), filters] as const,
+    details: () => [...queryKeys.academicYears.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.academicYears.details(), id] as const,
+  },
+
+  grades: {
+    all: ['grades'] as const,
+    lists: () => [...queryKeys.grades.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.grades.lists(), filters] as const,
+    details: () => [...queryKeys.grades.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.grades.details(), id] as const,
+  },
+
+  students: {
+    all: ['students'] as const,
+    lists: () => [...queryKeys.students.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.students.lists(), filters] as const,
+    details: () => [...queryKeys.students.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.students.details(), id] as const,
+  },
+
+  parents: {
+    all: ['parents'] as const,
+    lists: () => [...queryKeys.parents.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.parents.lists(), filters] as const,
+    fees: () => [...queryKeys.parents.all, 'fees'] as const,
+  },
+
+  feeTypes: {
+    all: ['feeTypes'] as const,
+    lists: () => [...queryKeys.feeTypes.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeTypes.lists(), filters] as const,
+    details: () => [...queryKeys.feeTypes.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeTypes.details(), id] as const,
+  },
+
+  feeStructures: {
+    all: ['feeStructures'] as const,
+    lists: () => [...queryKeys.feeStructures.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeStructures.lists(), filters] as const,
+    details: () => [...queryKeys.feeStructures.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeStructures.details(), id] as const,
+  },
+
+  feeInstances: {
+    all: ['feeInstances'] as const,
+    lists: () => [...queryKeys.feeInstances.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.feeInstances.lists(), filters] as const,
+    details: () => [...queryKeys.feeInstances.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.feeInstances.details(), id] as const,
+  },
 } as const;

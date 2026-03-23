@@ -19,6 +19,19 @@ const RoleEditPage = lazy(() => import('@/features/roles/pages/RoleEditPage'));
 const SchoolsListPage = lazy(() => import('@/features/schools/pages/SchoolsListPage'));
 const SchoolDetailPage = lazy(() => import('@/features/schools/pages/SchoolDetailPage'));
 const SchoolCreatePage = lazy(() => import('@/features/schools/pages/SchoolCreatePage'));
+const AcademicYearsListPage = lazy(() => import('@/features/academic-years/pages/AcademicYearsListPage'));
+const AcademicYearDetailPage = lazy(() => import('@/features/academic-years/pages/AcademicYearDetailPage'));
+const GradesListPage = lazy(() => import('@/features/grades/pages/GradesListPage'));
+const GradeDetailPage = lazy(() => import('@/features/grades/pages/GradeDetailPage'));
+const StudentsListPage = lazy(() => import('@/features/students/pages/StudentsListPage'));
+const StudentDetailPage = lazy(() => import('@/features/students/pages/StudentDetailPage'));
+const ParentsListPage = lazy(() => import('@/features/parents/pages/ParentsListPage'));
+const FeeTypesListPage = lazy(() => import('@/features/fee-types/pages/FeeTypesListPage'));
+const FeeStructuresListPage = lazy(() => import('@/features/fees/pages/FeeStructuresListPage'));
+const FeeStructureDetailPage = lazy(() => import('@/features/fees/pages/FeeStructureDetailPage'));
+const FeeInstancesListPage = lazy(() => import('@/features/fees/pages/FeeInstancesListPage'));
+const FeeInstanceDetailPage = lazy(() => import('@/features/fees/pages/FeeInstanceDetailPage'));
+const ParentFeeDashboardPage = lazy(() => import('@/features/parents/pages/ParentFeeDashboardPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -93,6 +106,63 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Schools.Create} />,
             children: [
               { path: ROUTES.SCHOOLS.CREATE, element: <SchoolCreatePage /> },
+            ],
+          },
+
+          // Academic Years
+          {
+            element: <PermissionGuard permission={PERMISSIONS.AcademicYears.View} />,
+            children: [
+              { path: ROUTES.ACADEMIC_YEARS.LIST, element: <AcademicYearsListPage /> },
+              { path: ROUTES.ACADEMIC_YEARS.DETAIL, element: <AcademicYearDetailPage /> },
+            ],
+          },
+
+          // Grades
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Grades.View} />,
+            children: [
+              { path: ROUTES.GRADES.LIST, element: <GradesListPage /> },
+              { path: ROUTES.GRADES.DETAIL, element: <GradeDetailPage /> },
+            ],
+          },
+
+          // Students
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Students.View} />,
+            children: [
+              { path: ROUTES.STUDENTS.LIST, element: <StudentsListPage /> },
+              { path: ROUTES.STUDENTS.DETAIL, element: <StudentDetailPage /> },
+            ],
+          },
+
+          // Parents
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Students.ManageParents} />,
+            children: [
+              { path: ROUTES.PARENTS.LIST, element: <ParentsListPage /> },
+            ],
+          },
+
+          // Fee Types
+          {
+            element: <PermissionGuard permission={PERMISSIONS.FeeTypes.View} />,
+            children: [
+              { path: ROUTES.FEE_TYPES.LIST, element: <FeeTypesListPage /> },
+            ],
+          },
+
+          // Parent Fees (self-service)
+          { path: ROUTES.PARENT_FEES, element: <ParentFeeDashboardPage /> },
+
+          // Fee Structures
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Fees.View} />,
+            children: [
+              { path: ROUTES.FEE_STRUCTURES.LIST, element: <FeeStructuresListPage /> },
+              { path: ROUTES.FEE_STRUCTURES.DETAIL, element: <FeeStructureDetailPage /> },
+              { path: ROUTES.FEE_INSTANCES.LIST, element: <FeeInstancesListPage /> },
+              { path: ROUTES.FEE_INSTANCES.DETAIL, element: <FeeInstanceDetailPage /> },
             ],
           },
 
