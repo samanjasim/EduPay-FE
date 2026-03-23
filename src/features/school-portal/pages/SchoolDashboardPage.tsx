@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Users, Receipt, AlertTriangle, TrendingUp, Plus, Eye } from 'lucide-react';
 import { useAuthStore, selectUser } from '@/stores';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
-import { useSchoolDashboard } from '@/features/school-portal/api';
+import { useSchoolDashboard, useSchoolSetupStatus } from '@/features/school-portal/api';
 import { ROUTES } from '@/config';
 import { Button, Card } from '@/components/ui';
 import { Spinner } from '@/components/ui';
@@ -14,6 +15,14 @@ export default function SchoolDashboardPage() {
   const user = useAuthStore(selectUser);
   const { schoolId } = useSchoolContext();
   const { data: dashboard, isLoading } = useSchoolDashboard(schoolId ?? undefined);
+  const { data: setupStatus } = useSchoolSetupStatus(schoolId ?? undefined);
+
+  // Auto-redirect to setup wizard if school is not configured
+  useEffect(() => {
+    if (setupStatus && setupStatus.gradesCount === 0) {
+      navigate(ROUTES.SCHOOL.SETUP, { replace: true });
+    }
+  }, [setupStatus, navigate]);
 
   return (
     <div className="space-y-6">
