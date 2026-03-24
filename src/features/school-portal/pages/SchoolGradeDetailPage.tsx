@@ -37,8 +37,6 @@ export default function SchoolGradeDetailPage() {
     return <p className="text-center text-text-muted py-12">{t('common.notFound')}</p>;
   }
 
-  const totalFees = grade.paidFeesAmount + grade.unpaidFeesAmount;
-
   return (
     <div className="space-y-6">
       {/* Header */}

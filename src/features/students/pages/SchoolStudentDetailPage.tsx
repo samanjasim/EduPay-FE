@@ -108,7 +108,6 @@ export default function SchoolStudentDetailPage() {
           isOpen={showStatusChange}
           onClose={() => setShowStatusChange(false)}
           studentId={id!}
-          studentName={student.fullNameEn}
           currentStatus={student.status as StudentStatus}
         />
       )}
@@ -347,10 +346,10 @@ function EditStudentModal({
 
 /* ─── Status Change Modal ─── */
 function StatusChangeModal({
-  isOpen, onClose, studentId, studentName, currentStatus,
+  isOpen, onClose, studentId, currentStatus,
 }: {
   isOpen: boolean; onClose: () => void;
-  studentId: string; studentName: string; currentStatus: StudentStatus;
+  studentId: string; currentStatus: StudentStatus;
 }) {
   const { t } = useTranslation();
   const [selectedStatus, setSelectedStatus] = useState('');

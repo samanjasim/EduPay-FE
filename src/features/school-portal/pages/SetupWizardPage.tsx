@@ -67,7 +67,7 @@ export default function SetupWizardPage() {
     if (firstIncompleteRequired !== -1) {
       setCurrentStep(firstIncompleteRequired);
     } else {
-      const firstIncompleteOptional = steps.findIndex((s, i) => !derived.has(i));
+      const firstIncompleteOptional = steps.findIndex((_s, i) => !derived.has(i));
       setCurrentStep(firstIncompleteOptional !== -1 ? firstIncompleteOptional : steps.length);
     }
   }, [setupStatus, currentStep, steps]);

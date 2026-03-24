@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Card, Button, Select, Input, Badge } from '@/components/ui';
+import { Card, Button, Select, Input } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { schoolsApi } from '@/features/schools/api';

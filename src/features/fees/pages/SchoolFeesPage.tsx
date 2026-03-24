@@ -80,7 +80,7 @@ function StructuresTab() {
   const [deleteTarget, setDeleteTarget] = useState<FeeStructureSummaryDto | null>(null);
   const [statusAction, setStatusAction] = useState<{ structure: FeeStructureSummaryDto; target: FeeStructureStatus } | null>(null);
   const [generateTarget, setGenerateTarget] = useState<FeeStructureSummaryDto | null>(null);
-  const [editTarget, setEditTarget] = useState<FeeStructureSummaryDto | null>(null);
+  const [editTargetId, setEditTargetId] = useState<string | null>(null);
 
   const deleteMutation = useDeleteFeeStructure();
   const statusMutation = useUpdateFeeStructureStatus();
@@ -152,7 +152,7 @@ function StructuresTab() {
                         </Link>
                         {fs.status === 'Draft' && (
                           <>
-                            <Button variant="ghost" size="sm" title={t('common.edit')} onClick={() => setEditTarget(fs)}>
+                            <Button variant="ghost" size="sm" title={t('common.edit')} onClick={() => setEditTargetId(fs.id)}>
                               <Pencil className="h-4 w-4 text-blue-600" />
                             </Button>
                             <Button variant="ghost" size="sm" title={t('feeStructures.activate')} onClick={() => setStatusAction({ structure: fs, target: 'Active' })}>
@@ -238,11 +238,11 @@ function StructuresTab() {
       )}
 
       {/* Edit Fee Structure Modal */}
-      {editTarget && (
+      {editTargetId && (
         <EditFeeStructureModal
-          isOpen={!!editTarget}
-          onClose={() => setEditTarget(null)}
-          feeStructure={editTarget}
+          isOpen={!!editTargetId}
+          onClose={() => setEditTargetId(null)}
+          feeStructureId={editTargetId}
         />
       )}
     </div>

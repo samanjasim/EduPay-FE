@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Select, Textarea, Modal, ModalFooter } from '@/components/ui';
-import { useUpdateFeeStructure } from '../api';
+import { useFeeStructure, useUpdateFeeStructure } from '../api';
 import { useFeeTypes } from '@/features/fee-types/api';
 import { useAcademicYears } from '@/features/academic-years/api';
 import { useGrades } from '@/features/grades/api';
@@ -10,7 +10,7 @@ import {
   createFeeStructureSchema,
   type CreateFeeStructureFormData,
 } from '@/lib/validation';
-import type { FeeStructureSummaryDto } from '@/types';
+import { Spinner } from '@/components/ui';
 
 const FREQUENCY_OPTIONS = [
   { value: 'OneTime', labelKey: 'feeStructures.freq_OneTime' },
@@ -28,11 +28,12 @@ const CURRENCY_OPTIONS = [
 interface EditFeeStructureModalProps {
   isOpen: boolean;
   onClose: () => void;
-  feeStructure: FeeStructureSummaryDto;
+  feeStructureId: string;
 }
 
-export function EditFeeStructureModal({ isOpen, onClose, feeStructure }: EditFeeStructureModalProps) {
+export function EditFeeStructureModal({ isOpen, onClose, feeStructureId }: EditFeeStructureModalProps) {
   const { t } = useTranslation();
+  const { data: feeStructure, isLoading: isLoadingDetail } = useFeeStructure(feeStructureId);
   const { mutate: updateFeeStructure, isPending } = useUpdateFeeStructure();
 
   const { data: feeTypesData } = useFeeTypes({ pageSize: 100 });
@@ -58,22 +59,52 @@ export function EditFeeStructureModal({ isOpen, onClose, feeStructure }: EditFee
     label: t(f.labelKey),
   }));
 
+  if (isLoadingDetail || !feeStructure) {
+    return (
+      <Modal isOpen={isOpen} onClose={onClose} title={t('feeStructures.editFeeStructure')} size="lg">
+        <div className="flex justify-center py-12"><Spinner /></div>
+      </Modal>
+    );
+  }
+
+  return (
+    <EditFeeStructureForm
+      feeStructure={feeStructure} onClose={onClose}
+      updateFeeStructure={updateFeeStructure} isPending={isPending}
+      feeTypeOptions={feeTypeOptions} academicYearOptions={academicYearOptions}
+      gradeOptions={gradeOptions} allGrades={allGrades} frequencyOptions={frequencyOptions}
+    />
+  );
+}
+
+function EditFeeStructureForm({ feeStructure, onClose, updateFeeStructure, isPending, feeTypeOptions, academicYearOptions, gradeOptions, allGrades, frequencyOptions }: {
+  feeStructure: { id: string; name: string; description: string | null; feeTypeId: string; amount: number; currency: string; academicYearId: string; frequency: 'OneTime' | 'Monthly' | 'Quarterly' | 'Semester' | 'Annual'; applicableGradeId: string | null; applicableSectionId: string | null; dueDate: string; lateFeePercentage: number };
+  onClose: () => void;
+  updateFeeStructure: (args: { id: string; data: CreateFeeStructureFormData }, opts: { onSuccess: () => void }) => void;
+  isPending: boolean;
+  feeTypeOptions: { value: string; label: string }[];
+  academicYearOptions: { value: string; label: string }[];
+  gradeOptions: { value: string; label: string }[];
+  allGrades: { id: string; sections?: { id: string; name: string; isActive: boolean }[] }[];
+  frequencyOptions: { value: string; label: string }[];
+}) {
+  const { t } = useTranslation();
   const {
     register, handleSubmit, control, watch, formState: { errors },
   } = useForm<CreateFeeStructureFormData>({
     resolver: zodResolver(createFeeStructureSchema),
     defaultValues: {
       name: feeStructure.name,
-      description: null,
+      description: feeStructure.description,
       feeTypeId: feeStructure.feeTypeId ?? '',
       amount: feeStructure.amount,
-      currency: (feeStructure as any).currency ?? 'IQD',
-      academicYearId: (feeStructure as any).academicYearId ?? '',
+      currency: feeStructure.currency ?? 'IQD',
+      academicYearId: feeStructure.academicYearId ?? '',
       frequency: feeStructure.frequency ?? 'OneTime',
-      applicableGradeId: (feeStructure as any).applicableGradeId ?? null,
-      applicableSectionId: (feeStructure as any).applicableSectionId ?? null,
+      applicableGradeId: feeStructure.applicableGradeId ?? null,
+      applicableSectionId: feeStructure.applicableSectionId ?? null,
       dueDate: feeStructure.dueDate ?? '',
-      lateFeePercentage: (feeStructure as any).lateFeePercentage ?? 0,
+      lateFeePercentage: feeStructure.lateFeePercentage ?? 0,
     },
   });
 
@@ -81,9 +112,9 @@ export function EditFeeStructureModal({ isOpen, onClose, feeStructure }: EditFee
   const selectedGrade = allGrades.find((g) => g.id === selectedGradeId);
   const sectionOptions = [
     { value: '', label: t('feeStructures.allSections') },
-    ...((selectedGrade as any)?.sections ?? [])
-      .filter((s: any) => s.isActive)
-      .map((s: any) => ({ value: s.id, label: s.name })),
+    ...(selectedGrade?.sections ?? [])
+      .filter((s) => s.isActive)
+      .map((s) => ({ value: s.id, label: s.name })),
   ];
 
   const onSubmit = (data: CreateFeeStructureFormData) => {
@@ -91,7 +122,7 @@ export function EditFeeStructureModal({ isOpen, onClose, feeStructure }: EditFee
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={t('feeStructures.editFeeStructure')} size="lg">
+    <Modal isOpen onClose={onClose} title={t('feeStructures.editFeeStructure')} size="lg">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label={t('feeStructures.name')} error={errors.name?.message} {...register('name')} />
