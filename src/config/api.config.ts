@@ -64,11 +64,6 @@ export const API_ENDPOINTS = {
     PARENTS: (studentId: string) => `/Students/${studentId}/parents`,
     PARENT: (studentId: string, parentUserId: string) => `/Students/${studentId}/parents/${parentUserId}`,
   },
-  PARENTS: {
-    LIST: '/Parents',
-    UPDATE: (parentUserId: string) => `/Parents/${parentUserId}`,
-    MY_FEES: '/Parents/my-fees',
-  },
   FEE_TYPES: {
     LIST: '/FeeTypes',
     DETAIL: (id: string) => `/FeeTypes/${id}`,
@@ -88,16 +83,10 @@ export const API_ENDPOINTS = {
     DETECT_OVERDUE: '/FeeInstances/detect-overdue',
   },
   PARENTS: {
-    // Self (authenticated parent)
-    MY_DASHBOARD: '/Parents/me/dashboard',
-    MY_CHILDREN: '/Parents/me/children',
-    MY_FEES: '/Parents/me/fees',
-    MY_ORDERS: '/Parents/me/orders',
-    // By ID (admin)
-    DASHBOARD: (id: string) => `/Parents/${id}/dashboard`,
-    CHILDREN: (id: string) => `/Parents/${id}/children`,
-    FEES: (id: string) => `/Parents/${id}/fees`,
-    ORDERS: (id: string) => `/Parents/${id}/orders`,
+    LIST: '/Parents',
+    DETAIL: (parentUserId: string) => `/Parents/${parentUserId}`,
+    CHILDREN: '/Parents/children',
+    MY_FEES: '/Parents/my-fees',
   },
   NOTIFICATIONS: {
     LIST: '/Notifications',

@@ -37,6 +37,6 @@ export const parentsApi = {
   },
 
   updateParent: async (parentUserId: string, data: UpdateParentData): Promise<void> => {
-    await apiClient.put(API_ENDPOINTS.PARENTS.UPDATE(parentUserId), data);
+    await apiClient.put(API_ENDPOINTS.PARENTS.DETAIL(parentUserId), data);
   },
 };
