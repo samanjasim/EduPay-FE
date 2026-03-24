@@ -163,6 +163,10 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
     }
   };
 
+  const [saveProgress, setSaveProgress] = useState('');
+
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const handleSave = async () => {
     const newGrades = grades.filter((g) => !g.existsInDb);
 
@@ -186,8 +190,12 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
     setSaving(true);
     setError(null);
 
-    try {
-      for (const grade of newGrades) {
+    let created = 0;
+    let failed = 0;
+
+    for (const grade of newGrades) {
+      setSaveProgress(`Creating ${grade.name}... (${created + 1}/${newGrades.length})`);
+      try {
         await createGrade.mutateAsync({
           name: grade.name,
           sortOrder: grade.sortOrder,
@@ -195,12 +203,27 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
             .filter((s) => s.name.trim())
             .map((s) => ({ name: s.name, capacity: s.capacity })),
         });
+        created++;
+        // Mark as saved in local state
+        setGrades((prev) =>
+          prev.map((g) => g.name === grade.name && !g.existsInDb ? { ...g, existsInDb: true } : g)
+        );
+      } catch {
+        failed++;
       }
+      // Delay between requests to avoid rate limiting (10 req/s limit)
+      if (created < newGrades.length) {
+        await delay(150);
+      }
+    }
+
+    setSaving(false);
+    setSaveProgress('');
+
+    if (failed > 0) {
+      setError(`Created ${created} grades, but ${failed} failed. Try clicking Next again to retry.`);
+    } else {
       onNext();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create grades');
-    } finally {
-      setSaving(false);
     }
   };
 
@@ -325,11 +348,14 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex justify-between">
-        <Button variant="outline" onClick={onBack}>{t('schoolPortal.setup.back')}</Button>
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? t('common.loading') : t('schoolPortal.setup.next')}
-        </Button>
+      <div className="flex items-center justify-between">
+        <Button variant="outline" onClick={onBack} disabled={saving}>{t('schoolPortal.setup.back')}</Button>
+        <div className="flex items-center gap-3">
+          {saveProgress && <span className="text-sm text-text-muted">{saveProgress}</span>}
+          <Button onClick={handleSave} disabled={saving}>
+            {saving ? t('common.loading') : t('schoolPortal.setup.next')}
+          </Button>
+        </div>
       </div>
     </div>
   );
