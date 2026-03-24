@@ -449,5 +449,79 @@
   },
   "payments": {
     "title": "المدفوعات"
+  },
+  "schoolPortal": {
+    "title": "بوابة المدرسة",
+    "subtitle": "إدارة المدرسة",
+    "nav": {
+      "dashboard": "لوحة التحكم",
+      "students": "الطلاب",
+      "fees": "الرسوم",
+      "payments": "المدفوعات",
+      "reports": "التقارير",
+      "settings": "الإعدادات"
+    },
+    "dashboard": {
+      "welcome": "مرحباً، {{name}}!",
+      "subtitle": "نظرة عامة على نشاط مدرستك",
+      "totalStudents": "الطلاب النشطون",
+      "activeFeeStructures": "هياكل الرسوم",
+      "collectionRate": "نسبة التحصيل",
+      "overdueAmount": "المبلغ المتأخر",
+      "feeStatusBreakdown": "توزيع حالة الرسوم",
+      "recentActivity": "النشاط الأخير",
+      "addStudent": "إضافة طالب",
+      "createFeeStructure": "إنشاء هيكل رسوم",
+      "viewOverdue": "عرض المتأخرات",
+      "setupIncomplete": "أكمل إعداد مدرستك",
+      "setupIncompleteDesc": "بعض خطوات الإعداد لا تزال معلقة. أكملها للاستفادة الكاملة من EduPay.",
+      "completeSetup": "إكمال الإعداد"
+    },
+    "payments": {
+      "comingSoonDesc": "سيتوفر هنا قريباً تتبع المدفوعات وتحصيل النقد وإدارة الإيصالات."
+    },
+    "reports": {
+      "comingSoonDesc": "ستتوفر هنا قريباً تقارير تحصيل الرسوم وتقادم المتأخرات والملخصات المالية."
+    },
+    "setup": {
+      "title": "إعداد المدرسة",
+      "subtitle": "لنجهز مدرستك لاستخدام EduPay",
+      "step": "الخطوة {{current}} من {{total}}",
+      "required": "مطلوب",
+      "optional": "اختياري",
+      "next": "التالي",
+      "back": "رجوع",
+      "skip": "تخطي",
+      "finish": "إنهاء الإعداد",
+      "settings": {
+        "title": "إعدادات المدرسة",
+        "description": "تكوين الإعدادات الأساسية لمدرستك"
+      },
+      "grades": {
+        "title": "المراحل والشعب",
+        "description": "إعداد المراحل الدراسية وشعب الصفوف"
+      },
+      "fees": {
+        "title": "هياكل الرسوم",
+        "description": "تحديد الرسوم التي تفرضها مدرستك على الطلاب"
+      },
+      "students": {
+        "title": "الطلاب",
+        "description": "إضافة طلابك إلى النظام"
+      },
+      "complete": {
+        "title": "اكتمل الإعداد!",
+        "description": "مدرستك جاهزة لاستخدام EduPay. يمكنك تحديث هذه الإعدادات لاحقاً.",
+        "goToDashboard": "الذهاب إلى لوحة التحكم"
+      }
+    },
+    "settings": {
+      "general": "عام",
+      "configuration": "التكوين",
+      "admins": "المسؤولون",
+      "setupWizard": "معالج الإعداد",
+      "rerunSetup": "إعادة تشغيل معالج الإعداد",
+      "rerunSetupDesc": "المرور عبر عملية الإعداد الأولية مرة أخرى لتحديث تكوين مدرستك."
+    }
   }
 }

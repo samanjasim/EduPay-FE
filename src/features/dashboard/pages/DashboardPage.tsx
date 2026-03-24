@@ -1,11 +1,14 @@
 import { Users, Shield, TrendingUp, GraduationCap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Navigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui';
 import { useAuthStore, selectUser } from '@/stores';
 import { useUsers } from '@/features/users/api';
 import { useRoles } from '@/features/roles/api';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
+import { ROUTES } from '@/config';
+import { shouldRedirectToSchoolPortal } from '@/components/guards/SchoolAdminGuard';
 
 function StatCard({
   icon: Icon,
@@ -46,6 +49,11 @@ export default function DashboardPage() {
   const { t } = useTranslation();
   const user = useAuthStore(selectUser);
   const { hasPermission } = usePermissions();
+
+  // Redirect school admins (who are not also platform admins) to school portal
+  if (shouldRedirectToSchoolPortal(user)) {
+    return <Navigate to={ROUTES.SCHOOL.DASHBOARD} replace />;
+  }
 
   const canViewUsers = hasPermission(PERMISSIONS.Users.View);
   const canViewRoles = hasPermission(PERMISSIONS.Roles.View);
