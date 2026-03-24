@@ -9,6 +9,8 @@ import {
   Settings,
   ChevronLeft,
   GraduationCap,
+  BookOpen,
+  UserCog,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -26,10 +28,12 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
 
   const navItems = [
     { label: t('schoolPortal.nav.dashboard'), icon: LayoutDashboard, path: ROUTES.SCHOOL.DASHBOARD },
+    { label: t('schoolPortal.nav.grades'), icon: BookOpen, path: ROUTES.SCHOOL.GRADES.LIST },
     { label: t('schoolPortal.nav.students'), icon: Users, path: ROUTES.SCHOOL.STUDENTS.LIST },
     { label: t('schoolPortal.nav.fees'), icon: Receipt, path: ROUTES.SCHOOL.FEES },
     { label: t('schoolPortal.nav.payments'), icon: CreditCard, path: ROUTES.SCHOOL.PAYMENTS },
     { label: t('schoolPortal.nav.reports'), icon: BarChart3, path: ROUTES.SCHOOL.REPORTS },
+    { label: t('schoolPortal.nav.staff'), icon: UserCog, path: ROUTES.SCHOOL.STAFF },
     { label: t('schoolPortal.nav.settings'), icon: Settings, path: ROUTES.SCHOOL.SETTINGS },
   ];
 

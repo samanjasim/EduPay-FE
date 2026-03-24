@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Receipt, Search, Eye, CheckCircle, Archive, Trash2, Ban, ShieldOff, Plus } from 'lucide-react';
+import { Receipt, Search, Eye, CheckCircle, Archive, Trash2, Ban, ShieldOff, Plus, Pencil } from 'lucide-react';
 import {
   Card, Badge, Button, Input, Select, Spinner, Pagination,
 } from '@/components/ui';
@@ -13,6 +13,7 @@ import {
   useFeeInstances, useWaiveFee, useCancelFee,
 } from '../api';
 import { CreateFeeStructureModal } from '../components/CreateFeeStructureModal';
+import { EditFeeStructureModal } from '../components/EditFeeStructureModal';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { useSchoolDashboard } from '@/features/school-portal/api';
 import { useDebounce } from '@/hooks';
@@ -79,6 +80,7 @@ function StructuresTab() {
   const [deleteTarget, setDeleteTarget] = useState<FeeStructureSummaryDto | null>(null);
   const [statusAction, setStatusAction] = useState<{ structure: FeeStructureSummaryDto; target: FeeStructureStatus } | null>(null);
   const [generateTarget, setGenerateTarget] = useState<FeeStructureSummaryDto | null>(null);
+  const [editTarget, setEditTarget] = useState<FeeStructureSummaryDto | null>(null);
 
   const deleteMutation = useDeleteFeeStructure();
   const statusMutation = useUpdateFeeStructureStatus();
@@ -150,6 +152,9 @@ function StructuresTab() {
                         </Link>
                         {fs.status === 'Draft' && (
                           <>
+                            <Button variant="ghost" size="sm" title={t('common.edit')} onClick={() => setEditTarget(fs)}>
+                              <Pencil className="h-4 w-4 text-blue-600" />
+                            </Button>
                             <Button variant="ghost" size="sm" title={t('feeStructures.activate')} onClick={() => setStatusAction({ structure: fs, target: 'Active' })}>
                               <CheckCircle className="h-4 w-4 text-emerald-600" />
                             </Button>
@@ -229,6 +234,15 @@ function StructuresTab() {
             searchParams.delete('create');
             setSearchParams(searchParams, { replace: true });
           }}
+        />
+      )}
+
+      {/* Edit Fee Structure Modal */}
+      {editTarget && (
+        <EditFeeStructureModal
+          isOpen={!!editTarget}
+          onClose={() => setEditTarget(null)}
+          feeStructure={editTarget}
         />
       )}
     </div>

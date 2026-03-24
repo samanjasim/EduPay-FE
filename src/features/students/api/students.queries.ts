@@ -76,3 +76,27 @@ export function useChangeStudentStatus() {
     },
   });
 }
+
+export function useEnrollParent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ studentId, data }: { studentId: string; data: Record<string, unknown> }) =>
+      studentsApi.enrollParent(studentId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.students.all });
+      toast.success('Parent enrolled successfully');
+    },
+  });
+}
+
+export function useUnlinkParent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ studentId, parentUserId }: { studentId: string; parentUserId: string }) =>
+      studentsApi.unlinkParent(studentId, parentUserId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.students.all });
+      toast.success('Parent unlinked successfully');
+    },
+  });
+}

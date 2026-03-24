@@ -31,6 +31,14 @@ export function useGrade(id: string) {
   });
 }
 
+export function useGradeWithStats(id: string | undefined) {
+  return useQuery({
+    queryKey: [...queryKeys.grades.detail(id!), 'stats'],
+    queryFn: () => gradesApi.getGradeWithStats(id!),
+    enabled: !!id,
+  });
+}
+
 // --- Grade Mutations ---
 
 export function useCreateGrade() {

@@ -24,7 +24,10 @@
     "remove": "Remove",
     "createdAt": "Created",
     "showing": "Showing {{start}}-{{end}} of {{total}}",
-    "close": "Close"
+    "close": "Close",
+    "viewAll": "View all",
+    "saved": "Saved!",
+    "operationFailed": "Operation failed"
   },
   "auth": {
     "welcomeBack": "Welcome back",
@@ -99,7 +102,11 @@
     "userDetail": "User Details",
     "backToUsers": "Back to Users",
     "editUser": "Edit User",
-    "userUpdated": "User updated successfully"
+    "userUpdated": "User updated successfully",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone"
   },
   "roles": {
     "title": "Roles",
@@ -297,7 +304,12 @@
     "school": "School",
     "filterByStatus": "Filter by status",
     "filterByGender": "Filter by gender",
-    "filterByGrade": "Filter by grade"
+    "filterByGrade": "Filter by grade",
+    "addParent": "Add Parent",
+    "linkParent": "Link Parent",
+    "unlinkParent": "Unlink Parent",
+    "unlink": "Unlink",
+    "unlinkParentDesc": "Are you sure you want to unlink this parent from the student?"
   },
   "validation": {
     "required": "{{field}} is required",
@@ -312,7 +324,9 @@
     "allParents": "All Parents",
     "noParents": "No parents found.",
     "enrollParent": "Enroll Parent",
-    "enrollHint": "If this parent already has an account, only email and relation are needed.",
+    "enrollHint": "If this parent already has an account, only email and relation are needed. The other fields are for creating a new parent account.",
+    "newAccountFields": "New Account Details",
+    "newAccountFieldsHint": "Only fill these if the parent doesn't have an account yet. Leave blank to link an existing parent by email.",
     "accountCreated": "Parent account created and linked. Share these credentials with the parent.",
     "existingLinked": "Existing parent {{name}} linked to this student.",
     "linkParent": "Link Parent",
@@ -327,6 +341,9 @@
     "firstLinkedAt": "First Linked",
     "relation": "Relation",
     "selectRelation": "Select relation",
+    "father": "Father",
+    "mother": "Mother",
+    "guardian": "Guardian",
     "relationFather": "Father",
     "relationMother": "Mother",
     "relationGuardian": "Guardian",
@@ -368,7 +385,8 @@
     "discountAmountLabel": "Discount Amount",
     "reason": "Reason",
     "waiveConfirmation": "Are you sure you want to waive this fee? This action cannot be undone.",
-    "cancelConfirmation": "Are you sure you want to cancel this fee? This action cannot be undone."
+    "cancelConfirmation": "Are you sure you want to cancel this fee? This action cannot be undone.",
+    "noStudentFees": "No fees found for this student."
   },
   "feeStructures": {
     "title": "Fee Structures",
@@ -455,10 +473,12 @@
     "subtitle": "School Management",
     "nav": {
       "dashboard": "Dashboard",
+      "grades": "Grades",
       "students": "Students",
       "fees": "Fees",
       "payments": "Payments",
       "reports": "Reports",
+      "staff": "Staff",
       "settings": "Settings"
     },
     "dashboard": {
@@ -475,7 +495,8 @@
       "viewOverdue": "View Overdue",
       "setupIncomplete": "Complete your school setup",
       "setupIncompleteDesc": "Some setup steps are still pending. Complete them to get the most out of EduPay.",
-      "completeSetup": "Complete Setup"
+      "completeSetup": "Complete Setup",
+      "noFeeInstances": "No fee instances yet."
     },
     "payments": {
       "comingSoonDesc": "Payment tracking, cash collections, and receipt management will be available here soon."
@@ -514,6 +535,52 @@
         "description": "Your school is ready to use EduPay. You can always update these settings later.",
         "goToDashboard": "Go to Dashboard"
       }
+    },
+    "staff": {
+      "title": "Staff Management",
+      "subtitle": "Manage your school's administrators and staff members",
+      "invite": "Invite Staff",
+      "noStaff": "No staff members yet.",
+      "name": "Name",
+      "email": "Email",
+      "roles": "Roles",
+      "joined": "Joined",
+      "primary": "Primary",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "e.g. John Smith",
+      "emailPlaceholder": "e.g. john@example.com",
+      "sendInvite": "Send Invite",
+      "removeTitle": "Remove Staff Member",
+      "removeDesc": "Are you sure you want to remove <strong>{{name}}</strong> from this school?",
+      "alreadyExists": "This user is already part of this school.",
+      "belongsToAnotherSchool": "This user belongs to another school. Please contact the platform administrator."
+    },
+    "grades": {
+      "title": "Grades & Sections",
+      "subtitle": "Manage your school's grade levels and class sections",
+      "addGrade": "Add Grade",
+      "editGrade": "Edit Grade",
+      "noGrades": "No grades configured",
+      "noGradesDesc": "Add grade levels to organize your students and manage sections.",
+      "sections": "Sections",
+      "studentsLabel": "students",
+      "gradeName": "Grade Name",
+      "gradeNamePlaceholder": "e.g. Grade 1, KG, etc.",
+      "sortOrder": "Sort Order",
+      "sectionName": "Section Name",
+      "capacity": "Capacity",
+      "capacityPlaceholder": "Max students",
+      "addSection": "Add Section",
+      "editSection": "Edit Section",
+      "noSections": "No sections in this grade yet. Add one to get started.",
+      "totalStudents": "Total Students",
+      "paidFees": "Paid Fees",
+      "unpaidFees": "Unpaid Fees",
+      "capacityUsed": "capacity used",
+      "deleteTitle": "Delete Grade",
+      "deleteDesc": "Are you sure you want to delete <strong>{{name}}</strong>? This will deactivate the grade.",
+      "deleteSectionTitle": "Delete Section",
+      "deleteSectionDesc": "Are you sure you want to delete section <strong>{{name}}</strong>?"
     },
     "settings": {
       "general": "General",

@@ -6,6 +6,7 @@ export interface SchoolSetupStatus {
   studentsCount: number;
   academicYearLinked: boolean;
   currentAcademicYear: string | null;
+  setupWizardCompleted: boolean;
 }
 
 export interface FeeCollectionSummary {
@@ -31,6 +32,21 @@ export interface RecentFeeInstance {
   status: string;
   dueDate: string;
   createdAt: string;
+}
+
+export interface SchoolStaffDto {
+  userId: string;
+  fullName: string;
+  email: string;
+  roles: string[];
+  isPrimary: boolean;
+  status: string;
+  assignedAt: string;
+}
+
+export interface InviteStaffData {
+  email: string;
+  fullName: string;
 }
 
 export interface SchoolDashboardData {

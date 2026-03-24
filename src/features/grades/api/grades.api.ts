@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from '@/config';
 import type {
   GradeSummaryDto,
   GradeDetailDto,
+  GradeWithStatsDto,
   CreateGradeData,
   UpdateGradeData,
   AddSectionData,
@@ -25,6 +26,13 @@ export const gradesApi = {
   getGradeById: async (id: string): Promise<GradeDetailDto> => {
     const response = await apiClient.get<ApiResponse<GradeDetailDto>>(
       API_ENDPOINTS.GRADES.DETAIL(id)
+    );
+    return response.data.data;
+  },
+
+  getGradeWithStats: async (id: string): Promise<GradeWithStatsDto> => {
+    const response = await apiClient.get<ApiResponse<GradeWithStatsDto>>(
+      API_ENDPOINTS.GRADES.STATS(id)
     );
     return response.data.data;
   },

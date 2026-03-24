@@ -35,6 +35,9 @@ export const API_ENDPOINTS = {
     REMOVE_ADMIN: (id: string, userId: string) => `/Schools/${id}/admins/${userId}`,
     SETUP_STATUS: (id: string) => `/Schools/${id}/setup-status`,
     DASHBOARD: (id: string) => `/Schools/${id}/dashboard`,
+    COMPLETE_SETUP: (id: string) => `/Schools/${id}/complete-setup`,
+    STAFF: (id: string) => `/Schools/${id}/staff`,
+    INVITE: (id: string) => `/Schools/${id}/invite`,
   },
   ACADEMIC_YEARS: {
     LIST: '/AcademicYears',
@@ -48,6 +51,7 @@ export const API_ENDPOINTS = {
     LIST: '/Grades',
     DETAIL: (id: string) => `/Grades/${id}`,
     STATUS: (id: string) => `/Grades/${id}/status`,
+    STATS: (id: string) => `/Grades/${id}/stats`,
     SECTIONS: (gradeId: string) => `/Grades/${gradeId}/sections`,
     SECTION: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}`,
     SECTION_STATUS: (gradeId: string, sectionId: string) => `/Grades/${gradeId}/sections/${sectionId}/status`,

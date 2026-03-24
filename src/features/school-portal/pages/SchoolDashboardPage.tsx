@@ -18,9 +18,9 @@ export default function SchoolDashboardPage() {
   const { data: dashboard, isLoading } = useSchoolDashboard(schoolId ?? undefined);
   const { data: setupStatus } = useSchoolSetupStatus(schoolId ?? undefined);
 
-  // Auto-redirect to setup wizard if school is not configured
+  // Auto-redirect to setup wizard if school is not configured and wizard hasn't been completed
   useEffect(() => {
-    if (setupStatus && setupStatus.gradesCount === 0) {
+    if (setupStatus && setupStatus.gradesCount === 0 && !setupStatus.setupWizardCompleted) {
       navigate(ROUTES.SCHOOL.SETUP, { replace: true });
     }
   }, [setupStatus, navigate]);
@@ -133,7 +133,7 @@ export default function SchoolDashboardPage() {
                   <Link to={ROUTES.SCHOOL.FEES}>
                     <Button variant="ghost" size="sm">
                       <Eye className="h-3.5 w-3.5 ltr:mr-1 rtl:ml-1" />
-                      View all
+                      {t('common.viewAll')}
                     </Button>
                   </Link>
                 </div>
@@ -182,14 +182,15 @@ function StatCard({ label, value, icon: Icon, color }: StatCardProps) {
 
 function FeeStatusBar({ breakdown }: { breakdown: { pending: number; paid: number; overdue: number; waived: number; cancelled: number } }) {
   const total = breakdown.pending + breakdown.paid + breakdown.overdue + breakdown.waived + breakdown.cancelled;
-  if (total === 0) return <p className="text-sm text-text-muted">No fee instances yet.</p>;
+  const { t } = useTranslation();
+  if (total === 0) return <p className="text-sm text-text-muted">{t('schoolPortal.dashboard.noFeeInstances')}</p>;
 
   const segments = [
-    { key: 'paid', count: breakdown.paid, color: 'bg-emerald-500', label: 'Paid' },
-    { key: 'pending', count: breakdown.pending, color: 'bg-amber-400', label: 'Pending' },
-    { key: 'overdue', count: breakdown.overdue, color: 'bg-red-500', label: 'Overdue' },
-    { key: 'waived', count: breakdown.waived, color: 'bg-gray-400', label: 'Waived' },
-    { key: 'cancelled', count: breakdown.cancelled, color: 'bg-gray-300', label: 'Cancelled' },
+    { key: 'paid', count: breakdown.paid, color: 'bg-emerald-500', label: t('feeInstances.paid') },
+    { key: 'pending', count: breakdown.pending, color: 'bg-amber-400', label: t('feeInstances.pending') },
+    { key: 'overdue', count: breakdown.overdue, color: 'bg-red-500', label: t('feeInstances.overdue') },
+    { key: 'waived', count: breakdown.waived, color: 'bg-gray-400', label: t('feeInstances.waived') },
+    { key: 'cancelled', count: breakdown.cancelled, color: 'bg-gray-300', label: t('feeInstances.cancelled') },
   ];
 
   return (

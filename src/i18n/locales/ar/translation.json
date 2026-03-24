@@ -24,7 +24,10 @@
     "remove": "إزالة",
     "createdAt": "تاريخ الإنشاء",
     "showing": "عرض {{start}}-{{end}} من {{total}}",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "viewAll": "عرض الكل",
+    "saved": "تم الحفظ!",
+    "operationFailed": "فشلت العملية"
   },
   "auth": {
     "welcomeBack": "مرحباً بعودتك",
@@ -99,7 +102,11 @@
     "userDetail": "تفاصيل المستخدم",
     "backToUsers": "العودة إلى المستخدمين",
     "editUser": "تعديل المستخدم",
-    "userUpdated": "تم تحديث المستخدم بنجاح"
+    "userUpdated": "تم تحديث المستخدم بنجاح",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف"
   },
   "roles": {
     "title": "الأدوار",
@@ -297,7 +304,12 @@
     "school": "المدرسة",
     "filterByStatus": "تصفية حسب الحالة",
     "filterByGender": "تصفية حسب الجنس",
-    "filterByGrade": "تصفية حسب المرحلة"
+    "filterByGrade": "تصفية حسب المرحلة",
+    "addParent": "إضافة ولي أمر",
+    "linkParent": "ربط ولي أمر",
+    "unlinkParent": "إلغاء ربط ولي الأمر",
+    "unlink": "إلغاء الربط",
+    "unlinkParentDesc": "هل أنت متأكد من إلغاء ربط ولي الأمر هذا من الطالب؟"
   },
   "validation": {
     "required": "{{field}} مطلوب",
@@ -312,7 +324,9 @@
     "allParents": "جميع أولياء الأمور",
     "noParents": "لم يتم العثور على أولياء أمور.",
     "enrollParent": "تسجيل ولي أمر",
-    "enrollHint": "إذا كان لدى ولي الأمر حساب بالفعل، يكفي إدخال البريد الإلكتروني وصلة القرابة فقط.",
+    "enrollHint": "إذا كان لدى ولي الأمر حساب بالفعل، يكفي إدخال البريد الإلكتروني وصلة القرابة فقط. الحقول الأخرى لإنشاء حساب جديد.",
+    "newAccountFields": "بيانات الحساب الجديد",
+    "newAccountFieldsHint": "املأ هذه الحقول فقط إذا لم يكن لدى ولي الأمر حساب. اتركها فارغة لربط ولي أمر موجود عبر البريد الإلكتروني.",
     "accountCreated": "تم إنشاء حساب ولي الأمر وربطه. شارك بيانات الدخول مع ولي الأمر.",
     "existingLinked": "تم ربط ولي الأمر الحالي {{name}} بهذا الطالب.",
     "linkParent": "ربط ولي أمر",
@@ -327,6 +341,9 @@
     "firstLinkedAt": "تاريخ أول ربط",
     "relation": "صلة القرابة",
     "selectRelation": "اختر صلة القرابة",
+    "father": "أب",
+    "mother": "أم",
+    "guardian": "ولي أمر",
     "relationFather": "أب",
     "relationMother": "أم",
     "relationGuardian": "ولي أمر",
@@ -368,7 +385,8 @@
     "discountAmountLabel": "مبلغ الخصم",
     "reason": "السبب",
     "waiveConfirmation": "هل أنت متأكد من إعفاء هذه الرسوم؟ لا يمكن التراجع عن هذا الإجراء.",
-    "cancelConfirmation": "هل أنت متأكد من إلغاء هذه الرسوم؟ لا يمكن التراجع عن هذا الإجراء."
+    "cancelConfirmation": "هل أنت متأكد من إلغاء هذه الرسوم؟ لا يمكن التراجع عن هذا الإجراء.",
+    "noStudentFees": "لم يتم العثور على رسوم لهذا الطالب."
   },
   "feeStructures": {
     "title": "هياكل الرسوم",
@@ -455,10 +473,12 @@
     "subtitle": "إدارة المدرسة",
     "nav": {
       "dashboard": "لوحة التحكم",
+      "grades": "المراحل الدراسية",
       "students": "الطلاب",
       "fees": "الرسوم",
       "payments": "المدفوعات",
       "reports": "التقارير",
+      "staff": "الموظفون",
       "settings": "الإعدادات"
     },
     "dashboard": {
@@ -475,7 +495,8 @@
       "viewOverdue": "عرض المتأخرات",
       "setupIncomplete": "أكمل إعداد مدرستك",
       "setupIncompleteDesc": "بعض خطوات الإعداد لا تزال معلقة. أكملها للاستفادة الكاملة من EduPay.",
-      "completeSetup": "إكمال الإعداد"
+      "completeSetup": "إكمال الإعداد",
+      "noFeeInstances": "لا توجد رسوم بعد."
     },
     "payments": {
       "comingSoonDesc": "سيتوفر هنا قريباً تتبع المدفوعات وتحصيل النقد وإدارة الإيصالات."
@@ -514,6 +535,52 @@
         "description": "مدرستك جاهزة لاستخدام EduPay. يمكنك تحديث هذه الإعدادات لاحقاً.",
         "goToDashboard": "الذهاب إلى لوحة التحكم"
       }
+    },
+    "staff": {
+      "title": "إدارة الموظفين",
+      "subtitle": "إدارة المسؤولين والموظفين في مدرستك",
+      "invite": "دعوة موظف",
+      "noStaff": "لا يوجد موظفون بعد.",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "roles": "الأدوار",
+      "joined": "تاريخ الانضمام",
+      "primary": "رئيسي",
+      "fullName": "الاسم الكامل",
+      "fullNamePlaceholder": "مثال: أحمد محمد",
+      "emailPlaceholder": "مثال: ahmed@example.com",
+      "sendInvite": "إرسال الدعوة",
+      "removeTitle": "إزالة الموظف",
+      "removeDesc": "هل أنت متأكد من إزالة <strong>{{name}}</strong> من هذه المدرسة؟",
+      "alreadyExists": "هذا المستخدم موجود بالفعل في هذه المدرسة.",
+      "belongsToAnotherSchool": "هذا المستخدم ينتمي إلى مدرسة أخرى. يرجى التواصل مع مسؤول المنصة."
+    },
+    "grades": {
+      "title": "المراحل والشعب",
+      "subtitle": "إدارة المراحل الدراسية وشعب الصفوف",
+      "addGrade": "إضافة مرحلة",
+      "editGrade": "تعديل المرحلة",
+      "noGrades": "لا توجد مراحل",
+      "noGradesDesc": "أضف مراحل دراسية لتنظيم الطلاب وإدارة الشعب.",
+      "sections": "الشعب",
+      "studentsLabel": "طالب",
+      "gradeName": "اسم المرحلة",
+      "gradeNamePlaceholder": "مثال: الصف الأول",
+      "sortOrder": "الترتيب",
+      "sectionName": "اسم الشعبة",
+      "capacity": "السعة",
+      "capacityPlaceholder": "الحد الأقصى للطلاب",
+      "addSection": "إضافة شعبة",
+      "editSection": "تعديل الشعبة",
+      "noSections": "لا توجد شعب في هذه المرحلة. أضف واحدة للبدء.",
+      "totalStudents": "إجمالي الطلاب",
+      "paidFees": "الرسوم المدفوعة",
+      "unpaidFees": "الرسوم غير المدفوعة",
+      "capacityUsed": "من السعة مستخدمة",
+      "deleteTitle": "حذف المرحلة",
+      "deleteDesc": "هل أنت متأكد من حذف <strong>{{name}}</strong>؟ سيتم إلغاء تفعيل المرحلة.",
+      "deleteSectionTitle": "حذف الشعبة",
+      "deleteSectionDesc": "هل أنت متأكد من حذف الشعبة <strong>{{name}}</strong>؟"
     },
     "settings": {
       "general": "عام",

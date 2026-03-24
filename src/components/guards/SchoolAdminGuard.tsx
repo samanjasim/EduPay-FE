@@ -6,15 +6,15 @@ import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContex
 const PLATFORM_ADMIN_ROLES = ['SuperAdmin', 'Admin'];
 
 export function SchoolAdminGuard() {
-  const { isLoading, isSchoolAdmin } = useSchoolContext();
+  const { isLoading, isSchoolAdmin, schoolId } = useSchoolContext();
 
   // If not a school admin, redirect to main dashboard
   if (!isSchoolAdmin) {
     return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 
-  // Wait for school context to load
-  if (isLoading) {
+  // Wait for school context to load and activeSchoolId to be set
+  if (isLoading || !schoolId) {
     return <LoadingScreen />;
   }
 
