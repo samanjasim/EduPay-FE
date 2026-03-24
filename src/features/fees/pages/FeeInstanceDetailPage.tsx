@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -36,7 +36,11 @@ type ReasonFormData = z.infer<typeof reasonSchema>;
 export default function FeeInstanceDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const { hasPermission } = usePermissions();
+  const isSchoolPortal = location.pathname.startsWith('/school/');
+  const backTo = isSchoolPortal ? ROUTES.SCHOOL.FEES : ROUTES.FEE_INSTANCES.LIST;
+  const backLabel = isSchoolPortal ? t('schoolPortal.nav.fees') : t('feeInstances.backToList');
   const { data: feeInstance, isLoading } = useFeeInstance(id!);
 
   const [showDiscountModal, setShowDiscountModal] = useState(false);
@@ -55,8 +59,8 @@ export default function FeeInstanceDetailPage() {
       <PageHeader
         title={`${feeInstance.feeTypeName} - ${feeInstance.studentName}`}
         subtitle={t('feeInstances.detailSubtitle')}
-        backTo={ROUTES.FEE_INSTANCES.LIST}
-        backLabel={t('feeInstances.backToList')}
+        backTo={backTo}
+        backLabel={backLabel}
       />
 
       <Card>

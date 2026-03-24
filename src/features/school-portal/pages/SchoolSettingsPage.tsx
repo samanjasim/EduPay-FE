@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Card, Button, Select, Input, Badge } from '@/components/ui';
+import { Card, Button, Select, Input } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { schoolsApi } from '@/features/schools/api';
@@ -147,28 +147,17 @@ function ConfigTab({ school, schoolId, queryClient }: { school: any; schoolId: s
   );
 }
 
-function AdminsTab({ school }: { school: any }) {
+function AdminsTab({ school: _school }: { school: any }) {
   const { t } = useTranslation();
-  const admins = school?.admins ?? [];
+  const navigate = useNavigate();
 
   return (
     <Card>
-      <div className="p-5">
-        {admins.length === 0 ? (
-          <p className="text-sm text-text-muted">{t('schools.noAdmins')}</p>
-        ) : (
-          <div className="space-y-3">
-            {admins.map((admin: any) => (
-              <div key={admin.userId} className="flex items-center justify-between rounded-lg border border-border p-3">
-                <div>
-                  <p className="text-sm font-medium text-text-primary">{admin.fullName}</p>
-                  <p className="text-xs text-text-muted">{admin.email}</p>
-                </div>
-                {admin.isPrimary && <Badge variant="success">{t('schools.primaryAdmin')}</Badge>}
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="p-5 text-center">
+        <p className="text-sm text-text-muted mb-4">{t('schoolPortal.staff.subtitle')}</p>
+        <Button onClick={() => navigate(ROUTES.SCHOOL.STAFF)}>
+          {t('schoolPortal.staff.title')}
+        </Button>
       </div>
     </Card>
   );

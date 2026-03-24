@@ -91,6 +91,11 @@ export const ROUTES = {
       DETAIL: '/school/students/:id',
       getDetail: (id: string) => `/school/students/${id}`,
     },
+    GRADES: {
+      LIST: '/school/grades',
+      DETAIL: '/school/grades/:id',
+      getDetail: (id: string) => `/school/grades/${id}`,
+    },
     FEES: '/school/fees',
     FEE_STRUCTURES: {
       DETAIL: '/school/fees/structures/:id',
@@ -102,6 +107,7 @@ export const ROUTES = {
     },
     PAYMENTS: '/school/payments',
     REPORTS: '/school/reports',
+    STAFF: '/school/staff',
     SETTINGS: '/school/settings',
   },
 } as const;

@@ -46,4 +46,12 @@ export const studentsApi = {
   changeStatus: async (id: string, data: ChangeStudentStatusData): Promise<void> => {
     await apiClient.patch(API_ENDPOINTS.STUDENTS.STATUS(id), data);
   },
+
+  enrollParent: async (studentId: string, data: Record<string, unknown>): Promise<void> => {
+    await apiClient.post(API_ENDPOINTS.STUDENTS.ENROLL_PARENT(studentId), data);
+  },
+
+  unlinkParent: async (studentId: string, parentUserId: string): Promise<void> => {
+    await apiClient.delete(API_ENDPOINTS.STUDENTS.PARENT(studentId, parentUserId));
+  },
 };

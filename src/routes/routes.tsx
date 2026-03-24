@@ -45,6 +45,9 @@ const SetupWizardPage = lazy(() => import('@/features/school-portal/pages/SetupW
 const SchoolStudentsPage = lazy(() => import('@/features/students/pages/SchoolStudentsPage'));
 const SchoolStudentDetailPage = lazy(() => import('@/features/students/pages/SchoolStudentDetailPage'));
 const SchoolFeesPage = lazy(() => import('@/features/fees/pages/SchoolFeesPage'));
+const SchoolGradesPage = lazy(() => import('@/features/school-portal/pages/SchoolGradesPage'));
+const SchoolGradeDetailPage = lazy(() => import('@/features/school-portal/pages/SchoolGradeDetailPage'));
+const SchoolStaffPage = lazy(() => import('@/features/school-portal/pages/SchoolStaffPage'));
 
 export const routes: RouteObject[] = [
   // Public routes (guest only)
@@ -74,11 +77,16 @@ export const routes: RouteObject[] = [
             children: [
               { path: ROUTES.SCHOOL.DASHBOARD, element: <SchoolDashboardPage /> },
               { path: ROUTES.SCHOOL.SETUP, element: <SetupWizardPage /> },
+              { path: ROUTES.SCHOOL.GRADES.LIST, element: <SchoolGradesPage /> },
+              { path: ROUTES.SCHOOL.GRADES.DETAIL, element: <SchoolGradeDetailPage /> },
               { path: ROUTES.SCHOOL.STUDENTS.LIST, element: <SchoolStudentsPage /> },
               { path: ROUTES.SCHOOL.STUDENTS.DETAIL, element: <SchoolStudentDetailPage /> },
               { path: ROUTES.SCHOOL.FEES, element: <SchoolFeesPage /> },
+              { path: ROUTES.SCHOOL.FEE_STRUCTURES.DETAIL, element: <FeeStructureDetailPage /> },
+              { path: ROUTES.SCHOOL.FEE_INSTANCES.DETAIL, element: <FeeInstanceDetailPage /> },
               { path: ROUTES.SCHOOL.PAYMENTS, element: <SchoolPaymentsPage /> },
               { path: ROUTES.SCHOOL.REPORTS, element: <SchoolReportsPage /> },
+              { path: ROUTES.SCHOOL.STAFF, element: <SchoolStaffPage /> },
               { path: ROUTES.SCHOOL.SETTINGS, element: <SchoolSettingsPage /> },
             ],
           },

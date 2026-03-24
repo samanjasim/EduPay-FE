@@ -5,6 +5,7 @@ export interface GradeSummaryDto {
   sortOrder: number;
   isActive: boolean;
   sectionCount: number;
+  studentCount: number;
   createdAt: string;
 }
 
@@ -54,6 +55,30 @@ export interface UpdateSectionData {
 
 export interface ToggleStatusData {
   isActive: boolean;
+}
+
+export interface SectionWithStatsDto {
+  id: string;
+  name: string;
+  capacity: number | null;
+  isActive: boolean;
+  studentCount: number;
+  capacityUsagePercent: number;
+}
+
+export interface GradeWithStatsDto {
+  id: string;
+  schoolId: string;
+  name: string;
+  sortOrder: number;
+  isActive: boolean;
+  sectionCount: number;
+  studentCount: number;
+  paidFeesAmount: number;
+  unpaidFeesAmount: number;
+  sections: SectionWithStatsDto[];
+  createdAt: string;
+  modifiedAt: string | null;
 }
 
 export interface GradeListParams {

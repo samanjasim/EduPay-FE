@@ -1,12 +1,21 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { ROUTES } from '@/config';
 
-export function WizardComplete() {
+interface WizardCompleteProps {
+  onComplete?: () => void;
+}
+
+export function WizardComplete({ onComplete }: WizardCompleteProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onComplete?.();
+  }, [onComplete]);
 
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">

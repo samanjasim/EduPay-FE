@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,7 +49,11 @@ export default function FeeStructureDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { hasPermission } = usePermissions();
+  const isSchoolPortal = location.pathname.startsWith('/school/');
+  const backTo = isSchoolPortal ? ROUTES.SCHOOL.FEES : ROUTES.FEE_STRUCTURES.LIST;
+  const backLabel = isSchoolPortal ? t('schoolPortal.nav.fees') : t('feeStructures.backToList');
   const { data: feeStructure, isLoading } = useFeeStructure(id!);
 
   const { mutate: deleteMutation, isPending: isDeleting } = useDeleteFeeStructure();
@@ -92,8 +96,8 @@ export default function FeeStructureDetailPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        backTo={ROUTES.FEE_STRUCTURES.LIST}
-        backLabel={t('feeStructures.backToList')}
+        backTo={backTo}
+        backLabel={backLabel}
       />
 
       {/* Header Card */}
