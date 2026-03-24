@@ -55,6 +55,8 @@ export const ROUTES = {
   // Parents
   PARENTS: {
     LIST: '/parents',
+    DETAIL: '/parents/:parentUserId',
+    getDetail: (id: string) => `/parents/${id}`,
   },
 
   // Parent Fees (self-service)
@@ -77,6 +79,38 @@ export const ROUTES = {
     LIST: '/fee-instances',
     DETAIL: '/fee-instances/:id',
     getDetail: (id: string) => `/fee-instances/${id}`,
+  },
+
+  // Notifications
+  NOTIFICATIONS: {
+    LIST: '/notifications',
+    DETAIL: '/notifications/:id',
+    SEND: '/notifications/send',
+    getDetail: (id: string) => `/notifications/${id}`,
+  },
+
+  // Subscription Plans
+  PLANS: {
+    LIST: '/plans',
+    CREATE: '/plans/new',
+    DETAIL: '/plans/:id',
+    EDIT: '/plans/:id/edit',
+    getDetail: (id: string) => `/plans/${id}`,
+    getEdit: (id: string) => `/plans/${id}/edit`,
+  },
+
+  // File Management
+  FILES: '/files',
+  FILE_CATEGORIES: '/files/categories',
+
+  // Products
+  PRODUCTS: {
+    LIST: '/products',
+    CREATE: '/products/new',
+    DETAIL: '/products/:id',
+    EDIT: '/products/:id/edit',
+    getDetail: (id: string) => `/products/${id}`,
+    getEdit: (id: string) => `/products/${id}/edit`,
   },
 
   // Placeholder pages

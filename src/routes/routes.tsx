@@ -27,12 +27,26 @@ const GradeDetailPage = lazy(() => import('@/features/grades/pages/GradeDetailPa
 const StudentsListPage = lazy(() => import('@/features/students/pages/StudentsListPage'));
 const StudentDetailPage = lazy(() => import('@/features/students/pages/StudentDetailPage'));
 const ParentsListPage = lazy(() => import('@/features/parents/pages/ParentsListPage'));
+const ParentDetailPage = lazy(() => import('@/features/parents/pages/ParentDetailPage'));
 const FeeTypesListPage = lazy(() => import('@/features/fee-types/pages/FeeTypesListPage'));
 const FeeStructuresListPage = lazy(() => import('@/features/fees/pages/FeeStructuresListPage'));
 const FeeStructureDetailPage = lazy(() => import('@/features/fees/pages/FeeStructureDetailPage'));
 const FeeInstancesListPage = lazy(() => import('@/features/fees/pages/FeeInstancesListPage'));
 const FeeInstanceDetailPage = lazy(() => import('@/features/fees/pages/FeeInstanceDetailPage'));
 const ParentFeeDashboardPage = lazy(() => import('@/features/parents/pages/ParentFeeDashboardPage'));
+const NotificationsPage = lazy(() => import('@/features/notifications/pages/NotificationsPage'));
+const NotificationDetailPage = lazy(() => import('@/features/notifications/pages/NotificationDetailPage'));
+const SendNotificationPage = lazy(() => import('@/features/notifications/pages/SendNotificationPage'));
+const PlansListPage = lazy(() => import('@/features/plans/pages/PlansListPage'));
+const PlanCreatePage = lazy(() => import('@/features/plans/pages/PlanCreatePage'));
+const PlanDetailPage = lazy(() => import('@/features/plans/pages/PlanDetailPage'));
+const PlanEditPage = lazy(() => import('@/features/plans/pages/PlanEditPage'));
+const FilesPage = lazy(() => import('@/features/files/pages/FilesPage'));
+const FileCategoriesPage = lazy(() => import('@/features/files/pages/FileCategoriesPage'));
+const ProductsListPage = lazy(() => import('@/features/products/pages/ProductsListPage'));
+const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
+const ProductCreatePage = lazy(() => import('@/features/products/pages/ProductCreatePage'));
+const ProductEditPage = lazy(() => import('@/features/products/pages/ProductEditPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
@@ -181,6 +195,7 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Students.ManageParents} />,
             children: [
               { path: ROUTES.PARENTS.LIST, element: <ParentsListPage /> },
+              { path: ROUTES.PARENTS.DETAIL, element: <ParentDetailPage /> },
             ],
           },
 
@@ -203,6 +218,62 @@ export const routes: RouteObject[] = [
               { path: ROUTES.FEE_STRUCTURES.DETAIL, element: <FeeStructureDetailPage /> },
               { path: ROUTES.FEE_INSTANCES.LIST, element: <FeeInstancesListPage /> },
               { path: ROUTES.FEE_INSTANCES.DETAIL, element: <FeeInstanceDetailPage /> },
+            ],
+          },
+
+          // Notifications
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Notifications.View} />,
+            children: [
+              { path: ROUTES.NOTIFICATIONS.LIST, element: <NotificationsPage /> },
+              { path: ROUTES.NOTIFICATIONS.DETAIL, element: <NotificationDetailPage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Notifications.Send} />,
+            children: [
+              { path: ROUTES.NOTIFICATIONS.SEND, element: <SendNotificationPage /> },
+            ],
+          },
+
+          // Subscription Plans
+          {
+            element: <PermissionGuard permission={PERMISSIONS.System.ViewDashboard} />,
+            children: [
+              { path: ROUTES.PLANS.LIST, element: <PlansListPage /> },
+              { path: ROUTES.PLANS.CREATE, element: <PlanCreatePage /> },
+              { path: ROUTES.PLANS.DETAIL, element: <PlanDetailPage /> },
+              { path: ROUTES.PLANS.EDIT, element: <PlanEditPage /> },
+            ],
+          },
+
+          // Files
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Files.View} />,
+            children: [
+              { path: ROUTES.FILES, element: <FilesPage /> },
+              { path: ROUTES.FILE_CATEGORIES, element: <FileCategoriesPage /> },
+            ],
+          },
+
+          // Products
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.View} />,
+            children: [
+              { path: ROUTES.PRODUCTS.LIST, element: <ProductsListPage /> },
+              { path: ROUTES.PRODUCTS.DETAIL, element: <ProductDetailPage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.Create} />,
+            children: [
+              { path: ROUTES.PRODUCTS.CREATE, element: <ProductCreatePage /> },
+            ],
+          },
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Products.Update} />,
+            children: [
+              { path: ROUTES.PRODUCTS.EDIT, element: <ProductEditPage /> },
             ],
           },
 

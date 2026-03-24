@@ -16,6 +16,11 @@ import {
   Receipt,
   ClipboardList,
   Wallet,
+  UserCheck,
+  Bell,
+  Package,
+  FileText,
+  Layers,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -67,6 +72,18 @@ export function Sidebar() {
       : []),
     ...((isParent || hasPermission(PERMISSIONS.Fees.View))
       ? [{ label: t('nav.myFees'), icon: Wallet, path: ROUTES.PARENT_FEES }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Products.View)
+      ? [{ label: t('nav.products'), icon: Package, path: ROUTES.PRODUCTS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.System.ViewDashboard)
+      ? [{ label: t('nav.plans'), icon: Layers, path: ROUTES.PLANS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Notifications.View)
+      ? [{ label: t('nav.notifications'), icon: Bell, path: ROUTES.NOTIFICATIONS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Files.View)
+      ? [{ label: t('nav.files'), icon: FileText, path: ROUTES.FILES }]
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]
