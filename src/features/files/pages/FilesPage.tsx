@@ -193,9 +193,9 @@ function FilesTab() {
                         <td className="px-4 py-3.5 text-text-muted">{format(new Date(file.createdAt), 'MMM d, yyyy')}</td>
                         <td className="px-4 py-3.5">
                           <div className="flex items-center justify-end gap-1">
-                            <a href={filesApi.downloadFile(file.id)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-md p-1.5 text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors">
+                            <button onClick={() => filesApi.downloadFile(file.id, file.originalFileName)} className="inline-flex items-center justify-center rounded-md p-1.5 text-text-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors">
                               <Download className="h-4 w-4" />
-                            </a>
+                            </button>
                             <button onClick={() => setDeleteTarget(file.id)} className="inline-flex items-center justify-center rounded-md p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
                               <Trash2 className="h-4 w-4" />
                             </button>

@@ -27,8 +27,19 @@ export const filesApi = {
     });
     return response.data.data;
   },
-  downloadFile: (id: string): string => {
-    return `${apiClient.defaults.baseURL}${API_ENDPOINTS.FILES.DOWNLOAD(id)}`;
+  downloadFile: async (id: string, fileName?: string): Promise<void> => {
+    const response = await apiClient.get(API_ENDPOINTS.FILES.DOWNLOAD(id), {
+      responseType: 'blob',
+    });
+    const blob = new Blob([response.data]);
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName || 'download';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
   },
   deleteFile: async (id: string): Promise<void> => {
     await apiClient.delete(API_ENDPOINTS.FILES.DETAIL(id));
