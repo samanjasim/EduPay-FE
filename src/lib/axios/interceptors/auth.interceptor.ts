@@ -10,9 +10,11 @@ export const setupAuthInterceptor = (client: AxiosInstance): void => {
         config.headers.Authorization = `Bearer ${token}`;
       }
 
-      const activeSchoolId = useUIStore.getState().activeSchoolId;
-      if (activeSchoolId && config.headers) {
-        config.headers['X-School-Id'] = activeSchoolId;
+      if (config.headers && !config.headers['X-School-Id']) {
+        const activeSchoolId = useUIStore.getState().activeSchoolId;
+        if (activeSchoolId) {
+          config.headers['X-School-Id'] = activeSchoolId;
+        }
       }
 
       return config;

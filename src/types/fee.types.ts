@@ -122,6 +122,7 @@ export interface FeeStatusHistoryDto {
 
 export interface FeeInstanceDetailDto {
   id: string;
+  schoolId: string;
   feeStructureId: string;
   feeStructureName: string;
   studentId: string;
@@ -139,6 +140,11 @@ export interface FeeInstanceDetailDto {
   createdAt: string;
   modifiedAt: string | null;
   statusHistory: FeeStatusHistoryDto[];
+  paidOrderId: string | null;
+  paidOrderReceiptNumber: string | null;
+  paidOrderPaymentMethod: string | null;
+  paidByUserId: string | null;
+  paidByUserName: string | null;
 }
 
 export interface FeeInstanceListParams {

@@ -16,6 +16,7 @@ import {
   Receipt,
   ClipboardList,
   Wallet,
+  WalletCards,
   UserCheck,
   Bell,
   Package,
@@ -87,6 +88,12 @@ export function Sidebar() {
       : []),
     ...(hasPermission(PERMISSIONS.Payments.View)
       ? [{ label: t('nav.payments'), icon: CreditCard, path: ROUTES.PAYMENTS }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Wallets.View)
+      ? [{ label: t('nav.wallets'), icon: WalletCards, path: ROUTES.WALLETS.LIST }]
+      : []),
+    ...(hasPermission(PERMISSIONS.Orders.View)
+      ? [{ label: t('nav.orders'), icon: Receipt, path: ROUTES.ORDERS.LIST }]
       : []),
   ];
 

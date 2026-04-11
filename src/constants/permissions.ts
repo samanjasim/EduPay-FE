@@ -81,6 +81,8 @@ export const PERMISSIONS = {
   },
   Wallets: {
     View: 'Wallets.View',
+    Show: 'Wallets.Show',
+    Create: 'Wallets.Create',
     TopUp: 'Wallets.TopUp',
     Manage: 'Wallets.Manage',
   },
@@ -94,12 +96,6 @@ export const PERMISSIONS = {
     View: 'Orders.View',
     Create: 'Orders.Create',
     Cancel: 'Orders.Cancel',
-  },
-  FeeTypes: {
-    View: 'FeeTypes.View',
-    Create: 'FeeTypes.Create',
-    Update: 'FeeTypes.Update',
-    Delete: 'FeeTypes.Delete',
   },
   Notifications: {
     View: 'Notifications.View',

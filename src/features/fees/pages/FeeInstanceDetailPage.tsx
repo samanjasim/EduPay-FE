@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Tag, Ban, XCircle } from 'lucide-react';
+import { Tag, Ban, XCircle, Wallet as WalletIcon, CreditCard } from 'lucide-react';
 import { Card, CardContent, Badge, Spinner, Button, Input, Textarea, Modal, ModalFooter } from '@/components/ui';
-import { PageHeader, InfoField } from '@/components/common';
+import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
 import { useFeeInstance, useApplyDiscount, useWaiveFee, useCancelFee } from '../api';
+import { usePayFeeWithWallet, usePayFeeWithGateway } from '@/features/wallets/api';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
@@ -46,13 +47,18 @@ export default function FeeInstanceDetailPage() {
   const [showDiscountModal, setShowDiscountModal] = useState(false);
   const [showWaiveModal, setShowWaiveModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showPayWithWalletModal, setShowPayWithWalletModal] = useState(false);
 
   const canUpdate = hasPermission(PERMISSIONS.Fees.Update);
+  const canPay = hasPermission(PERMISSIONS.Payments.Create);
+  const { mutate: payWithWallet, isPending: walletPaying } = usePayFeeWithWallet();
+  const { mutate: payWithGateway, isPending: gatewayPaying } = usePayFeeWithGateway();
 
   if (isLoading) return <div className="flex justify-center py-12"><Spinner size="lg" /></div>;
   if (!feeInstance) return <div className="py-12 text-center text-text-muted">{t('common.noResults')}</div>;
 
   const canTakeAction = canUpdate && (feeInstance.status === 'Pending' || feeInstance.status === 'Overdue');
+  const canPayFee = canPay && (feeInstance.status === 'Pending' || feeInstance.status === 'Overdue');
 
   return (
     <div className="space-y-6">
@@ -83,6 +89,59 @@ export default function FeeInstanceDetailPage() {
           {feeInstance.discountReason && <div className="sm:col-span-2"><InfoField label={t('feeInstances.discountReason')}>{feeInstance.discountReason}</InfoField></div>}
         </CardContent>
       </Card>
+
+      {/* Payment Details (when paid) */}
+      {feeInstance.paidOrderId && (
+        <Card>
+          <CardContent>
+            <h3 className="text-sm font-medium text-text-primary mb-4">{t('feeInstances.paymentDetails')}</h3>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <InfoField label={t('feeInstances.receiptNumber')}>
+                <Link
+                  to={ROUTES.ORDERS.getDetail(feeInstance.paidOrderId)}
+                  className="text-primary hover:underline"
+                >
+                  {feeInstance.paidOrderReceiptNumber ?? feeInstance.paidOrderId}
+                </Link>
+              </InfoField>
+              {feeInstance.paidOrderPaymentMethod && (
+                <InfoField label={t('feeInstances.paymentMethod')}>
+                  {feeInstance.paidOrderPaymentMethod}
+                </InfoField>
+              )}
+              {feeInstance.paidByUserName && (
+                <InfoField label={t('feeInstances.paidBy')}>
+                  {feeInstance.paidByUserName}
+                </InfoField>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Payment Buttons */}
+      {canPayFee && (
+        <div className="flex items-center gap-2 flex-wrap">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setShowPayWithWalletModal(true)}
+            isLoading={walletPaying}
+            leftIcon={<WalletIcon className="h-4 w-4" />}
+          >
+            {t('wallets.payWithWallet')}
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => payWithGateway({ feeInstanceId: id!, gateway: 'ZainCash', schoolId: feeInstance.schoolId })}
+            isLoading={gatewayPaying}
+            leftIcon={<CreditCard className="h-4 w-4" />}
+          >
+            {t('wallets.payWithGateway')}
+          </Button>
+        </div>
+      )}
 
       {/* Action Buttons */}
       {canTakeAction && (
@@ -164,6 +223,30 @@ export default function FeeInstanceDetailPage() {
           feeInstanceId={id!}
         />
       )}
+
+      {/* Pay With Wallet Confirm Modal */}
+      <ConfirmModal
+        isOpen={showPayWithWalletModal}
+        onClose={() => setShowPayWithWalletModal(false)}
+        onConfirm={() =>
+          payWithWallet(
+            { feeInstanceId: id!, schoolId: feeInstance.schoolId },
+            {
+              onSuccess: () => setShowPayWithWalletModal(false),
+              onError: () => setShowPayWithWalletModal(false),
+            }
+          )
+        }
+        title={t('wallets.confirmPayWithWalletTitle')}
+        description={t('wallets.confirmPayWithWalletMessage', {
+          amount: feeInstance.remainingAmount.toLocaleString(),
+          feeType: feeInstance.feeTypeName,
+        })}
+        confirmLabel={t('wallets.confirmPayWithWalletAction')}
+        cancelLabel={t('common.cancel')}
+        variant="primary"
+        isLoading={walletPaying}
+      />
     </div>
   );
 }
