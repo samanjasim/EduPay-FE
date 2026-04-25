@@ -48,6 +48,10 @@ const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDe
 const ProductCreatePage = lazy(() => import('@/features/products/pages/ProductCreatePage'));
 const ProductEditPage = lazy(() => import('@/features/products/pages/ProductEditPage'));
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
+const WalletsListPage = lazy(() => import('@/features/wallets/pages/WalletsListPage'));
+const WalletDetailPage = lazy(() => import('@/features/wallets/pages/WalletDetailPage'));
+const OrdersListPage = lazy(() => import('@/features/orders/pages/OrdersListPage'));
+const OrderDetailPage = lazy(() => import('@/features/orders/pages/OrderDetailPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 
 // School Portal pages (lazy-loaded)
@@ -282,6 +286,24 @@ export const routes: RouteObject[] = [
             element: <PermissionGuard permission={PERMISSIONS.Payments.View} />,
             children: [
               { path: ROUTES.PAYMENTS, element: <PaymentsPage /> },
+            ],
+          },
+
+          // Wallets
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Wallets.View} />,
+            children: [
+              { path: ROUTES.WALLETS.LIST, element: <WalletsListPage /> },
+              { path: ROUTES.WALLETS.DETAIL, element: <WalletDetailPage /> },
+            ],
+          },
+
+          // Orders
+          {
+            element: <PermissionGuard permission={PERMISSIONS.Orders.View} />,
+            children: [
+              { path: ROUTES.ORDERS.LIST, element: <OrdersListPage /> },
+              { path: ROUTES.ORDERS.DETAIL, element: <OrderDetailPage /> },
             ],
           },
         ],

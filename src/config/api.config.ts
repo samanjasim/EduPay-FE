@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1',
   TIMEOUT: 30000,
 } as const;
 
@@ -119,5 +119,21 @@ export const API_ENDPOINTS = {
     LIST: '/Products',
     DETAIL: (id: string) => `/Products/${id}`,
     STATUS: (id: string) => `/Products/${id}/status`,
+  },
+  WALLETS: {
+    LIST: '/Wallets',
+    DETAIL: (id: string) => `/Wallets/${id}`,
+    STATUS: (id: string) => `/Wallets/${id}/status`,
+    TOP_UP_CASH: (id: string) => `/Wallets/${id}/top-up/cash`,
+    TOP_UP_GATEWAY: (id: string) => `/Wallets/${id}/top-up/gateway`,
+    TRANSACTIONS: (id: string) => `/Wallets/${id}/transactions`,
+  },
+  FEE_INSTANCE_PAYMENTS: {
+    PAY_WITH_WALLET: (id: string) => `/FeeInstances/${id}/pay/wallet`,
+    PAY_WITH_GATEWAY: (id: string) => `/FeeInstances/${id}/pay/gateway`,
+  },
+  ORDERS: {
+    LIST: '/Orders',
+    DETAIL: (id: string) => `/Orders/${id}`,
   },
 } as const;

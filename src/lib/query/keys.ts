@@ -123,4 +123,22 @@ export const queryKeys = {
     details: () => [...queryKeys.products.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.products.details(), id] as const,
   },
+
+  orders: {
+    all: ['orders'] as const,
+    lists: () => [...queryKeys.orders.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.orders.lists(), filters] as const,
+    details: () => [...queryKeys.orders.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.orders.details(), id] as const,
+  },
+
+  wallets: {
+    all: ['wallets'] as const,
+    lists: () => [...queryKeys.wallets.all, 'list'] as const,
+    list: <T extends object>(filters?: T) => [...queryKeys.wallets.lists(), filters] as const,
+    details: () => [...queryKeys.wallets.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.wallets.details(), id] as const,
+    transactions: <T extends object>(id: string, filters?: T) =>
+      [...queryKeys.wallets.all, 'transactions', id, filters] as const,
+  },
 } as const;

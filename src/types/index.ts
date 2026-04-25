@@ -14,3 +14,4 @@ export * from './order.types';
 export * from './notification.types';
 export * from './file.types';
 export * from './subscription.types';
+export * from './wallet.types';

@@ -113,6 +113,20 @@ export const ROUTES = {
     getEdit: (id: string) => `/products/${id}/edit`,
   },
 
+  // Wallets
+  WALLETS: {
+    LIST: '/wallets',
+    DETAIL: '/wallets/:id',
+    getDetail: (id: string) => `/wallets/${id}`,
+  },
+
+  // Orders
+  ORDERS: {
+    LIST: '/orders',
+    DETAIL: '/orders/:id',
+    getDetail: (id: string) => `/orders/${id}`,
+  },
+
   // Placeholder pages
   PAYMENTS: '/payments',
 
