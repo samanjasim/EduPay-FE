@@ -36,21 +36,18 @@ export const PERMISSIONS = {
   },
   AcademicYears: {
     View: 'AcademicYears.View',
-    Show: 'AcademicYears.Show',
     Create: 'AcademicYears.Create',
     Update: 'AcademicYears.Update',
     Delete: 'AcademicYears.Delete',
   },
   Grades: {
     View: 'Grades.View',
-    Show: 'Grades.Show',
     Create: 'Grades.Create',
     Update: 'Grades.Update',
     Delete: 'Grades.Delete',
   },
   Sections: {
     View: 'Sections.View',
-    Show: 'Sections.Show',
     Create: 'Sections.Create',
     Update: 'Sections.Update',
     Delete: 'Sections.Delete',
@@ -81,7 +78,6 @@ export const PERMISSIONS = {
   },
   Wallets: {
     View: 'Wallets.View',
-    Show: 'Wallets.Show',
     Create: 'Wallets.Create',
     TopUp: 'Wallets.TopUp',
     Manage: 'Wallets.Manage',
