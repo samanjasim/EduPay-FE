@@ -206,3 +206,122 @@ button {
     @apply bg-surface-elevated rounded-lg border border-border p-4 shadow-soft-sm;
   }
 }
+
+/* Landing pages opt into smooth anchor scrolling on the root element */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ==========================================================================
+   Landing-page-specific styles (used only by /features/landing/*)
+   Keep scoped utilities (reveal, glass, kinetic typography, marquee, etc.)
+   isolated here so they don't leak into dashboard pages.
+   ========================================================================== */
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Section container helper */
+.section-pad {
+  padding-top: clamp(3rem, 6vw, 6rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #2563eb 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Aurora hero blobs */
+.aurora { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.aurora::before,
+.aurora::after { content: ""; position: absolute; border-radius: 9999px; filter: blur(80px); opacity: 0.55; }
+.aurora::before { width: 520px; height: 520px; background: radial-gradient(closest-side, #60a5fa, transparent 70%); top: -120px; inset-inline-start: -80px; }
+.aurora::after  { width: 460px; height: 460px; background: radial-gradient(closest-side, #34d399, transparent 70%); bottom: -120px; inset-inline-end: -60px; }
+.dark .aurora::before { opacity: 0.35; }
+.dark .aurora::after  { opacity: 0.35; }
+
+/* Glassy translucent surface */
+.glass {
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+
+/* Hero carousel kinetic animations */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to   { opacity: 1; transform: none;             filter: blur(0);   }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes ken-burns {
+  0%   { transform: scale(1.05) translate3d(0, 0, 0); }
+  100% { transform: scale(1.18) translate3d(-1.5%, -1.5%, 0); }
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes word-cycle-in {
+  0%   { opacity: 0; transform: translateY(28px) rotateX(-40deg); filter: blur(8px); }
+  20%, 80% { opacity: 1; transform: none; filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-28px) rotateX(40deg); filter: blur(8px); }
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+}
+
+.kinetic-word {
+  display: inline-block;
+  animation: word-cycle-in 3.6s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #93c5fd 0%, #ffffff 25%, #6ee7b7 50%, #ffffff 75%, #93c5fd 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+.fade-up      { animation: fade-up 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.fade-in      { animation: fade-in 1200ms ease both; }
+.ken-burns-img{ animation: ken-burns 9000ms ease-out forwards; }
+.marquee-track{ animation: marquee 38s linear infinite; }
+.pulse-ring   { animation: pulse-ring 2s ease-out infinite; }
+
+/* Performance hint for long landing sections */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .kinetic-word, .shimmer-text, .fade-up, .fade-in,
+  .ken-burns-img, .marquee-track, .pulse-ring { animation: none !important; }
+  .shimmer-text { -webkit-text-fill-color: #ffffff; color: #ffffff; }
+}
+

@@ -1,10 +1,13 @@
 export const ROUTES = {
+  // Public marketing
+  LANDING: '/',
+
   // Auth
   LOGIN: '/login',
   REGISTER: '/register',
 
   // Dashboard
-  DASHBOARD: '/',
+  DASHBOARD: '/dashboard',
 
   // Users
   USERS: {
