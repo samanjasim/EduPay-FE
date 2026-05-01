@@ -85,7 +85,7 @@ export interface CreateFeeStructureData {
   lateFeePercentage?: number;
 }
 
-export interface UpdateFeeStructureData extends CreateFeeStructureData {}
+export type UpdateFeeStructureData = CreateFeeStructureData;
 
 export interface UpdateFeeStructureStatusData {
   status: FeeStructureStatus;
@@ -109,6 +109,9 @@ export interface FeeInstanceSummaryDto {
   dueDate: string;
   paidAt: string | null;
   createdAt: string;
+  paymentPlanId?: string | null;
+  sourcePlanId?: string | null;
+  surchargeReason?: string | null;
 }
 
 export interface FeeStatusHistoryDto {
@@ -145,6 +148,9 @@ export interface FeeInstanceDetailDto {
   paidOrderPaymentMethod: string | null;
   paidByUserId: string | null;
   paidByUserName: string | null;
+  paymentPlanId?: string | null;
+  sourcePlanId?: string | null;
+  surchargeReason?: string | null;
 }
 
 export interface FeeInstanceListParams {
