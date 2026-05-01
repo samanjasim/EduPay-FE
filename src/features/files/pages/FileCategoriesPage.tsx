@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FolderOpen, Plus, Pencil, Trash2, Check, X, Languages,
+  FolderOpen, Plus, Pencil, Trash2, Check, Languages,
 } from 'lucide-react';
 import {
   Card, CardContent, CardHeader, CardTitle,

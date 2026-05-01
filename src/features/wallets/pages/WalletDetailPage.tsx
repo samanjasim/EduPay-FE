@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Wallet as WalletIcon, Plus, CreditCard, Settings, Trash2, Snowflake, Play, Ban } from 'lucide-react';
+import { Plus, CreditCard, Settings, Trash2, Snowflake, Play, Ban } from 'lucide-react';
 import { Card, CardContent, Badge, Spinner, Button } from '@/components/ui';
 import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
 import { format } from 'date-fns';

@@ -229,11 +229,7 @@ export default function ProductsListPage() {
 
           {pagination && pagination.totalPages > 1 && (
             <div className="flex justify-center">
-              <Pagination
-                currentPage={pagination.pageNumber}
-                totalPages={pagination.totalPages}
-                onPageChange={setPage}
-              />
+              <Pagination pagination={pagination} onPageChange={setPage} />
             </div>
           )}
         </>

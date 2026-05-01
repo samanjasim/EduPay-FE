@@ -207,7 +207,7 @@ function FilesTab() {
                 </table>
               </div>
               {pagination && pagination.totalPages > 1 && (
-                <div className="mt-4 flex justify-center"><Pagination currentPage={pagination.pageNumber} totalPages={pagination.totalPages} onPageChange={setPage} /></div>
+                <div className="mt-4 flex justify-center"><Pagination pagination={pagination} onPageChange={setPage} /></div>
               )}
             </>
           )}
@@ -469,7 +469,7 @@ function AuditTab() {
                 </table>
               </div>
               {pagination && pagination.totalPages > 1 && (
-                <div className="mt-4 flex justify-center"><Pagination currentPage={pagination.pageNumber} totalPages={pagination.totalPages} onPageChange={setPage} /></div>
+                <div className="mt-4 flex justify-center"><Pagination pagination={pagination} onPageChange={setPage} /></div>
               )}
             </>
           )}

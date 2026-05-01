@@ -6,7 +6,7 @@ import {
   Monitor, Smartphone, Mail, AlertCircle, CreditCard,
   ShoppingCart, Wallet, Search, Check, ChevronRight,
 } from 'lucide-react';
-import { Card, CardContent, Button, Input, Textarea, Select, Spinner, Badge } from '@/components/ui';
+import { Card, CardContent, Button, Input, Textarea, Spinner, Badge } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useBulkSendNotification } from '../api';
 import { useUsers } from '@/features/users/api';
@@ -82,7 +82,7 @@ export default function SendNotificationPage() {
         roleNames: audienceType === 'Roles' ? [...selectedRoles] : undefined,
         schoolId: audienceType === 'School' ? selectedSchoolId : undefined,
       });
-      navigate(ROUTES.NOTIFICATIONS);
+      navigate(ROUTES.NOTIFICATIONS.LIST);
     } catch {
       // handled by mutation
     }
@@ -93,7 +93,7 @@ export default function SendNotificationPage() {
       <PageHeader
         title={t('send.title')}
         subtitle={t('send.subtitle')}
-        backTo={ROUTES.NOTIFICATIONS}
+        backTo={ROUTES.NOTIFICATIONS.LIST}
         backLabel={t('send.backToNotifications')}
       />
 
@@ -159,7 +159,6 @@ export default function SendNotificationPage() {
           audienceType={audienceType}
           selectedUserIds={selectedUserIds}
           selectedRoles={selectedRoles}
-          selectedSchoolId={selectedSchoolId}
           channel={channel}
           refType={refType}
           title={title}
@@ -177,7 +176,7 @@ export default function SendNotificationPage() {
           )}
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="secondary" onClick={() => navigate(ROUTES.NOTIFICATIONS)}>
+          <Button variant="secondary" onClick={() => navigate(ROUTES.NOTIFICATIONS.LIST)}>
             {t('common.cancel')}
           </Button>
           {step === 'audience' && (
@@ -562,13 +561,12 @@ function ContentStep({
 /* ─── Step 3: Review ─── */
 
 function ReviewStep({
-  audienceType, selectedUserIds, selectedRoles, selectedSchoolId,
+  audienceType, selectedUserIds, selectedRoles,
   channel, refType, title, body,
 }: {
   audienceType: NotificationAudienceType;
   selectedUserIds: Set<string>;
   selectedRoles: Set<string>;
-  selectedSchoolId: string;
   channel: NotificationChannel;
   refType: NotificationReferenceType | '';
   title: string;

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Package, Info, DollarSign, Calendar, Tag, School } from 'lucide-react';
-import { Card, CardContent, Button, Input, Textarea, Select, Spinner } from '@/components/ui';
+import { Package, Info, DollarSign, Calendar, School } from 'lucide-react';
+import { Card, CardContent, Button, Input, Textarea, Select } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useCreateProduct } from '../api';
 import { useSchools } from '@/features/schools/api';

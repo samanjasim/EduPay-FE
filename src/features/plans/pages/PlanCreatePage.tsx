@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { CreditCard, DollarSign, Settings, Info } from 'lucide-react';
+import { CreditCard, DollarSign, Settings } from 'lucide-react';
 import { Card, CardContent, Button, Input, Textarea, Select } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useCreatePlan } from '../api';

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Package, Info, DollarSign, Calendar, Tag } from 'lucide-react';
+import { Package, DollarSign, Calendar } from 'lucide-react';
 import { Card, CardContent, Button, Input, Textarea, Select, Spinner, Badge } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useProduct, useUpdateProduct, useUpdateProductStatus } from '../api';

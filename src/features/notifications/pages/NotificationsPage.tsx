@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Bell, CheckCheck, Mail, MailOpen, Smartphone, Monitor, Send, Search,
   CreditCard, Wallet, School, ShoppingCart, Clock, AlertCircle, Inbox, Users,
-  ChevronDown, ChevronUp, Filter, Eye, EyeOff,
+  ChevronDown, ChevronUp, Eye, EyeOff,
 } from 'lucide-react';
 import { Card, CardContent, Badge, Spinner, Button, Pagination, Input, Select } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
@@ -174,7 +174,7 @@ function InboxTab() {
         : notifications.length === 0 ? <EmptyState icon={Bell} title={t('notifications.emptyTitle')} />
         : <div className="space-y-3">{notifications.map((n) => <NotificationCard key={n.id} notification={n} onMarkAsRead={() => markAsRead(n.id)} isMarkingRead={isMarkingRead} />)}</div>}
 
-      {pagination && pagination.totalPages > 1 && <div className="flex justify-center"><Pagination currentPage={pagination.pageNumber} totalPages={pagination.totalPages} onPageChange={setPage} /></div>}
+      {pagination && pagination.totalPages > 1 && <div className="flex justify-center"><Pagination pagination={pagination} onPageChange={setPage} /></div>}
     </div>
   );
 }
@@ -302,7 +302,7 @@ function SentTab() {
                 </tbody>
               </table>
             </div>
-            {pagination && pagination.totalPages > 1 && <div className="mt-4 flex justify-center"><Pagination currentPage={pagination.pageNumber} totalPages={pagination.totalPages} onPageChange={setPage} /></div>}
+            {pagination && pagination.totalPages > 1 && <div className="mt-4 flex justify-center"><Pagination pagination={pagination} onPageChange={setPage} /></div>}
           </>
         )}
       </CardContent></Card>

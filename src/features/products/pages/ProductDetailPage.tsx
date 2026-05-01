@@ -3,11 +3,11 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Package, Pencil, Trash2, Tag, DollarSign,
-  Calendar, Users, Hash, Clock,
+  Calendar, Hash,
 } from 'lucide-react';
 import { Card, CardContent, Badge, Spinner, Button } from '@/components/ui';
 import { PageHeader, InfoField, ConfirmModal } from '@/components/common';
-import { useProduct, useDeleteProduct, useUpdateProductStatus } from '../api';
+import { useProduct, useDeleteProduct } from '../api';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
