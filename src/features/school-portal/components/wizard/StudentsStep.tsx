@@ -15,11 +15,6 @@ interface StudentInput {
   gender: Gender;
 }
 
-const GENDER_OPTIONS = [
-  { value: 'Male', label: 'Male' },
-  { value: 'Female', label: 'Female' },
-];
-
 interface StudentsStepProps {
   onNext: () => void;
   onBack: () => void;
@@ -36,6 +31,10 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
 
   const grades = gradesData?.data ?? [];
   const gradeOptions = grades.map((g) => ({ value: g.id, label: g.name }));
+  const genderOptions = [
+    { value: 'Male', label: t('students.male') },
+    { value: 'Female', label: t('students.female') },
+  ];
 
   const addStudent = () => {
     setStudents([
@@ -69,7 +68,7 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
 
     const invalid = students.filter((s) => !s.fullNameAr.trim() || !s.studentCode.trim() || !s.gradeId);
     if (invalid.length > 0) {
-      setError('Each student must have an Arabic name, student code, and grade.');
+      setError(t('schoolPortal.setup.students.validationRequired'));
       return;
     }
 
@@ -90,7 +89,7 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
       }
       onNext();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create students');
+      setError(err instanceof Error ? err.message : t('schoolPortal.setup.students.createFailed'));
     } finally {
       setSaving(false);
     }
@@ -103,9 +102,9 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
           <Plus className="h-4 w-4 ltr:mr-1 rtl:ml-1" />
           {t('students.addStudent')}
         </Button>
-        <Button variant="outline" size="sm" disabled title="Coming soon — CSV import is not yet available">
+        <Button variant="outline" size="sm" disabled title={t('schoolPortal.setup.students.importComingSoon')}>
           <Upload className="h-4 w-4 ltr:mr-1 rtl:ml-1" />
-          Import CSV
+          {t('schoolPortal.setup.students.importCsv')}
         </Button>
       </div>
 
@@ -113,8 +112,8 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
         {students.map((student, i) => (
           <Card key={i}>
             <div className="p-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-text-muted w-6">#{i + 1}</span>
+              <div className="grid gap-2 lg:grid-cols-[auto_1fr_1fr_auto] lg:items-center">
+                <span className="w-8 text-xs font-medium text-text-muted">#{i + 1}</span>
                 <Input
                   value={student.fullNameAr}
                   onChange={(e) => updateStudent(i, 'fullNameAr', e.target.value)}
@@ -150,7 +149,7 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
                   onChange={(e) => updateStudent(i, 'dateOfBirth', e.target.value)}
                 />
                 <Select
-                  options={GENDER_OPTIONS}
+                  options={genderOptions}
                   value={student.gender}
                   onChange={(v) => updateStudent(i, 'gender', v as Gender)}
                 />
@@ -162,13 +161,13 @@ export function StudentsStep({ onNext, onBack, onSkip }: StudentsStepProps) {
 
       {students.length === 0 && (
         <p className="text-center text-sm text-text-muted py-8">
-          No students added. You can add them now or skip and do it later.
+          {t('schoolPortal.setup.students.empty')}
         </p>
       )}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
         <Button variant="outline" onClick={onBack}>{t('schoolPortal.setup.back')}</Button>
         <div className="flex gap-2">
           <Button variant="outline" onClick={onSkip}>{t('schoolPortal.setup.skip')}</Button>

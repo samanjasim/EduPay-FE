@@ -25,6 +25,7 @@ interface SchoolSidebarProps {
 
 export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
   const { t } = useTranslation();
+  const displaySchoolName = schoolName || t('schoolPortal.title');
   const isCollapsed = useUIStore(selectSidebarCollapsed);
   const toggleCollapse = useUIStore((state) => state.toggleSidebarCollapse);
   const { hasPermission, hasAnyPermission, hasAllPermissions } = usePermissions();
@@ -59,17 +60,17 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
       )}
     >
       {/* School branding */}
-      <div className="flex h-16 items-center justify-between border-b border-border px-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-500/20">
+      <div className="flex h-16 min-w-0 items-center justify-between overflow-hidden border-b border-border px-4">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-500/20">
             <GraduationCap className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
           </div>
           {!isCollapsed && (
-            <div className="min-w-0">
-              <span className="block truncate text-sm font-bold text-text-primary">
-                {schoolName || t('schoolPortal.title')}
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <span className="block truncate text-sm font-bold text-text-primary" title={displaySchoolName}>
+                {displaySchoolName}
               </span>
-              <span className="text-xs text-text-muted">{t('schoolPortal.subtitle')}</span>
+              <span className="block truncate text-xs text-text-muted">{t('schoolPortal.subtitle')}</span>
             </div>
           )}
         </div>
@@ -85,7 +86,7 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
                 end={item.path === ROUTES.SCHOOL.DASHBOARD}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                    'flex min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                     isActive
                       ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
                       : 'text-text-secondary hover:bg-hover hover:text-text-primary'
@@ -93,7 +94,7 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
                 }
               >
                 <item.icon className="h-5 w-5 shrink-0" />
-                {!isCollapsed && <span>{item.label}</span>}
+                {!isCollapsed && <span className="min-w-0 truncate">{item.label}</span>}
               </NavLink>
             </li>
           ))}
@@ -115,7 +116,7 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
               !isCollapsed && 'rtl:rotate-180'
             )}
           />
-          {!isCollapsed && <span className="ltr:ml-2 rtl:mr-2">{t('nav.collapse')}</span>}
+          {!isCollapsed && <span className="min-w-0 truncate ltr:ml-2 rtl:mr-2">{t('nav.collapse')}</span>}
         </Button>
       </div>
     </aside>

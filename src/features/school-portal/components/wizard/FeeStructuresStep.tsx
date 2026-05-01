@@ -16,14 +16,6 @@ interface FeeInput {
   dueDate: string;
 }
 
-const FREQUENCY_OPTIONS = [
-  { value: 'OneTime', label: 'One Time' },
-  { value: 'Monthly', label: 'Monthly' },
-  { value: 'Quarterly', label: 'Quarterly' },
-  { value: 'Semester', label: 'Semester' },
-  { value: 'Annual', label: 'Annual' },
-];
-
 interface FeeStructuresStepProps {
   onNext: () => void;
   onBack: () => void;
@@ -43,6 +35,13 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
   const feeTypes = feeTypesData?.data ?? [];
   const feeTypeOptions = feeTypes.map((ft) => ({ value: ft.id, label: ft.name }));
   const hasAcademicYear = setupStatus?.academicYearLinked;
+  const frequencyOptions = [
+    { value: 'OneTime', label: t('feeStructures.freq_OneTime') },
+    { value: 'Monthly', label: t('feeStructures.freq_Monthly') },
+    { value: 'Quarterly', label: t('feeStructures.freq_Quarterly') },
+    { value: 'Semester', label: t('feeStructures.freq_Semester') },
+    { value: 'Annual', label: t('feeStructures.freq_Annual') },
+  ];
 
   const addFee = () => {
     setFees([
@@ -75,7 +74,7 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
 
     const invalid = fees.filter((f) => !f.name.trim() || !f.feeTypeId || !f.amount || !f.dueDate);
     if (invalid.length > 0) {
-      setError('All fee structures must have a name, type, amount, and due date.');
+      setError(t('schoolPortal.setup.fees.validationRequired'));
       return;
     }
 
@@ -96,7 +95,7 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
       }
       onNext();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create fee structures');
+      setError(err instanceof Error ? err.message : t('schoolPortal.setup.fees.createFailed'));
     } finally {
       setSaving(false);
     }
@@ -108,13 +107,15 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
         <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
           <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">No academic year linked</p>
+            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+              {t('schoolPortal.setup.fees.noAcademicYear')}
+            </p>
             <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
-              Fee structures require an academic year. Please ask your platform admin to create and link an academic year to your school.
+              {t('schoolPortal.setup.fees.noAcademicYearDesc')}
             </p>
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
           <Button variant="outline" onClick={onBack}>{t('schoolPortal.setup.back')}</Button>
           <Button variant="outline" onClick={onSkip}>{t('schoolPortal.setup.skip')}</Button>
         </div>
@@ -128,14 +129,14 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
         <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
           <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <p className="text-sm text-amber-700 dark:text-amber-400">
-            No fee types available. Ask your platform admin to create fee types first.
+            {t('schoolPortal.setup.fees.noFeeTypes')}
           </p>
         </div>
       )}
 
       <Button variant="outline" size="sm" onClick={addFee} disabled={feeTypes.length === 0}>
         <Plus className="h-4 w-4 ltr:mr-1 rtl:ml-1" />
-        Add Fee Structure
+        {t('feeStructures.createFeeStructure')}
       </Button>
 
       <div className="space-y-3">
@@ -146,7 +147,7 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
                 <Input
                   value={fee.name}
                   onChange={(e) => updateFee(i, 'name', e.target.value)}
-                  placeholder="Fee name (e.g., Annual Tuition)"
+                  placeholder={t('schoolPortal.setup.fees.namePlaceholder')}
                   className="flex-1"
                 />
                 <Button variant="ghost" size="sm" onClick={() => removeFee(i)}>
@@ -167,7 +168,7 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
                   placeholder={t('feeStructures.amount')}
                 />
                 <Select
-                  options={FREQUENCY_OPTIONS}
+                  options={frequencyOptions}
                   value={fee.frequency}
                   onChange={(v) => updateFee(i, 'frequency', v as FeeFrequency)}
                 />
@@ -184,13 +185,13 @@ export function FeeStructuresStep({ onNext, onBack, onSkip }: FeeStructuresStepP
 
       {fees.length === 0 && (
         <p className="text-center text-sm text-text-muted py-8">
-          No fee structures added. You can add them now or skip and do it later.
+          {t('schoolPortal.setup.fees.empty')}
         </p>
       )}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
         <Button variant="outline" onClick={onBack}>{t('schoolPortal.setup.back')}</Button>
         <div className="flex gap-2">
           <Button variant="outline" onClick={onSkip}>{t('schoolPortal.setup.skip')}</Button>

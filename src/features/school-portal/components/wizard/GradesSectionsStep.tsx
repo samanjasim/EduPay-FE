@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Plus, Trash2, ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
 import { Button, Input, Card, Badge } from '@/components/ui';
 import { useGrades, useCreateGrade } from '@/features/grades/api';
@@ -26,41 +26,42 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
   const { t } = useTranslation();
   const createGrade = useCreateGrade();
   const { data: existingGradesData } = useGrades({ pageSize: 100 });
-  const existingGrades = existingGradesData?.data ?? [];
+  const existingGrades = useMemo(() => existingGradesData?.data ?? [], [existingGradesData?.data]);
 
-  const [grades, setGrades] = useState<GradeInput[]>([]);
+  const [draftGrades, setDraftGrades] = useState<GradeInput[]>([]);
+  const [expandedExistingGrades, setExpandedExistingGrades] = useState<Set<string>>(new Set());
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
-  const [initialized, setInitialized] = useState(false);
+  const existingGradeInputs = useMemo<GradeInput[]>(() =>
+    existingGrades.map((g) => ({
+      name: g.name,
+      sortOrder: g.sortOrder ?? 0,
+      sections: Array.from({ length: g.sectionCount ?? 0 }, (_, i) => ({
+        name: String.fromCharCode(65 + i), // A, B, C...
+        capacity: null,
+      })),
+      expanded: expandedExistingGrades.has(g.name),
+      existsInDb: true,
+    })),
+    [existingGrades, expandedExistingGrades]
+  );
+  const grades = useMemo(() => [...existingGradeInputs, ...draftGrades], [draftGrades, existingGradeInputs]);
+  const existingGradeCount = existingGradeInputs.length;
 
-  // Pre-populate with existing grades from DB
-  useEffect(() => {
-    if (existingGrades.length > 0 && !initialized) {
-      const existing: GradeInput[] = existingGrades.map((g) => ({
-        name: g.name,
-        sortOrder: g.sortOrder ?? 0,
-        sections: Array.from({ length: g.sectionCount ?? 0 }, (_, i) => ({
-          name: String.fromCharCode(65 + i), // A, B, C...
-          capacity: null,
-        })),
-        expanded: false,
-        existsInDb: true,
-      }));
-      setGrades(existing);
-      setInitialized(true);
-    } else if (existingGrades.length === 0 && existingGradesData) {
-      setInitialized(true);
-    }
-  }, [existingGrades, existingGradesData, initialized]);
+  const updateDraftGrade = (index: number, updater: (grade: GradeInput) => GradeInput) => {
+    const draftIndex = index - existingGradeCount;
+    if (draftIndex < 0) return;
+    setDraftGrades((prev) => prev.map((grade, i) => (i === draftIndex ? updater(grade) : grade)));
+  };
 
   // Summary counts
   const totalSections = useMemo(() => grades.reduce((sum, g) => sum + g.sections.length, 0), [grades]);
   const newGradesCount = useMemo(() => grades.filter((g) => !g.existsInDb).length, [grades]);
 
   const addGrade = () => {
-    setGrades([
-      ...grades,
+    setDraftGrades((prev) => [
+      ...prev,
       {
         name: '',
         sortOrder: grades.length + 1,
@@ -73,66 +74,73 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
 
   const removeGrade = (index: number) => {
     if (grades[index].existsInDb) return; // Can't remove existing grades from wizard
-    setGrades(grades.filter((_, i) => i !== index));
+    const draftIndex = index - existingGradeCount;
+    setDraftGrades(draftGrades.filter((_, i) => i !== draftIndex));
   };
 
   const updateGradeName = (index: number, name: string) => {
     if (grades[index].existsInDb) return;
-    const updated = [...grades];
-    updated[index] = { ...updated[index], name };
-    setGrades(updated);
+    updateDraftGrade(index, (grade) => ({ ...grade, name }));
   };
 
   const updateGradeSortOrder = (index: number, sortOrder: number) => {
     if (grades[index].existsInDb) return;
-    const updated = [...grades];
-    updated[index] = { ...updated[index], sortOrder };
-    setGrades(updated);
+    updateDraftGrade(index, (grade) => ({ ...grade, sortOrder }));
   };
 
   const toggleExpand = (index: number) => {
-    const updated = [...grades];
-    updated[index] = { ...updated[index], expanded: !updated[index].expanded };
-    setGrades(updated);
+    if (grades[index].existsInDb) {
+      const gradeName = grades[index].name;
+      setExpandedExistingGrades((prev) => {
+        const next = new Set(prev);
+        if (next.has(gradeName)) {
+          next.delete(gradeName);
+        } else {
+          next.add(gradeName);
+        }
+        return next;
+      });
+      return;
+    }
+
+    updateDraftGrade(index, (grade) => ({ ...grade, expanded: !grade.expanded }));
   };
 
   const addSection = (gradeIndex: number) => {
     if (grades[gradeIndex].existsInDb) return;
-    const updated = [...grades];
-    const nextLetter = String.fromCharCode(65 + updated[gradeIndex].sections.length);
-    updated[gradeIndex] = {
-      ...updated[gradeIndex],
-      sections: [...updated[gradeIndex].sections, { name: nextLetter, capacity: null }],
-    };
-    setGrades(updated);
+    updateDraftGrade(gradeIndex, (grade) => {
+      const nextLetter = String.fromCharCode(65 + grade.sections.length);
+      return {
+        ...grade,
+        sections: [...grade.sections, { name: nextLetter, capacity: null }],
+      };
+    });
   };
 
   const removeSection = (gradeIndex: number, sectionIndex: number) => {
     if (grades[gradeIndex].existsInDb) return;
-    const updated = [...grades];
-    updated[gradeIndex] = {
-      ...updated[gradeIndex],
-      sections: updated[gradeIndex].sections.filter((_, i) => i !== sectionIndex),
-    };
-    setGrades(updated);
+    updateDraftGrade(gradeIndex, (grade) => ({
+      ...grade,
+      sections: grade.sections.filter((_, i) => i !== sectionIndex),
+    }));
   };
 
   const updateSectionName = (gradeIndex: number, sectionIndex: number, name: string) => {
     if (grades[gradeIndex].existsInDb) return;
-    const updated = [...grades];
-    const sections = [...updated[gradeIndex].sections];
-    sections[sectionIndex] = { ...sections[sectionIndex], name };
-    updated[gradeIndex] = { ...updated[gradeIndex], sections };
-    setGrades(updated);
+    updateDraftGrade(gradeIndex, (grade) => {
+      const sections = [...grade.sections];
+      sections[sectionIndex] = { ...sections[sectionIndex], name };
+      return { ...grade, sections };
+    });
   };
 
   const updateSectionCapacity = (gradeIndex: number, sectionIndex: number, capacity: number | null) => {
     if (grades[gradeIndex].existsInDb) return;
-    const updated = [...grades];
-    const sections = [...updated[gradeIndex].sections];
-    sections[sectionIndex] = { ...sections[sectionIndex], capacity };
-    updated[gradeIndex] = { ...updated[gradeIndex], sections };
-    setGrades(updated);
+    updateDraftGrade(gradeIndex, (grade) => {
+      const sections = [...grade.sections];
+      sections[sectionIndex] = { ...sections[sectionIndex], capacity };
+      return { ...grade, sections };
+    });
   };
 
   const generateTemplate = () => {
@@ -141,7 +149,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
 
     const newGrades: GradeInput[] = [];
     for (let i = 1; i <= 12; i++) {
-      const name = `Grade ${i}`;
+      const name = t('schoolPortal.setup.grades.templateName', { number: i });
       if (existingNames.has(name.toLowerCase())) continue;
       // Also skip if already in local state
       if (grades.some((g) => g.name.toLowerCase() === name.toLowerCase())) continue;
@@ -156,10 +164,17 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
     }
 
     if (addedCount === 0) {
-      setInfo('All Grade 1-12 already exist.');
+      setInfo(t('schoolPortal.setup.grades.allGradesAlreadyExist'));
     } else {
-      setGrades([...grades, ...newGrades]);
-      setInfo(`Added ${addedCount} new grade${addedCount > 1 ? 's' : ''}.${existingNames.size > 0 ? ` ${existingNames.size} already existed.` : ''}`);
+      setDraftGrades((prev) => [...prev, ...newGrades]);
+      setInfo(
+        [
+          t('schoolPortal.setup.grades.generatedGrades', { count: addedCount }),
+          existingNames.size > 0
+            ? t('schoolPortal.setup.grades.existingGradesSkipped', { count: existingNames.size })
+            : '',
+        ].filter(Boolean).join(' ')
+      );
     }
   };
 
@@ -168,10 +183,10 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSave = async () => {
-    const newGrades = grades.filter((g) => !g.existsInDb);
+    const newGrades = draftGrades.filter((g) => !g.existsInDb);
 
     if (grades.length === 0) {
-      setError('Please add at least one grade.');
+      setError(t('schoolPortal.setup.grades.addAtLeastOneGrade'));
       return;
     }
 
@@ -183,7 +198,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
 
     const invalidGrades = newGrades.filter((g) => !g.name.trim());
     if (invalidGrades.length > 0) {
-      setError('All new grades must have a name.');
+      setError(t('schoolPortal.setup.grades.gradeNameRequired'));
       return;
     }
 
@@ -194,7 +209,11 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
     let failed = 0;
 
     for (const grade of newGrades) {
-      setSaveProgress(`Creating ${grade.name}... (${created + 1}/${newGrades.length})`);
+      setSaveProgress(t('schoolPortal.setup.grades.creatingGrade', {
+        name: grade.name,
+        current: created + 1,
+        total: newGrades.length,
+      }));
       try {
         await createGrade.mutateAsync({
           name: grade.name,
@@ -204,10 +223,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
             .map((s) => ({ name: s.name, capacity: s.capacity })),
         });
         created++;
-        // Mark as saved in local state
-        setGrades((prev) =>
-          prev.map((g) => g.name === grade.name && !g.existsInDb ? { ...g, existsInDb: true } : g)
-        );
+        setDraftGrades((prev) => prev.filter((g) => g.name !== grade.name));
       } catch {
         failed++;
       }
@@ -221,7 +237,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
     setSaveProgress('');
 
     if (failed > 0) {
-      setError(`Created ${created} grades, but ${failed} failed. Try clicking Next again to retry.`);
+      setError(t('schoolPortal.setup.grades.partialGradeFailure', { created, failed }));
     } else {
       onNext();
     }
@@ -232,9 +248,12 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
       {/* Summary */}
       {grades.length > 0 && (
         <div className="text-sm text-text-muted">
-          {grades.length} grade{grades.length !== 1 ? 's' : ''} with {totalSections} section{totalSections !== 1 ? 's' : ''} total
+          {t('schoolPortal.setup.grades.summary', { grades: grades.length, sections: totalSections })}
           {newGradesCount > 0 && (
-            <span className="text-emerald-600 dark:text-emerald-400"> · {newGradesCount} new</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              {' '}
+              {t('schoolPortal.setup.grades.newGradesCount', { count: newGradesCount })}
+            </span>
           )}
         </div>
       )}
@@ -242,7 +261,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
       {/* Actions */}
       <div className="flex flex-wrap items-center gap-3">
         <Button variant="outline" size="sm" onClick={generateTemplate}>
-          Generate Grade 1-12
+          {t('schoolPortal.setup.grades.generateTemplate')}
         </Button>
         <Button variant="outline" size="sm" onClick={addGrade}>
           <Plus className="h-4 w-4 ltr:mr-1 rtl:ml-1" />
@@ -259,20 +278,20 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
         {grades.map((grade, gi) => (
           <Card key={gi} className={grade.existsInDb ? 'opacity-75' : ''}>
             <div className="p-4">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <button type="button" onClick={() => toggleExpand(gi)} className="text-text-muted hover:text-text-primary">
                   {grade.expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 </button>
                 {grade.existsInDb ? (
                   <>
-                    <div className="flex-1 flex items-center gap-2">
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm font-medium text-text-primary">{grade.name}</span>
-                      <span className="text-xs text-text-muted">
-                        · {grade.sections.map((s) => s.name).join(', ')}
+                      <span className="truncate text-sm font-medium text-text-primary">{grade.name}</span>
+                      <span className="truncate text-xs text-text-muted">
+                        {grade.sections.map((s) => s.name).join(', ')}
                       </span>
                     </div>
-                    <Badge variant="success">Saved</Badge>
+                    <Badge variant="success">{t('common.saved')}</Badge>
                   </>
                 ) : (
                   <>
@@ -280,16 +299,16 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
                       value={grade.name}
                       onChange={(e) => updateGradeName(gi, e.target.value)}
                       placeholder={t('grades.name')}
-                      className="flex-1"
+                      className="w-full lg:flex-1"
                     />
                     <Input
                       type="number"
                       value={grade.sortOrder}
                       onChange={(e) => updateGradeSortOrder(gi, parseInt(e.target.value) || 0)}
                       placeholder={t('grades.sortOrder')}
-                      className="w-20"
+                      className="w-full sm:w-24"
                     />
-                    <span className="text-xs text-text-muted whitespace-nowrap">
+                    <span className="whitespace-nowrap text-xs text-text-muted">
                       {grade.sections.length} {t('grades.sections').toLowerCase()}
                     </span>
                     <Button variant="ghost" size="sm" onClick={() => removeGrade(gi)}>
@@ -331,7 +350,9 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
               {grade.expanded && grade.existsInDb && (
                 <div className="mt-3 ltr:ml-8 rtl:mr-8">
                   <p className="text-xs text-text-muted">
-                    Sections: {grade.sections.map((s) => s.name).join(', ') || 'None'}
+                    {t('schoolPortal.setup.grades.sectionsList', {
+                      sections: grade.sections.map((s) => s.name).join(', ') || t('common.no'),
+                    })}
                   </p>
                 </div>
               )}
@@ -342,7 +363,7 @@ export function GradesSectionsStep({ onNext, onBack }: GradesSectionsStepProps) 
 
       {grades.length === 0 && (
         <p className="text-center text-sm text-text-muted py-8">
-          No grades added yet. Use the buttons above to add grades or generate a template.
+          {t('schoolPortal.setup.grades.noGradesYet')}
         </p>
       )}
 

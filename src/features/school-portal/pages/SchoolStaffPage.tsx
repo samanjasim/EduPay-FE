@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserPlus, Trash2, Shield } from 'lucide-react';
+import { Banknote, Settings, Shield, Trash2, UserPlus } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Card, Badge, Button, Spinner } from '@/components/ui';
-import { ConfirmModal } from '@/components/common';
+import { ConfirmModal, PageHeader } from '@/components/common';
 import { useSchoolContext } from '../hooks/useSchoolContext';
 import { useSchoolStaff, useRemoveStaff } from '../api/school-portal.queries';
 import { InviteStaffModal } from '../components/staff/InviteStaffModal';
@@ -24,19 +25,38 @@ export default function SchoolStaffPage() {
     CashCollector: t('schoolPortal.staff.roleCashCollector'),
     SchoolAdmin: t('schoolPortal.staff.roleSchoolAdmin'),
   };
+  const roleCards = [
+    {
+      role: t('schoolPortal.staff.roleSchoolAdmin'),
+      description: t('schoolPortal.staff.roleSchoolAdminDesc'),
+      icon: Settings,
+      tone: 'emerald' as const,
+    },
+    {
+      role: t('schoolPortal.staff.roleCashCollector'),
+      description: t('schoolPortal.staff.roleCashCollectorDesc'),
+      icon: Banknote,
+      tone: 'blue' as const,
+    },
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary">{t('schoolPortal.staff.title')}</h1>
-          <p className="mt-1 text-text-muted">{t('schoolPortal.staff.subtitle')}</p>
-        </div>
-        <Button onClick={() => setShowInvite(true)}>
-          <UserPlus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
-          {t('schoolPortal.staff.invite')}
-        </Button>
+      <PageHeader
+        title={t('schoolPortal.staff.title')}
+        subtitle={t('schoolPortal.staff.subtitle')}
+        actions={
+          <Button onClick={() => setShowInvite(true)}>
+            <UserPlus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+            {t('schoolPortal.staff.invite')}
+          </Button>
+        }
+      />
+
+      <div className="grid gap-3 md:grid-cols-2">
+        {roleCards.map((role) => (
+          <RoleCapabilityCard key={role.role} {...role} />
+        ))}
       </div>
 
       {/* Staff list */}
@@ -132,5 +152,36 @@ export default function SchoolStaffPage() {
         isLoading={removeStaff.isPending}
       />
     </div>
+  );
+}
+
+function RoleCapabilityCard({
+  role,
+  description,
+  icon: Icon,
+  tone,
+}: {
+  role: string;
+  description: string;
+  icon: LucideIcon;
+  tone: 'blue' | 'emerald';
+}) {
+  const toneClasses = {
+    blue: 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300',
+    emerald: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300',
+  };
+
+  return (
+    <Card>
+      <div className="flex items-start gap-3">
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${toneClasses[tone]}`}>
+          <Icon className="h-5 w-5" />
+        </div>
+        <div className="min-w-0">
+          <h2 className="text-sm font-semibold text-text-primary">{role}</h2>
+          <p className="mt-1 text-sm text-text-muted">{description}</p>
+        </div>
+      </div>
+    </Card>
   );
 }

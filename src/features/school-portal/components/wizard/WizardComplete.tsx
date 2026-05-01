@@ -1,21 +1,14 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui';
-import { ROUTES } from '@/config';
 
 interface WizardCompleteProps {
-  onComplete?: () => void;
+  onComplete: () => void;
+  isCompleting?: boolean;
 }
 
-export function WizardComplete({ onComplete }: WizardCompleteProps) {
+export function WizardComplete({ onComplete, isCompleting = false }: WizardCompleteProps) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    onComplete?.();
-  }, [onComplete]);
 
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -28,8 +21,8 @@ export function WizardComplete({ onComplete }: WizardCompleteProps) {
       <p className="mt-2 max-w-md text-text-muted">
         {t('schoolPortal.setup.complete.description')}
       </p>
-      <Button className="mt-8" onClick={() => navigate(ROUTES.SCHOOL.DASHBOARD)}>
-        {t('schoolPortal.setup.complete.goToDashboard')}
+      <Button className="mt-8" onClick={onComplete} disabled={isCompleting}>
+        {isCompleting ? t('common.loading') : t('schoolPortal.setup.complete.goToDashboard')}
       </Button>
     </div>
   );
