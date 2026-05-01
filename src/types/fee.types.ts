@@ -163,6 +163,21 @@ export interface FeeInstanceListParams {
   sortDescending?: boolean;
 }
 
+export interface PayFeeWithCashData {
+  amount?: number;
+  note?: string;
+  clientIdempotencyKey?: string;
+}
+
+export interface CashFeePayResultDto {
+  orderId: string;
+  receiptNumber: string;
+  amountCollected: number;
+  paidAmount: number;
+  remainingAmount: number;
+  feeStatus: FeeInstanceStatus;
+}
+
 export interface FeeStructureListParams {
   pageNumber?: number;
   pageSize?: number;

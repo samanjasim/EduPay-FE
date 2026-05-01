@@ -3,12 +3,15 @@ import { toast } from 'sonner';
 import { schoolPortalApi } from './school-portal.api';
 
 import type { InviteStaffData } from '@/types/school-portal.types';
+import type { CashReconciliationReportParams } from '@/types/report.types';
 
 export const schoolPortalKeys = {
   all: ['school-portal'] as const,
   setupStatus: (schoolId: string) => [...schoolPortalKeys.all, 'setup-status', schoolId] as const,
   dashboard: (schoolId: string) => [...schoolPortalKeys.all, 'dashboard', schoolId] as const,
   staff: (schoolId: string) => [...schoolPortalKeys.all, 'staff', schoolId] as const,
+  cashReconciliation: (schoolId: string, params?: CashReconciliationReportParams) =>
+    [...schoolPortalKeys.all, 'cash-reconciliation', schoolId, params] as const,
 };
 
 export function useSchoolSetupStatus(schoolId: string | undefined) {
@@ -31,6 +34,17 @@ export function useSchoolStaff(schoolId: string | undefined) {
   return useQuery({
     queryKey: schoolPortalKeys.staff(schoolId!),
     queryFn: () => schoolPortalApi.getStaff(schoolId!),
+    enabled: !!schoolId,
+  });
+}
+
+export function useCashReconciliationReport(
+  schoolId: string | undefined,
+  params?: CashReconciliationReportParams
+) {
+  return useQuery({
+    queryKey: schoolPortalKeys.cashReconciliation(schoolId!, params),
+    queryFn: () => schoolPortalApi.getCashReconciliation(params),
     enabled: !!schoolId,
   });
 }

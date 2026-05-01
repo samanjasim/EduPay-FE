@@ -8,10 +8,11 @@ import {
   Receipt,
   Package,
   FileText,
+  Download,
 } from 'lucide-react';
-import { Card, CardContent, Badge, Spinner } from '@/components/ui';
+import { Card, CardContent, Badge, Spinner, Button } from '@/components/ui';
 import { PageHeader, InfoField } from '@/components/common';
-import { useOrder } from '../api';
+import { ordersApi, useOrder } from '../api';
 import { ROUTES } from '@/config';
 import type {
   OrderStatus,
@@ -83,6 +84,16 @@ export default function OrderDetailPage() {
         subtitle={t('orders.detailSubtitle')}
         backTo={ROUTES.ORDERS.LIST}
         backLabel={t('orders.backToList')}
+        actions={
+          <Button
+            size="sm"
+            variant="secondary"
+            leftIcon={<Download className="h-4 w-4" />}
+            onClick={() => ordersApi.downloadReceipt(order.id, order.receiptNumber)}
+          >
+            {t('orders.downloadReceipt')}
+          </Button>
+        }
       />
 
       {/* Summary */}

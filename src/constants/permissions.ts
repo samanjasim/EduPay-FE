@@ -76,6 +76,10 @@ export const PERMISSIONS = {
     Create: 'Payments.Create',
     Refund: 'Payments.Refund',
   },
+  CashCollections: {
+    View: 'CashCollections.View',
+    Create: 'CashCollections.Create',
+  },
   Wallets: {
     View: 'Wallets.View',
     Create: 'Wallets.Create',

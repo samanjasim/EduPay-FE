@@ -2,6 +2,7 @@ import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
 import type { ApiResponse } from '@/types';
 import type { SchoolSetupStatus, SchoolDashboardData, SchoolStaffDto, InviteStaffData } from '@/types/school-portal.types';
+import type { CashReconciliationReportDto, CashReconciliationReportParams } from '@/types/report.types';
 
 export const schoolPortalApi = {
   getSetupStatus: async (schoolId: string): Promise<SchoolSetupStatus> => {
@@ -25,6 +26,16 @@ export const schoolPortalApi = {
   getStaff: async (schoolId: string): Promise<SchoolStaffDto[]> => {
     const response = await apiClient.get<ApiResponse<SchoolStaffDto[]>>(
       API_ENDPOINTS.SCHOOLS.STAFF(schoolId)
+    );
+    return response.data.data;
+  },
+
+  getCashReconciliation: async (
+    params?: CashReconciliationReportParams
+  ): Promise<CashReconciliationReportDto> => {
+    const response = await apiClient.get<ApiResponse<CashReconciliationReportDto>>(
+      API_ENDPOINTS.REPORTS.CASH_RECONCILIATION,
+      { params }
     );
     return response.data.data;
   },

@@ -20,6 +20,10 @@ export default function SchoolStaffPage() {
 
   const [showInvite, setShowInvite] = useState(false);
   const [staffToRemove, setStaffToRemove] = useState<SchoolStaffDto | null>(null);
+  const roleLabels: Record<string, string> = {
+    CashCollector: t('schoolPortal.staff.roleCashCollector'),
+    SchoolAdmin: t('schoolPortal.staff.roleSchoolAdmin'),
+  };
 
   return (
     <div className="space-y-6">
@@ -76,7 +80,7 @@ export default function SchoolStaffPage() {
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         {member.roles.map((role) => (
-                          <Badge key={role} variant="default" className="text-xs">{role}</Badge>
+                          <Badge key={role} variant="default" className="text-xs">{roleLabels[role] ?? role}</Badge>
                         ))}
                       </div>
                     </td>
@@ -91,6 +95,7 @@ export default function SchoolStaffPage() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          aria-label={t('common.remove')}
                           onClick={() => setStaffToRemove(member)}
                         >
                           <Trash2 className="h-4 w-4 text-red-500" />

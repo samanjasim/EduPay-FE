@@ -1,4 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { API_ENDPOINTS } from '@/config';
+import { apiClient } from '@/lib/axios';
+import type { ApiResponse, PaginatedResponse } from '@/types';
 
 type ParentDashboardChild = {
   studentId: string;
@@ -6,14 +9,11 @@ type ParentDashboardChild = {
   fullNameAr: string;
   studentCode: string;
   gradeName: string;
-  sectionName?: string | null;
   status: string;
   pendingFees: number;
   pendingAmount: number;
   overdueFees: number;
   overdueAmount: number;
-  relation?: string;
-  linkedAt?: string;
 };
 
 type ParentDashboard = {
@@ -24,22 +24,23 @@ type ParentDashboard = {
   totalOverdueAmount: number;
   totalPaidFees: number;
   totalPaidAmount: number;
+  totalOrders: number;
   currency: string;
   children: ParentDashboardChild[];
 };
 
-type ParentChild = ParentDashboardChild & { relation: string; linkedAt: string };
-
-type Paginated<T> = {
-  data: T[];
-  pagination: {
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalCount: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
+type ParentChild = {
+  studentId: string;
+  fullNameEn: string;
+  fullNameAr: string;
+  studentCode: string;
+  schoolId: string;
+  schoolName: string;
+  gradeName: string;
+  sectionName?: string | null;
+  relation: string;
+  status: string;
+  linkedAt: string;
 };
 
 type ParentFee = {
@@ -68,36 +69,15 @@ type ParentOrder = {
 type FeesParams = { pageNumber: number; pageSize: number; studentId?: string; status?: string };
 type OrdersParams = FeesParams;
 
-const emptyDashboard: ParentDashboard = {
-  totalChildren: 0,
-  totalPendingFees: 0,
-  totalPendingAmount: 0,
-  totalOverdueFees: 0,
-  totalOverdueAmount: 0,
-  totalPaidFees: 0,
-  totalPaidAmount: 0,
-  currency: 'IQD',
-  children: [],
-};
-
-const emptyPaginated = <T,>(): Paginated<T> => ({
-  data: [],
-  pagination: {
-    pageNumber: 1,
-    pageSize: 10,
-    totalPages: 0,
-    totalCount: 0,
-    hasNextPage: false,
-    hasPreviousPage: false,
-  },
-});
-
-// Stubs — matching parent-detail endpoints not yet implemented in BE.
-// Returning empty data so the page renders without runtime errors.
 export function useParentDashboard(parentUserId: string) {
   return useQuery<ParentDashboard>({
     queryKey: ['parent', parentUserId, 'dashboard'],
-    queryFn: async () => emptyDashboard,
+    queryFn: async () => {
+      const response = await apiClient.get<ApiResponse<ParentDashboard>>(
+        API_ENDPOINTS.PARENTS.DASHBOARD(parentUserId)
+      );
+      return response.data.data;
+    },
     enabled: !!parentUserId,
   });
 }
@@ -105,23 +85,40 @@ export function useParentDashboard(parentUserId: string) {
 export function useParentChildren(parentUserId: string) {
   return useQuery<ParentChild[]>({
     queryKey: ['parent', parentUserId, 'children'],
-    queryFn: async () => [],
+    queryFn: async () => {
+      const response = await apiClient.get<ApiResponse<ParentChild[]>>(
+        API_ENDPOINTS.PARENTS.CHILDREN_FOR_PARENT(parentUserId)
+      );
+      return response.data.data;
+    },
     enabled: !!parentUserId,
   });
 }
 
 export function useParentFees(parentUserId: string, params: FeesParams) {
-  return useQuery<Paginated<ParentFee>>({
+  return useQuery<PaginatedResponse<ParentFee>>({
     queryKey: ['parent', parentUserId, 'fees', params],
-    queryFn: async () => emptyPaginated<ParentFee>(),
+    queryFn: async () => {
+      const response = await apiClient.get<PaginatedResponse<ParentFee>>(
+        API_ENDPOINTS.PARENTS.FEES(parentUserId),
+        { params }
+      );
+      return response.data;
+    },
     enabled: !!parentUserId,
   });
 }
 
 export function useParentOrders(parentUserId: string, params: OrdersParams) {
-  return useQuery<Paginated<ParentOrder>>({
+  return useQuery<PaginatedResponse<ParentOrder>>({
     queryKey: ['parent', parentUserId, 'orders', params],
-    queryFn: async () => emptyPaginated<ParentOrder>(),
+    queryFn: async () => {
+      const response = await apiClient.get<PaginatedResponse<ParentOrder>>(
+        API_ENDPOINTS.PARENTS.ORDERS(parentUserId),
+        { params }
+      );
+      return response.data;
+    },
     enabled: !!parentUserId,
   });
 }

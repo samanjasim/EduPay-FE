@@ -25,6 +25,7 @@
     "createdAt": "دروستکراو",
     "showing": "پیشاندانی {{start}}-{{end}} لە {{total}}",
     "close": "داخستن",
+    "view": "بینین",
     "viewAll": "بینینی هەمووی",
     "saved": "پاشەکەوت کرا!",
     "operationFailed": "کردارەکە سەرکەوتوو نەبوو"
@@ -420,7 +421,8 @@
     "gwStatusSuccessful": "سەرکەوتوو",
     "gwStatusFailed": "شکستی هێناوە",
     "gwStatusTimeout": "کاتی بەسەرچوو",
-    "txRef": "ژمارەی مامەڵە"
+    "txRef": "ژمارەی مامەڵە",
+    "downloadReceipt": "داگرتنی پسوولە"
   },
   "wallets": {
     "title": "جزدانەکان",
@@ -509,6 +511,9 @@
     "applyDiscount": "داشکاندن بکە",
     "waiveFee": "کرێ ببوورە",
     "cancelFee": "کرێ هەڵبوەشێنەوە",
+    "recordCashPayment": "تۆمارکردنی پارەدانی نەقد",
+    "cashAmountLabel": "بڕی نەقد",
+    "cashNoteLabel": "تێبینی پارەدانی نەقد",
     "discountAmountLabel": "بڕی داشکاندن",
     "reason": "هۆکار",
     "waiveConfirmation": "دڵنیایت لە بووردنی ئەم کرێیە؟ ناتوانرێت ئەم کارە پووچەڵ بکرێتەوە.",
@@ -603,6 +608,7 @@
       "grades": "پۆلەکان",
       "students": "قوتابیان",
       "fees": "کرێکان",
+      "cashCollection": "کۆکردنەوەی نەقد",
       "payments": "پارەدانەکان",
       "reports": "ڕاپۆرتەکان",
       "staff": "ستاف",
@@ -628,8 +634,37 @@
     "payments": {
       "comingSoonDesc": "شوێنپێکردنی پارەدان و کۆکردنەوەی نەقد و بەڕێوەبردنی پسوولە بەم زووانە لێرە بەردەست دەبێت."
     },
+    "cashCollection": {
+      "title": "کۆکردنەوەی نەقد",
+      "subtitle": "کرێ نەدراوەکانی قوتابیان بدۆزەوە و پارەدانی نەقد تۆمار بکە",
+      "pending": "چاوەڕوان",
+      "overdue": "دواکەوتوو",
+      "pendingQueue": "ڕیزی چاوەڕوان",
+      "overdueQueue": "ڕیزی دواکەوتوو",
+      "visibleOutstanding": "ماوەی دیار",
+      "visibleFees": "کرێی دیار",
+      "searchPlaceholder": "گەڕان بۆ قوتابی یان کرێ",
+      "viewReport": "بینینی ڕاپۆرت",
+      "emptyTitle": "هیچ کرێیەک بۆ کۆکردنەوە نییە",
+      "emptyDescription": "کرێ چاوەڕوان و دواکەوتووەکان لێرە دەردەکەون.",
+      "collect": "کۆکردنەوە"
+    },
     "reports": {
-      "comingSoonDesc": "ڕاپۆرتەکانی کۆکردنەوەی کرێ و کۆنبوونەوەی دواکەوتووەکان و پوختەی دارایی بەم زووانە بەردەست دەبن."
+      "comingSoonDesc": "ڕاپۆرتەکانی کۆکردنەوەی کرێ و کۆنبوونەوەی دواکەوتووەکان و پوختەی دارایی بەم زووانە بەردەست دەبن.",
+      "dateFrom": "لە بەروار",
+      "dateTo": "تا بەروار",
+      "cashCollected": "نەقدی کۆکراوە",
+      "payments": "پارەدانەکان",
+      "collectors": "کۆکەرەوەکان",
+      "collectorBreakdown": "دابەشکردنی کۆکەرەوەکان",
+      "collector": "کۆکەرەوە",
+      "cashPayments": "پارەدانە نەقدییەکان",
+      "receipt": "پسوولە",
+      "student": "قوتابی",
+      "amount": "بڕ",
+      "collectedAt": "کاتی کۆکردنەوە",
+      "noCashPayments": "هیچ پارەدانێکی نەقد نییە",
+      "noCashPaymentsDesc": "کۆکردنەوەی نەقد بۆ بەروارە هەڵبژێردراوەکان لێرە دەردەکەوێت."
     },
     "setup": {
       "title": "دامەزراندنی قوتابخانە",
@@ -680,7 +715,10 @@
       "removeTitle": "لابردنی ستاف",
       "removeDesc": "دڵنیایت لە لابردنی <strong>{{name}}</strong> لەم قوتابخانەیە؟",
       "alreadyExists": "ئەم بەکارهێنەرە پێشتر لەم قوتابخانەیەدایە.",
-      "belongsToAnotherSchool": "ئەم بەکارهێنەرە هی قوتابخانەیەکی تر."
+      "belongsToAnotherSchool": "ئەم بەکارهێنەرە هی قوتابخانەیەکی تر.",
+      "role": "ڕۆڵ",
+      "roleCashCollector": "کۆکەرەوەی نەقد",
+      "roleSchoolAdmin": "بەڕێوەبەری قوتابخانە"
     },
     "grades": {
       "title": "پۆلەکان و بەشەکان",

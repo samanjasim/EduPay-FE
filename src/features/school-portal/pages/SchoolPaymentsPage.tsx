@@ -1,19 +1,15 @@
-import { useTranslation } from 'react-i18next';
-import { CreditCard } from 'lucide-react';
-import { PageHeader } from '@/components/common';
-import { EmptyState } from '@/components/common';
+import { Navigate } from 'react-router-dom';
+import { ROUTES } from '@/config';
+import { PERMISSIONS } from '@/constants';
+import { usePermissions } from '@/hooks';
 
 export default function SchoolPaymentsPage() {
-  const { t } = useTranslation();
+  const { hasPermission } = usePermissions();
 
   return (
-    <div className="space-y-6">
-      <PageHeader title={t('schoolPortal.nav.payments')} />
-      <EmptyState
-        icon={CreditCard}
-        title={t('common.comingSoon')}
-        description={t('schoolPortal.payments.comingSoonDesc')}
-      />
-    </div>
+    <Navigate
+      to={hasPermission(PERMISSIONS.CashCollections.View) ? ROUTES.SCHOOL.REPORTS : ROUTES.SCHOOL.DASHBOARD}
+      replace
+    />
   );
 }

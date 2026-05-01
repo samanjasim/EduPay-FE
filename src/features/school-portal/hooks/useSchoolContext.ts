@@ -12,11 +12,13 @@ export function useSchoolContext() {
   const activeSchoolId = useUIStore((state) => state.activeSchoolId);
 
   const isSchoolAdmin = user?.roles?.includes('SchoolAdmin') ?? false;
+  const isCashCollector = user?.roles?.includes('CashCollector') ?? false;
+  const isSchoolStaff = isSchoolAdmin || isCashCollector;
 
   const { data: school, isLoading, error } = useQuery<SchoolDto>({
     queryKey: SCHOOL_CONTEXT_KEY,
     queryFn: () => schoolsApi.getMySchool(),
-    enabled: isSchoolAdmin,
+    enabled: isSchoolStaff,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
@@ -33,5 +35,7 @@ export function useSchoolContext() {
     isLoading,
     error,
     isSchoolAdmin,
+    isCashCollector,
+    isSchoolStaff,
   };
 }

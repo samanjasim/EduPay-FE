@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { feeInstancesApi } from './fee-instances.api';
 import { queryKeys } from '@/lib/query';
 import { useUIStore } from '@/stores/ui.store';
-import type { FeeInstanceListParams } from '@/types';
+import type { FeeInstanceListParams, PayFeeWithCashData } from '@/types';
 
 export function useFeeInstances(params?: FeeInstanceListParams) {
   const activeSchoolId = useUIStore((s) => s.activeSchoolId);
@@ -54,6 +54,19 @@ export function useCancelFee() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.feeInstances.all });
       toast.success('Fee cancelled successfully');
+    },
+  });
+}
+
+export function usePayFeeWithCash() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data, schoolId }: { id: string; data: PayFeeWithCashData; schoolId?: string }) =>
+      feeInstancesApi.payWithCash(id, data, schoolId),
+    onSuccess: (result) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.feeInstances.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
+      toast.success(`Cash payment recorded. Receipt: ${result.receiptNumber}`);
     },
   });
 }
