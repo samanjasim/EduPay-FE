@@ -8,6 +8,7 @@ import { AuthGuard, GuestGuard, PermissionGuard, SchoolAdminGuard } from '@/comp
 import { PERMISSIONS } from '@/constants';
 
 // Lazy-loaded pages
+const LandingPage = lazy(() => import('@/features/landing/pages/LandingPage'));
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -68,7 +69,12 @@ const SchoolGradeDetailPage = lazy(() => import('@/features/school-portal/pages/
 const SchoolStaffPage = lazy(() => import('@/features/school-portal/pages/SchoolStaffPage'));
 
 export const routes: RouteObject[] = [
-  // Public routes (guest only)
+  // Public marketing landing page — open to everyone.
+  // The page itself redirects authenticated users to ROUTES.DASHBOARD,
+  // so guests see marketing while signed-in users go straight to the app.
+  { path: ROUTES.LANDING, element: <LandingPage /> },
+
+  // Public auth routes (guests only)
   {
     element: <GuestGuard />,
     children: [

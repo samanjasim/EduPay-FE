@@ -993,5 +993,393 @@
     "details": "Product Details",
     "allGrades": "All Grades",
     "allSections": "All Sections"
+  },
+  "landing": {
+    "meta": {
+      "title": "EduPay — Modern school payments for Iraqi families and schools",
+      "description": "Pay tuition with Qi Card or ZainCash, split fees with Aqsati BNPL, manage student wallets, and run schools in Arabic, Kurdish, and English."
+    },
+    "nav": {
+      "features": "Features",
+      "how": "How it works",
+      "pricing": "Pricing",
+      "roadmap": "Roadmap",
+      "faq": "FAQ",
+      "signIn": "Sign in",
+      "getStarted": "Get started",
+      "skipToContent": "Skip to content",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
+    },
+    "hero": {
+      "badge": "Built for Iraq · Powered by Qi Card & Aqsati",
+      "titleA": "Modern school payments",
+      "titleB": "for families and schools.",
+      "forWord": "for",
+      "words": {
+        "classrooms": "classrooms",
+        "families": "families",
+        "fintech": "fintech",
+        "schools": "schools",
+        "futures": "futures",
+        "institutions": "institutions"
+      },
+      "subtitle": "Pay tuition in seconds, split fees with zero-interest installments, top up student wallets, and run school operations — all in Arabic, Kurdish, and English.",
+      "ctaPrimary": "Start free",
+      "ctaSecondary": "Explore the demo",
+      "trust": "Qi Card · Aqsati BNPL · ZainCash · IQD",
+      "mockHeader": "Tuition · Term 2",
+      "mockStatus": "Paid · Q1",
+      "mockOverdue": "Overdue 3d",
+      "mockDue": "Due Mar 12",
+      "mockPay": "Pay 250,000 IQD"
+    },
+    "showcase": {
+      "eyebrow": "EduPay in action",
+      "title": "Built for real classrooms, families, and back offices.",
+      "subtitle": "",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "goTo": "Go to slide",
+      "badges": {
+        "classroom": "Classroom",
+        "parents": "Parents",
+        "wallet": "Mobile wallet",
+        "admin": "School operations",
+        "graduation": "Outcomes",
+        "library": "Resources"
+      }
+    },
+    "logos": {
+      "eyebrow": "Integrations & local payment partners"
+    },
+    "problem": {
+      "eyebrow": "Why EduPay",
+      "title": "Receipts in shoeboxes. Cash trips to school. No transparency.",
+      "body": "Iraqi families today juggle paper receipts, untracked cash, and visits to the school office. Schools chase overdue fees by hand. EduPay replaces all of that with a single, transparent ledger built on local rails.",
+      "pains": [
+        "Lost paper receipts and missed deadlines",
+        "No installment options for big terms",
+        "Cash trips that risk fraud and time",
+        "Admins reconciling spreadsheets at midnight"
+      ],
+      "outcomes": [
+        "Real-time fee status on every parent’s phone",
+        "Up to 12-month installments with Aqsati BNPL",
+        "Pay with Qi Card, ZainCash, FIB, or in-person cash",
+        "School dashboards that close the books in minutes"
+      ]
+    },
+    "features": {
+      "eyebrow": "Features",
+      "title": "Everything a school needs to get paid — and a parent needs to pay.",
+      "subtitle": "Six pillars that cover the full school-payment lifecycle, from invoice to receipt to wallet.",
+      "items": [
+        {
+          "title": "Fee management & transparency",
+          "body": "Tuition, transport, activities — every fee broken down by type with due dates, history, discounts, and waivers."
+        },
+        {
+          "title": "Flexible payments",
+          "body": "Qi Card, ZainCash, FIB, plus Aqsati BNPL for up to 12-month zero-interest installments."
+        },
+        {
+          "title": "Student wallet & cafeteria",
+          "body": "Parents top up. Students spend at the school POS. Schools track every transaction in real time."
+        },
+        {
+          "title": "School operations dashboard",
+          "body": "Bulk-import students, manage grades and sections, age overdue accounts, export reports in one click."
+        },
+        {
+          "title": "Localised for Iraq",
+          "body": "Full Arabic and Kurdish, RTL layout, IQD currency, Asia/Baghdad timezone — built for Iraqi schools."
+        },
+        {
+          "title": "Role-based access & multi-school",
+          "body": "Five roles, granular permissions, multi-school parent accounts, and tenant-isolated school data."
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Up and running in a single afternoon.",
+      "tabs": {
+        "parents": "For parents",
+        "schools": "For schools"
+      },
+      "parents": [
+        {
+          "title": "Claim your child",
+          "body": "Sign up with your phone, enter the school invite, and link every child in seconds."
+        },
+        {
+          "title": "Choose how to pay",
+          "body": "Pick Qi Card, ZainCash, FIB, or split with Aqsati BNPL — zero interest, up to 12 months."
+        },
+        {
+          "title": "Track everything",
+          "body": "Real-time receipts, fee status, wallet balance, and a unified history per child."
+        }
+      ],
+      "schools": [
+        {
+          "title": "Onboard the school",
+          "body": "Import students from CSV, set grades and sections, configure tuition and term fees."
+        },
+        {
+          "title": "Issue & track fees",
+          "body": "Auto-generate per-student fees, accept cash at the office, watch overdue ageing live."
+        },
+        {
+          "title": "Close the books",
+          "body": "Export reports per grade, audit every transaction, reconcile in minutes — not nights."
+        }
+      ]
+    },
+    "audience": {
+      "eyebrow": "Built for everyone in the room",
+      "title": "One platform, five roles, zero compromises.",
+      "tabs": {
+        "parents": "Parents",
+        "schools": "School admins",
+        "platform": "Platform admins"
+      },
+      "parents": {
+        "title": "For parents",
+        "body": "Pay fees, fund wallets, and track every child across every school — from one phone.",
+        "points": [
+          "Multi-child, multi-school under one account",
+          "Aqsati BNPL with no interest, no surprises",
+          "Push receipts and Arabic-first interface"
+        ]
+      },
+      "schools": {
+        "title": "For school admins",
+        "body": "Run finance like a fintech: bulk imports, real-time dashboards, exports your accountant will love.",
+        "points": [
+          "CSV import, grades, sections, term fees",
+          "7/30/60/90-day overdue ageing",
+          "Cash + digital reconciled in one ledger"
+        ]
+      },
+      "platform": {
+        "title": "For platform admins",
+        "body": "Onboard schools, manage subscriptions, and watch the platform grow with full audit trails.",
+        "points": [
+          "School subscription tiers and billing",
+          "Granular roles & permissions",
+          "Background-job and audit visibility"
+        ]
+      }
+    },
+    "wallet": {
+      "eyebrow": "Student wallet & cafeteria",
+      "title": "A safer way for kids to spend at school.",
+      "body": "Parents top up the wallet. Students tap to pay at the cafeteria. Every transaction is logged, every balance is real-time, and every receipt is just a swipe away.",
+      "bullets": [
+        "No cash on campus — fewer losses, less risk",
+        "Daily and per-vendor spending limits",
+        "Live balance and notifications for parents"
+      ],
+      "mockTitle": "Wallet",
+      "mockBalance": "Balance",
+      "mockTopUp": "Top up",
+      "mockTxn1": "Cafeteria · 4,500 IQD",
+      "mockTxn2": "Library print · 1,000 IQD",
+      "mockTxn3": "Bus pass · 30,000 IQD"
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Simple plans for every school size.",
+      "subtitle": "Start free for pilot schools. Scale as you onboard more grades, students, and modules.",
+      "perMonth": "/ month",
+      "custom": "Custom",
+      "contact": "Talk to us",
+      "select": "Select",
+      "mostPopular": "Most popular",
+      "plans": [
+        {
+          "name": "Basic",
+          "price": "Free",
+          "priceNote": "pilot pricing",
+          "body": "Get a single school up and running with core fee tracking and digital payments.",
+          "features": [
+            "Up to 300 students",
+            "Fees & payments",
+            "Parent app",
+            "Email support"
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$49",
+          "priceNote": "per school",
+          "body": "Everything in Basic, plus the modules a growing school depends on every day.",
+          "features": [
+            "Up to 1,500 students",
+            "Aqsati BNPL",
+            "Wallet (cafeteria)",
+            "Reports & exports",
+            "Priority support"
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "Custom",
+          "priceNote": "tailored",
+          "body": "For school networks: SLAs, integrations, advanced analytics, and dedicated success.",
+          "features": [
+            "Unlimited students",
+            "Multi-school org",
+            "API access",
+            "Dedicated CSM",
+            "99.9% SLA"
+          ]
+        }
+      ]
+    },
+    "roadmap": {
+      "eyebrow": "Roadmap",
+      "title": "Where EduPay is heading.",
+      "subtitle": "Three phases over 12 months — pilot, scale, expand.",
+      "phases": [
+        {
+          "tag": "Phase 1 · Now",
+          "title": "Foundations · Months 1–4",
+          "items": [
+            "Parent app (iOS & Android)",
+            "School admin portal",
+            "Qi Card gateway",
+            "Arabic & Kurdish",
+            "Pilot: 3–5 Baghdad schools"
+          ]
+        },
+        {
+          "tag": "Phase 2 · Next",
+          "title": "Scale · Months 5–8",
+          "items": [
+            "Aqsati BNPL",
+            "Event payments",
+            "Student wallet v1",
+            "Multi-child support",
+            "Target: 50 schools, 5,000+ parents"
+          ]
+        },
+        {
+          "tag": "Phase 3 · Soon",
+          "title": "Expand · Months 9–12",
+          "items": [
+            "Cafeteria POS",
+            "Marketplace (uniforms, transport)",
+            "Advanced analytics",
+            "Kurdistan Region launch",
+            "Target: 200+ schools"
+          ]
+        }
+      ]
+    },
+    "trust": {
+      "eyebrow": "Built on solid ground",
+      "title": "Bank-grade engineering. Local-first design.",
+      "items": [
+        {
+          "title": ".NET 10 & Postgres",
+          "body": "ACID-compliant transactions on a long-supported stack."
+        },
+        {
+          "title": "JWT + RBAC",
+          "body": "Granular permissions across SuperAdmin, Admin, SchoolAdmin, Parent, Student."
+        },
+        {
+          "title": "Audit trail",
+          "body": "Every fee status change tracked end-to-end for transparent finance."
+        },
+        {
+          "title": "Multi-tenant",
+          "body": "School-scoped data isolation with per-tenant configuration."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions we hear most often.",
+      "items": [
+        {
+          "q": "Is EduPay safe for school payments?",
+          "a": "Yes. EduPay runs on .NET 10 with PostgreSQL, JWT-based auth, BCrypt password hashing, RBAC, and a full audit trail on every fee status change. Payments route through licensed local providers (Qi Card, ZainCash, FIB)."
+        },
+        {
+          "q": "How does Aqsati BNPL work?",
+          "a": "Eligible families can split a tuition or term fee into up to 12 monthly installments at zero interest, subject to Aqsati approval. Schools still receive the full amount up front."
+        },
+        {
+          "q": "Which languages are supported?",
+          "a": "EduPay ships in Arabic, Kurdish, and English with full RTL on day one. Schools can default a language and parents can switch any time."
+        },
+        {
+          "q": "Can a parent manage multiple children at multiple schools?",
+          "a": "Yes. One parent account links to as many children as you have, across as many schools as you have, with a unified payment history."
+        },
+        {
+          "q": "What if a parent prefers cash?",
+          "a": "School admins can record cash payments at the office. Cash and digital payments live in the same ledger so reconciliation is automatic."
+        },
+        {
+          "q": "Do schools need to install anything?",
+          "a": "No. EduPay is fully web-based for schools and a native mobile app for parents. There is no on-prem hardware requirement."
+        },
+        {
+          "q": "Can EduPay integrate with our school management system?",
+          "a": "Premium plans include API access for student rosters, fee schedules, and reporting. We can quote integrations during onboarding."
+        },
+        {
+          "q": "How fast can we go live?",
+          "a": "Pilot schools typically launch within 1–2 weeks of CSV import and configuration. Full rollouts complete within a single school term."
+        }
+      ]
+    },
+    "finalCta": {
+      "eyebrow": "Try the demo",
+      "title": "See EduPay end-to-end in 5 minutes.",
+      "body": "Use a seeded account to explore each role. No installation needed.",
+      "open": "Open the app",
+      "superadmin": "Super admin",
+      "schooladmin": "School admin",
+      "parent": "Parent",
+      "student": "Student"
+    },
+    "footer": {
+      "tagline": "Modern school payments for Iraq.",
+      "columns": {
+        "product": "Product",
+        "company": "Company",
+        "legal": "Legal",
+        "language": "Language"
+      },
+      "links": {
+        "features": "Features",
+        "pricing": "Pricing",
+        "roadmap": "Roadmap",
+        "signIn": "Sign in",
+        "about": "About",
+        "contact": "Contact",
+        "careers": "Careers",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "security": "Security"
+      },
+      "rights": "All rights reserved.",
+      "builtIn": "Built in Iraq."
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "toggle": "Toggle theme"
+    },
+    "language": {
+      "label": "Language"
+    }
   }
 }
