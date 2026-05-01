@@ -5,23 +5,11 @@ import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContex
 import { schoolsApi } from '@/features/schools/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const CURRENCIES = [
-  { value: 'IQD', label: 'IQD - Iraqi Dinar' },
-  { value: 'USD', label: 'USD - US Dollar' },
-  { value: 'EUR', label: 'EUR - Euro' },
-];
-
 const TIMEZONES = [
   { value: 'Asia/Baghdad', label: 'Asia/Baghdad (UTC+3)' },
   { value: 'Asia/Dubai', label: 'Asia/Dubai (UTC+4)' },
   { value: 'Europe/London', label: 'Europe/London (UTC+0)' },
   { value: 'America/New_York', label: 'America/New_York (UTC-5)' },
-];
-
-const LANGUAGES = [
-  { value: 'ar', label: 'العربية (Arabic)' },
-  { value: 'en', label: 'English' },
-  { value: 'ku', label: 'کوردی (Kurdish)' },
 ];
 
 interface SchoolSettingsStepProps {
@@ -37,6 +25,16 @@ export function SchoolSettingsStep({ onNext }: SchoolSettingsStepProps) {
   const [currency, setCurrency] = useState(school?.settings?.currency || 'IQD');
   const [timezone, setTimezone] = useState(school?.settings?.timezone || 'Asia/Baghdad');
   const [defaultLanguage, setDefaultLanguage] = useState(school?.settings?.defaultLanguage || 'ar');
+  const currencyOptions = [
+    { value: 'IQD', label: t('schoolPortal.setup.settings.currencyIqd') },
+    { value: 'USD', label: t('schoolPortal.setup.settings.currencyUsd') },
+    { value: 'EUR', label: t('schoolPortal.setup.settings.currencyEur') },
+  ];
+  const languageOptions = [
+    { value: 'ar', label: t('schoolPortal.setup.settings.languageAr') },
+    { value: 'en', label: t('schoolPortal.setup.settings.languageEn') },
+    { value: 'ku', label: t('schoolPortal.setup.settings.languageKu') },
+  ];
 
   const mutation = useMutation({
     mutationFn: () =>
@@ -47,7 +45,7 @@ export function SchoolSettingsStep({ onNext }: SchoolSettingsStepProps) {
       onNext();
     },
     onError: (err: Error) => {
-      setError(err.message || 'Failed to update settings');
+      setError(err.message || t('schoolPortal.setup.settings.updateFailed'));
     },
   });
 
@@ -61,7 +59,7 @@ export function SchoolSettingsStep({ onNext }: SchoolSettingsStepProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <Select
           label={t('schools.currency')}
-          options={CURRENCIES}
+          options={currencyOptions}
           value={currency}
           onChange={setCurrency}
         />
@@ -75,7 +73,7 @@ export function SchoolSettingsStep({ onNext }: SchoolSettingsStepProps) {
 
       <Select
         label={t('schools.defaultLanguage')}
-        options={LANGUAGES}
+        options={languageOptions}
         value={defaultLanguage}
         onChange={setDefaultLanguage}
       />

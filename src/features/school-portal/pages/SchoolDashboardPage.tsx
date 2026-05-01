@@ -1,7 +1,20 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
-import { Users, Receipt, AlertTriangle, TrendingUp, Plus, Eye, ArrowRight, Clock, Banknote } from 'lucide-react';
+import {
+  Users,
+  Receipt,
+  AlertTriangle,
+  TrendingUp,
+  Plus,
+  Eye,
+  ArrowRight,
+  Clock,
+  Banknote,
+  BarChart3,
+  UserPlus,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useAuthStore, selectUser } from '@/stores';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { useSchoolDashboard, useSchoolSetupStatus } from '@/features/school-portal/api';
@@ -9,6 +22,7 @@ import { ROUTES } from '@/config';
 import { PERMISSIONS } from '@/constants';
 import { usePermissions } from '@/hooks';
 import { Button, Card, Badge } from '@/components/ui';
+import { PageHeader } from '@/components/common';
 import { Spinner } from '@/components/ui';
 import type { RecentFeeInstance } from '@/types/school-portal.types';
 
@@ -20,6 +34,8 @@ export default function SchoolDashboardPage() {
   const { hasAllPermissions } = usePermissions();
   const { data: dashboard, isLoading } = useSchoolDashboard(schoolId ?? undefined);
   const { data: setupStatus } = useSchoolSetupStatus(schoolId ?? undefined);
+  const collection = dashboard?.feeCollection;
+  const outstandingAmount = Math.max((collection?.totalDue ?? 0) - (collection?.totalCollected ?? 0), 0);
   const canViewCashCollection = hasAllPermissions([
     PERMISSIONS.CashCollections.View,
     PERMISSIONS.Fees.View,
@@ -37,9 +53,38 @@ export default function SchoolDashboardPage() {
     setupStatus.studentsCount === 0 ||
     setupStatus.feeStructuresCount === 0
   );
+  const setupItems = [
+    {
+      label: t('schoolPortal.setup.settings.title'),
+      complete: setupStatus?.settingsConfigured ?? false,
+      route: ROUTES.SCHOOL.SETTINGS,
+    },
+    {
+      label: t('schoolPortal.setup.grades.title'),
+      complete: (setupStatus?.gradesCount ?? 0) > 0,
+      route: ROUTES.SCHOOL.GRADES.LIST,
+    },
+    {
+      label: t('schoolPortal.setup.fees.title'),
+      complete: (setupStatus?.feeStructuresCount ?? 0) > 0,
+      route: ROUTES.SCHOOL.FEES,
+    },
+    {
+      label: t('schoolPortal.setup.students.title'),
+      complete: (setupStatus?.studentsCount ?? 0) > 0,
+      route: ROUTES.SCHOOL.STUDENTS.LIST,
+    },
+  ];
+  const completedSetupItems = setupItems.filter((item) => item.complete).length;
+  const setupProgress = Math.round((completedSetupItems / setupItems.length) * 100);
 
   return (
     <div className="space-y-6">
+      <PageHeader
+        title={t('schoolPortal.dashboard.operationsTitle')}
+        subtitle={t('schoolPortal.dashboard.operationsSubtitle')}
+      />
+
       {/* Setup incomplete banner */}
       {isSetupIncomplete && setupStatus.gradesCount > 0 && (
         <div className="flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
@@ -58,21 +103,51 @@ export default function SchoolDashboardPage() {
         </div>
       )}
 
-      {/* Welcome banner */}
-      <div className="rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white">
-        <h1 className="text-2xl font-bold">
-          {t('schoolPortal.dashboard.welcome', { name: user?.firstName })}
-        </h1>
-        <p className="mt-1 text-emerald-100">
-          {t('schoolPortal.dashboard.subtitle')}
-        </p>
-      </div>
-
       {/* Stat cards */}
       {isLoading ? (
         <div className="flex justify-center py-12"><Spinner /></div>
       ) : (
         <>
+          <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+            <Card className="p-0">
+              <div className="flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-sm font-medium text-text-secondary">
+                    {t('schoolPortal.dashboard.welcome', { name: user?.firstName })}
+                  </p>
+                  <h2 className="mt-1 text-xl font-semibold text-text-primary">
+                    {t('schoolPortal.dashboard.todayFocus')}
+                  </h2>
+                  <p className="mt-1 max-w-2xl text-sm text-text-muted">
+                    {outstandingAmount > 0
+                      ? t('schoolPortal.dashboard.outstandingFocus', { amount: outstandingAmount.toLocaleString() })
+                      : t('schoolPortal.dashboard.readyFocus')}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {canViewCashCollection && (
+                    <Button onClick={() => navigate(ROUTES.SCHOOL.CASH_COLLECTION)}>
+                      <Banknote className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+                      {t('schoolPortal.nav.cashCollection')}
+                    </Button>
+                  )}
+                  <Button variant="secondary" onClick={() => navigate(ROUTES.SCHOOL.REPORTS)}>
+                    <BarChart3 className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+                    {t('schoolPortal.dashboard.reviewReports')}
+                  </Button>
+                </div>
+              </div>
+            </Card>
+
+            <SetupProgressPanel
+              progress={setupProgress}
+              completed={completedSetupItems}
+              total={setupItems.length}
+              items={setupItems}
+              onNavigate={navigate}
+            />
+          </div>
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard
               label={t('schoolPortal.dashboard.totalStudents')}
@@ -101,25 +176,36 @@ export default function SchoolDashboardPage() {
           </div>
 
           {/* Quick actions */}
-          <div className="flex flex-wrap gap-3">
-            <Button variant="outline" onClick={() => navigate(`${ROUTES.SCHOOL.STUDENTS.LIST}?create=true`)}>
-              <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
-              {t('schoolPortal.dashboard.addStudent')}
-            </Button>
-            <Button variant="outline" onClick={() => navigate(`${ROUTES.SCHOOL.FEES}?create=true`)}>
-              <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
-              {t('schoolPortal.dashboard.createFeeStructure')}
-            </Button>
-            <Button variant="outline" onClick={() => navigate(ROUTES.SCHOOL.FEES)}>
-              <Eye className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
-              {t('schoolPortal.dashboard.viewOverdue')}
-            </Button>
-            {canViewCashCollection && (
-              <Button variant="outline" onClick={() => navigate(ROUTES.SCHOOL.CASH_COLLECTION)}>
-                <Banknote className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
-                {t('schoolPortal.nav.cashCollection')}
-              </Button>
-            )}
+          <div>
+            <h2 className="mb-3 text-sm font-semibold text-text-primary">
+              {t('schoolPortal.dashboard.quickActions')}
+            </h2>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              <ActionTile
+                icon={Plus}
+                title={t('schoolPortal.dashboard.addStudent')}
+                description={t('schoolPortal.dashboard.addStudentDesc')}
+                onClick={() => navigate(`${ROUTES.SCHOOL.STUDENTS.LIST}?create=true`)}
+              />
+              <ActionTile
+                icon={Receipt}
+                title={t('schoolPortal.dashboard.createFeeStructure')}
+                description={t('schoolPortal.dashboard.createFeeStructureDesc')}
+                onClick={() => navigate(`${ROUTES.SCHOOL.FEES}?create=true`)}
+              />
+              <ActionTile
+                icon={AlertTriangle}
+                title={t('schoolPortal.dashboard.viewOverdue')}
+                description={t('schoolPortal.dashboard.viewOverdueDesc')}
+                onClick={() => navigate(ROUTES.SCHOOL.FEES)}
+              />
+              <ActionTile
+                icon={UserPlus}
+                title={t('schoolPortal.dashboard.inviteStaff')}
+                description={t('schoolPortal.dashboard.inviteStaffDesc')}
+                onClick={() => navigate(ROUTES.SCHOOL.STAFF)}
+              />
+            </div>
           </div>
 
           {/* Two-column: Fee breakdown + Recent activity */}
@@ -193,6 +279,85 @@ function StatCard({ label, value, icon: Icon, color }: StatCardProps) {
   );
 }
 
+function SetupProgressPanel({
+  progress,
+  completed,
+  total,
+  items,
+  onNavigate,
+}: {
+  progress: number;
+  completed: number;
+  total: number;
+  items: Array<{ label: string; complete: boolean; route: string }>;
+  onNavigate: (path: string) => void;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <Card className="p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h2 className="text-sm font-semibold text-text-primary">
+            {t('schoolPortal.dashboard.setupProgress')}
+          </h2>
+          <p className="mt-1 text-sm text-text-muted">
+            {t('schoolPortal.dashboard.setupProgressValue', { completed, total })}
+          </p>
+        </div>
+        <Badge variant={progress === 100 ? 'success' : 'warning'}>{progress}%</Badge>
+      </div>
+      <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface-200 dark:bg-surface-elevated">
+        <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${progress}%` }} />
+      </div>
+      <div className="mt-4 space-y-2">
+        {items.map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            onClick={() => onNavigate(item.route)}
+            className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-start transition-colors hover:bg-hover"
+          >
+            <span className="min-w-0 truncate text-sm text-text-secondary">{item.label}</span>
+            <Badge variant={item.complete ? 'success' : 'outline'} size="sm">
+              {item.complete ? t('schoolPortal.dashboard.configured') : t('schoolPortal.dashboard.needsSetup')}
+            </Badge>
+          </button>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function ActionTile({
+  icon: Icon,
+  title,
+  description,
+  onClick,
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex min-h-28 items-start gap-3 rounded-lg border border-border bg-surface p-4 text-start transition-colors hover:border-primary-300 hover:bg-hover"
+    >
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 dark:bg-primary-500/10 dark:text-primary-300">
+        <Icon className="h-4 w-4" />
+      </div>
+      <div className="min-w-0">
+        <p className="font-medium text-text-primary">{title}</p>
+        <p className="mt-1 text-sm text-text-muted">{description}</p>
+      </div>
+      <ArrowRight className="ms-auto mt-1 h-4 w-4 shrink-0 text-text-muted transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" />
+    </button>
+  );
+}
+
 function FeeStatusBar({ breakdown }: { breakdown: { pending: number; paid: number; overdue: number; waived: number; cancelled: number } }) {
   const total = breakdown.pending + breakdown.paid + breakdown.overdue + breakdown.waived + breakdown.cancelled;
   const { t } = useTranslation();
@@ -234,8 +399,10 @@ const STATUS_COLORS: Record<string, 'success' | 'warning' | 'error' | 'default'>
 };
 
 function RecentActivityList({ items }: { items: RecentFeeInstance[] }) {
+  const { t } = useTranslation();
+
   if (items.length === 0) {
-    return <p className="text-sm text-text-muted">No recent activity.</p>;
+    return <p className="text-sm text-text-muted">{t('schoolPortal.dashboard.noRecentActivity')}</p>;
   }
 
   return (

@@ -148,7 +148,7 @@ function StructuresTab() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
                         <Link to={ROUTES.SCHOOL.FEE_STRUCTURES.getDetail(fs.id)}>
-                          <Button variant="ghost" size="sm" title="View"><Eye className="h-4 w-4" /></Button>
+                          <Button variant="ghost" size="sm" title={t('common.view')}><Eye className="h-4 w-4" /></Button>
                         </Link>
                         {fs.status === 'Draft' && (
                           <>
@@ -221,7 +221,7 @@ function StructuresTab() {
         onClose={() => setGenerateTarget(null)}
         onConfirm={() => { if (generateTarget) { generateMutation.mutate(generateTarget.id); setGenerateTarget(null); } }}
         title={t('feeStructures.generateFees')}
-        description={`Generate fee instances for all applicable students from "${generateTarget?.name}"?`}
+        description={t('feeStructures.generateFeesConfirmation', { name: generateTarget?.name })}
         confirmLabel={t('feeStructures.generateFees')}
       />
 
@@ -335,7 +335,7 @@ function InstancesTab() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
                         <Link to={ROUTES.SCHOOL.FEE_INSTANCES.getDetail(fi.id)}>
-                          <Button variant="ghost" size="sm" title="View"><Eye className="h-4 w-4" /></Button>
+                          <Button variant="ghost" size="sm" title={t('common.view')}><Eye className="h-4 w-4" /></Button>
                         </Link>
                         {(fi.status === 'Pending' || fi.status === 'Overdue') && (
                           <>
@@ -364,7 +364,7 @@ function InstancesTab() {
       <ConfirmModal
         isOpen={!!waiveTarget}
         onClose={() => setWaiveTarget(null)}
-        onConfirm={() => { if (waiveTarget) { waiveMutation.mutate({ id: waiveTarget.id, data: { reason: 'Waived by school admin' } }); setWaiveTarget(null); } }}
+        onConfirm={() => { if (waiveTarget) { waiveMutation.mutate({ id: waiveTarget.id, data: { reason: t('feeInstances.waivedBySchoolAdmin') } }); setWaiveTarget(null); } }}
         title={t('feeInstances.waiveFee')}
         description={t('feeInstances.waiveConfirmation')}
         confirmLabel={t('feeInstances.waiveFee')}
@@ -375,7 +375,7 @@ function InstancesTab() {
       <ConfirmModal
         isOpen={!!cancelTarget}
         onClose={() => setCancelTarget(null)}
-        onConfirm={() => { if (cancelTarget) { cancelMutation.mutate({ id: cancelTarget.id, data: { reason: 'Cancelled by school admin' } }); setCancelTarget(null); } }}
+        onConfirm={() => { if (cancelTarget) { cancelMutation.mutate({ id: cancelTarget.id, data: { reason: t('feeInstances.cancelledBySchoolAdmin') } }); setCancelTarget(null); } }}
         title={t('feeInstances.cancelFee')}
         description={t('feeInstances.cancelConfirmation')}
         confirmLabel={t('feeInstances.cancelFee')}

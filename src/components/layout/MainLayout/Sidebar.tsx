@@ -105,13 +105,13 @@ export function Sidebar() {
       )}
     >
       {/* Logo */}
-      <div className="flex h-16 items-center justify-between border-b border-border px-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-500/20">
+      <div className="flex h-16 min-w-0 items-center justify-between overflow-hidden border-b border-border px-4">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-500/20">
             <GraduationCap className="h-5 w-5 text-primary-600 dark:text-primary-400" />
           </div>
           {!isCollapsed && (
-            <span className="text-lg font-bold text-text-primary">EduPay</span>
+            <span className="min-w-0 truncate text-lg font-bold text-text-primary">EduPay</span>
           )}
         </div>
       </div>
@@ -126,7 +126,7 @@ export function Sidebar() {
                 end={item.path === ROUTES.DASHBOARD}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                    'flex min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                     isActive
                       ? 'bg-primary-50 text-primary-700 dark:bg-primary-500/20 dark:text-primary-300'
                       : 'text-text-secondary hover:bg-hover hover:text-text-primary'
@@ -134,7 +134,7 @@ export function Sidebar() {
                 }
               >
                 <item.icon className="h-5 w-5 shrink-0" />
-                {!isCollapsed && <span>{item.label}</span>}
+                {!isCollapsed && <span className="min-w-0 truncate">{item.label}</span>}
               </NavLink>
             </li>
           ))}
@@ -156,7 +156,7 @@ export function Sidebar() {
               !isCollapsed && 'rtl:rotate-180'
             )}
           />
-          {!isCollapsed && <span className="ltr:ml-2 rtl:mr-2">{t('nav.collapse')}</span>}
+          {!isCollapsed && <span className="min-w-0 truncate ltr:ml-2 rtl:mr-2">{t('nav.collapse')}</span>}
         </Button>
       </div>
     </aside>

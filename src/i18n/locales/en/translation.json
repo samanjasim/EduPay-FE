@@ -518,6 +518,8 @@
     "reason": "Reason",
     "waiveConfirmation": "Are you sure you want to waive this fee? This action cannot be undone.",
     "cancelConfirmation": "Are you sure you want to cancel this fee? This action cannot be undone.",
+    "waivedBySchoolAdmin": "Waived by school admin",
+    "cancelledBySchoolAdmin": "Cancelled by school admin",
     "noStudentFees": "No fees found for this student."
   },
   "feeStructures": {
@@ -560,6 +562,7 @@
     "activateConfirmation": "Are you sure you want to activate \"{{name}}\"? Students will be able to see this fee.",
     "archiveConfirmation": "Are you sure you want to archive \"{{name}}\"? No new fee instances can be generated.",
     "generateFees": "Generate Fees",
+    "generateFeesConfirmation": "Generate fee instances for all applicable students from \"{{name}}\"?",
     "modifiedAt": "Modified"
   },
   "feeTypes": {
@@ -617,19 +620,36 @@
     "dashboard": {
       "welcome": "Welcome, {{name}}!",
       "subtitle": "Here's an overview of your school's activity",
+      "operationsTitle": "School Operations",
+      "operationsSubtitle": "Track setup, collections, overdue fees, and staff work from one place",
       "totalStudents": "Active Students",
       "activeFeeStructures": "Fee Structures",
       "collectionRate": "Collection Rate",
       "overdueAmount": "Overdue Amount",
       "feeStatusBreakdown": "Fee Status Breakdown",
       "recentActivity": "Recent Activity",
+      "todayFocus": "Today's focus",
+      "outstandingFocus": "{{amount}} remains outstanding across active fees.",
+      "readyFocus": "Collections are up to date for the current view.",
       "addStudent": "Add Student",
+      "addStudentDesc": "Add a student and link parents for fee visibility.",
       "createFeeStructure": "Create Fee Structure",
+      "createFeeStructureDesc": "Create tuition or service fees and generate records.",
       "viewOverdue": "View Overdue",
+      "viewOverdueDesc": "Review pending and overdue fee records.",
+      "inviteStaff": "Invite Staff",
+      "inviteStaffDesc": "Add admins or cash collectors to the school portal.",
+      "reviewReports": "Review Reports",
+      "quickActions": "Quick Actions",
+      "setupProgress": "Setup Progress",
+      "setupProgressValue": "{{completed}} of {{total}} areas configured",
+      "configured": "Configured",
+      "needsSetup": "Needs setup",
       "setupIncomplete": "Complete your school setup",
       "setupIncompleteDesc": "Some setup steps are still pending. Complete them to get the most out of EduPay.",
       "completeSetup": "Complete Setup",
-      "noFeeInstances": "No fee instances yet."
+      "noFeeInstances": "No fee instances yet.",
+      "noRecentActivity": "No recent activity."
     },
     "payments": {
       "comingSoonDesc": "Payment tracking, cash collections, and receipt management will be available here soon."
@@ -651,18 +671,28 @@
     },
     "reports": {
       "comingSoonDesc": "Fee collection reports, overdue aging, and financial summaries will be available here soon.",
+      "subtitle": "Reconcile cash collections by date and collector",
+      "datePreset": "Date Range",
+      "today": "Today",
+      "last7Days": "Last 7 days",
+      "last30Days": "Last 30 days",
+      "customRange": "Custom range",
+      "allCollectors": "All collectors",
       "dateFrom": "Date From",
       "dateTo": "Date To",
       "cashCollected": "Cash Collected",
       "payments": "Payments",
       "collectors": "Collectors",
+      "range": "Range",
       "collectorBreakdown": "Collector Breakdown",
       "collector": "Collector",
       "cashPayments": "Cash Payments",
+      "filteredPayments": "{{count}} payments",
       "receipt": "Receipt",
       "student": "Student",
       "amount": "Amount",
       "collectedAt": "Collected At",
+      "resetFilters": "Reset",
       "noCashPayments": "No cash payments",
       "noCashPaymentsDesc": "Cash collections for the selected dates will appear here."
     },
@@ -678,19 +708,51 @@
       "finish": "Finish Setup",
       "settings": {
         "title": "School Settings",
-        "description": "Configure your school's basic settings"
+        "description": "Configure your school's basic settings",
+        "currencyIqd": "IQD - Iraqi Dinar",
+        "currencyUsd": "USD - US Dollar",
+        "currencyEur": "EUR - Euro",
+        "languageAr": "Arabic",
+        "languageEn": "English",
+        "languageKu": "Kurdish",
+        "updateFailed": "Failed to update school settings"
       },
       "grades": {
         "title": "Grades & Sections",
-        "description": "Set up your school's grade levels and class sections"
+        "description": "Set up your school's grade levels and class sections",
+        "summary": "{{grades}} grades with {{sections}} sections total",
+        "newGradesCount": "{{count}} new",
+        "generateTemplate": "Generate grades 1-12",
+        "templateName": "Grade {{number}}",
+        "allGradesAlreadyExist": "Grades 1-12 already exist.",
+        "generatedGrades": "Added {{count}} grades.",
+        "existingGradesSkipped": "{{count}} existing grades skipped.",
+        "addAtLeastOneGrade": "Add at least one grade to continue.",
+        "gradeNameRequired": "Every new grade needs a name.",
+        "creatingGrade": "Creating {{name}}... ({{current}}/{{total}})",
+        "partialGradeFailure": "Created {{created}} grades, but {{failed}} failed. Try Next again to retry.",
+        "sectionsList": "Sections: {{sections}}",
+        "noGradesYet": "No grades added yet. Add grades manually or generate a starter template."
       },
       "fees": {
         "title": "Fee Structures",
-        "description": "Define the fees your school charges students"
+        "description": "Define the fees your school charges students",
+        "validationRequired": "Every fee needs a name, type, amount, and due date.",
+        "createFailed": "Failed to create fee structures",
+        "noAcademicYear": "No academic year linked",
+        "noAcademicYearDesc": "Fee structures require an academic year. Ask the platform admin to create one and link it to this school.",
+        "noFeeTypes": "No fee types available. Ask the platform admin to create fee types first.",
+        "namePlaceholder": "Fee name, e.g. Annual Tuition",
+        "empty": "No fee structures added yet. You can add them now or skip and finish later."
       },
       "students": {
         "title": "Students",
-        "description": "Add your students to the system"
+        "description": "Add your students to the system",
+        "validationRequired": "Every student needs an Arabic name, student code, and grade.",
+        "createFailed": "Failed to create students",
+        "importComingSoon": "CSV import is not available yet",
+        "importCsv": "Import CSV",
+        "empty": "No students added yet. You can add them now or skip and finish later."
       },
       "complete": {
         "title": "Setup Complete!",
@@ -718,7 +780,9 @@
       "belongsToAnotherSchool": "This user belongs to another school. Please contact the platform administrator.",
       "role": "Role",
       "roleCashCollector": "Cash Collector",
-      "roleSchoolAdmin": "School Admin"
+      "roleSchoolAdmin": "School Admin",
+      "roleCashCollectorDesc": "Records cash payments, downloads receipts, and reviews cash reports for assigned schools.",
+      "roleSchoolAdminDesc": "Manages setup, students, fees, staff, cash collection, reports, and school settings."
     },
     "grades": {
       "title": "Grades & Sections",
