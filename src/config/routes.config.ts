@@ -148,6 +148,7 @@ export const ROUTES = {
       getDetail: (id: string) => `/school/grades/${id}`,
     },
     FEES: '/school/fees',
+    CASH_COLLECTION: '/school/cash-collection',
     FEE_STRUCTURES: {
       DETAIL: '/school/fees/structures/:id',
       getDetail: (id: string) => `/school/fees/structures/${id}`,

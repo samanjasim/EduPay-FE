@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Modal, ModalFooter, Button, Input } from '@/components/ui';
+import { Modal, ModalFooter, Button, Input, Select } from '@/components/ui';
 import { useInviteStaff } from '../../api/school-portal.queries';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 interface InviteStaffForm {
   email: string;
   fullName: string;
+  roleName: 'SchoolAdmin' | 'CashCollector';
 }
 
 interface InviteStaffModalProps {
@@ -20,9 +21,14 @@ export function InviteStaffModal({ isOpen, onClose, schoolId }: InviteStaffModal
   const { t } = useTranslation();
   const inviteStaff = useInviteStaff(schoolId || undefined);
 
-  const { register, handleSubmit, reset, setError, formState: { errors } } = useForm<InviteStaffForm>({
-    defaultValues: { email: '', fullName: '' },
+  const { register, handleSubmit, reset, setError, setValue, watch, formState: { errors } } = useForm<InviteStaffForm>({
+    defaultValues: { email: '', fullName: '', roleName: 'CashCollector' },
   });
+  const roleName = watch('roleName');
+  const roleOptions = [
+    { value: 'CashCollector', label: t('schoolPortal.staff.roleCashCollector') },
+    { value: 'SchoolAdmin', label: t('schoolPortal.staff.roleSchoolAdmin') },
+  ];
 
   const onSubmit = (data: InviteStaffForm) => {
     inviteStaff.mutate(data, {
@@ -60,6 +66,12 @@ export function InviteStaffModal({ isOpen, onClose, schoolId }: InviteStaffModal
           {...register('email', { required: t('validation.required') })}
           error={errors.email?.message}
           placeholder={t('schoolPortal.staff.emailPlaceholder')}
+        />
+        <Select
+          label={t('schoolPortal.staff.role')}
+          value={roleName}
+          options={roleOptions}
+          onChange={(value) => setValue('roleName', value as InviteStaffForm['roleName'], { shouldDirty: true })}
         />
         <ModalFooter>
           <Button type="button" variant="outline" onClick={onClose}>

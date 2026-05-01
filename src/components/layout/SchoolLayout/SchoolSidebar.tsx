@@ -4,18 +4,20 @@ import {
   LayoutDashboard,
   Users,
   Receipt,
-  CreditCard,
   BarChart3,
   Settings,
   ChevronLeft,
   GraduationCap,
   BookOpen,
   UserCog,
+  Banknote,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
 import { ROUTES } from '@/config';
 import { Button } from '@/components/ui';
+import { usePermissions } from '@/hooks';
+import { PERMISSIONS } from '@/constants';
 
 interface SchoolSidebarProps {
   schoolName?: string;
@@ -25,17 +27,28 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
   const { t } = useTranslation();
   const isCollapsed = useUIStore(selectSidebarCollapsed);
   const toggleCollapse = useUIStore((state) => state.toggleSidebarCollapse);
+  const { hasPermission, hasAnyPermission, hasAllPermissions } = usePermissions();
+  const canRecordCash = hasPermission(PERMISSIONS.CashCollections.Create);
+  const canViewCashCollection = hasAllPermissions([
+    PERMISSIONS.CashCollections.View,
+    PERMISSIONS.Fees.View,
+  ]);
+  const canManageFees = hasAnyPermission([
+    PERMISSIONS.Fees.Create,
+    PERMISSIONS.Fees.Update,
+    PERMISSIONS.Fees.Delete,
+  ]);
 
   const navItems = [
-    { label: t('schoolPortal.nav.dashboard'), icon: LayoutDashboard, path: ROUTES.SCHOOL.DASHBOARD },
-    { label: t('schoolPortal.nav.grades'), icon: BookOpen, path: ROUTES.SCHOOL.GRADES.LIST },
-    { label: t('schoolPortal.nav.students'), icon: Users, path: ROUTES.SCHOOL.STUDENTS.LIST },
-    { label: t('schoolPortal.nav.fees'), icon: Receipt, path: ROUTES.SCHOOL.FEES },
-    { label: t('schoolPortal.nav.payments'), icon: CreditCard, path: ROUTES.SCHOOL.PAYMENTS },
-    { label: t('schoolPortal.nav.reports'), icon: BarChart3, path: ROUTES.SCHOOL.REPORTS },
-    { label: t('schoolPortal.nav.staff'), icon: UserCog, path: ROUTES.SCHOOL.STAFF },
-    { label: t('schoolPortal.nav.settings'), icon: Settings, path: ROUTES.SCHOOL.SETTINGS },
-  ];
+    { label: t('schoolPortal.nav.dashboard'), icon: LayoutDashboard, path: ROUTES.SCHOOL.DASHBOARD, show: hasPermission(PERMISSIONS.Schools.View) },
+    { label: t('schoolPortal.nav.grades'), icon: BookOpen, path: ROUTES.SCHOOL.GRADES.LIST, show: hasPermission(PERMISSIONS.Grades.View) },
+    { label: t('schoolPortal.nav.students'), icon: Users, path: ROUTES.SCHOOL.STUDENTS.LIST, show: hasPermission(PERMISSIONS.Students.View) },
+    { label: t('schoolPortal.nav.cashCollection'), icon: Banknote, path: ROUTES.SCHOOL.CASH_COLLECTION, show: canViewCashCollection },
+    { label: t('schoolPortal.nav.fees'), icon: Receipt, path: ROUTES.SCHOOL.FEES, show: hasPermission(PERMISSIONS.Fees.View) && (canManageFees || !canRecordCash) },
+    { label: t('schoolPortal.nav.reports'), icon: BarChart3, path: ROUTES.SCHOOL.REPORTS, show: hasPermission(PERMISSIONS.CashCollections.View) },
+    { label: t('schoolPortal.nav.staff'), icon: UserCog, path: ROUTES.SCHOOL.STAFF, show: hasPermission(PERMISSIONS.Schools.ManageAdmins) },
+    { label: t('schoolPortal.nav.settings'), icon: Settings, path: ROUTES.SCHOOL.SETTINGS, show: hasPermission(PERMISSIONS.Schools.ManageSettings) },
+  ].filter((item) => item.show);
 
   return (
     <aside

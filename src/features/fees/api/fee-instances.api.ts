@@ -4,6 +4,8 @@ import type {
   FeeInstanceSummaryDto,
   FeeInstanceDetailDto,
   FeeInstanceListParams,
+  PayFeeWithCashData,
+  CashFeePayResultDto,
   PaginatedResponse,
   ApiResponse,
 } from '@/types';
@@ -34,6 +36,19 @@ export const feeInstancesApi = {
 
   cancelFee: async (id: string, data: { reason: string }): Promise<void> => {
     await apiClient.patch(API_ENDPOINTS.FEE_INSTANCES.CANCEL(id), data);
+  },
+
+  payWithCash: async (
+    id: string,
+    data: PayFeeWithCashData,
+    schoolId?: string
+  ): Promise<CashFeePayResultDto> => {
+    const response = await apiClient.post<ApiResponse<CashFeePayResultDto>>(
+      API_ENDPOINTS.FEE_INSTANCE_PAYMENTS.PAY_WITH_CASH(id),
+      data,
+      schoolId ? { headers: { 'X-School-Id': schoolId } } : undefined
+    );
+    return response.data.data;
   },
 
   detectOverdue: async (): Promise<number> => {

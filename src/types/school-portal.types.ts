@@ -47,6 +47,7 @@ export interface SchoolStaffDto {
 export interface InviteStaffData {
   email: string;
   fullName: string;
+  roleName: 'SchoolAdmin' | 'CashCollector';
 }
 
 export interface SchoolDashboardData {

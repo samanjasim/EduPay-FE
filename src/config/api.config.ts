@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
   TIMEOUT: 30000,
 } as const;
 
@@ -87,6 +87,13 @@ export const API_ENDPOINTS = {
     DETAIL: (parentUserId: string) => `/Parents/${parentUserId}`,
     CHILDREN: '/Parents/children',
     MY_FEES: '/Parents/my-fees',
+    MY_FEE_ITEMS: '/Parents/my-fees/items',
+    MY_ORDERS: '/Parents/my-orders',
+    DASHBOARD: (parentUserId: string) => `/Parents/${parentUserId}/dashboard`,
+    CHILDREN_FOR_PARENT: (parentUserId: string) => `/Parents/${parentUserId}/children`,
+    FEES: (parentUserId: string) => `/Parents/${parentUserId}/fees`,
+    FEE_DASHBOARD: (parentUserId: string) => `/Parents/${parentUserId}/fees/dashboard`,
+    ORDERS: (parentUserId: string) => `/Parents/${parentUserId}/orders`,
   },
   NOTIFICATIONS: {
     LIST: '/Notifications',
@@ -131,9 +138,14 @@ export const API_ENDPOINTS = {
   FEE_INSTANCE_PAYMENTS: {
     PAY_WITH_WALLET: (id: string) => `/FeeInstances/${id}/pay/wallet`,
     PAY_WITH_GATEWAY: (id: string) => `/FeeInstances/${id}/pay/gateway`,
+    PAY_WITH_CASH: (id: string) => `/FeeInstances/${id}/pay/cash`,
   },
   ORDERS: {
     LIST: '/Orders',
     DETAIL: (id: string) => `/Orders/${id}`,
+    RECEIPT: (id: string) => `/Orders/${id}/receipt`,
+  },
+  REPORTS: {
+    CASH_RECONCILIATION: '/Reports/cash-reconciliation',
   },
 } as const;

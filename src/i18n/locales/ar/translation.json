@@ -25,6 +25,7 @@
     "createdAt": "تاريخ الإنشاء",
     "showing": "عرض {{start}}-{{end}} من {{total}}",
     "close": "إغلاق",
+    "view": "عرض",
     "viewAll": "عرض الكل",
     "saved": "تم الحفظ!",
     "operationFailed": "فشلت العملية"
@@ -420,7 +421,8 @@
     "gwStatusSuccessful": "ناجحة",
     "gwStatusFailed": "فشلت",
     "gwStatusTimeout": "انتهت المهلة",
-    "txRef": "مرجع المعاملة"
+    "txRef": "مرجع المعاملة",
+    "downloadReceipt": "تنزيل الإيصال"
   },
   "wallets": {
     "title": "المحافظ",
@@ -509,6 +511,9 @@
     "applyDiscount": "تطبيق خصم",
     "waiveFee": "إعفاء الرسوم",
     "cancelFee": "إلغاء الرسوم",
+    "recordCashPayment": "تسجيل دفع نقدي",
+    "cashAmountLabel": "المبلغ النقدي",
+    "cashNoteLabel": "ملاحظة الدفع النقدي",
     "discountAmountLabel": "مبلغ الخصم",
     "reason": "السبب",
     "waiveConfirmation": "هل أنت متأكد من إعفاء هذه الرسوم؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -603,6 +608,7 @@
       "grades": "المراحل الدراسية",
       "students": "الطلاب",
       "fees": "الرسوم",
+      "cashCollection": "تحصيل النقد",
       "payments": "المدفوعات",
       "reports": "التقارير",
       "staff": "الموظفون",
@@ -628,8 +634,37 @@
     "payments": {
       "comingSoonDesc": "سيتوفر هنا قريباً تتبع المدفوعات وتحصيل النقد وإدارة الإيصالات."
     },
+    "cashCollection": {
+      "title": "تحصيل النقد",
+      "subtitle": "ابحث عن رسوم الطلاب غير المدفوعة وسجل الدفعات النقدية",
+      "pending": "معلقة",
+      "overdue": "متأخرة",
+      "pendingQueue": "قائمة المعلقات",
+      "overdueQueue": "قائمة المتأخرات",
+      "visibleOutstanding": "المبلغ الظاهر المتبقي",
+      "visibleFees": "الرسوم الظاهرة",
+      "searchPlaceholder": "ابحث عن طالب أو رسم",
+      "viewReport": "عرض التقرير",
+      "emptyTitle": "لا توجد رسوم للتحصيل",
+      "emptyDescription": "ستظهر هنا الرسوم المعلقة والمتأخرة.",
+      "collect": "تحصيل"
+    },
     "reports": {
-      "comingSoonDesc": "ستتوفر هنا قريباً تقارير تحصيل الرسوم وتقادم المتأخرات والملخصات المالية."
+      "comingSoonDesc": "ستتوفر هنا قريباً تقارير تحصيل الرسوم وتقادم المتأخرات والملخصات المالية.",
+      "dateFrom": "من تاريخ",
+      "dateTo": "إلى تاريخ",
+      "cashCollected": "النقد المحصل",
+      "payments": "المدفوعات",
+      "collectors": "المحصلون",
+      "collectorBreakdown": "توزيع المحصلين",
+      "collector": "المحصل",
+      "cashPayments": "المدفوعات النقدية",
+      "receipt": "الإيصال",
+      "student": "الطالب",
+      "amount": "المبلغ",
+      "collectedAt": "وقت التحصيل",
+      "noCashPayments": "لا توجد مدفوعات نقدية",
+      "noCashPaymentsDesc": "ستظهر التحصيلات النقدية للتواريخ المحددة هنا."
     },
     "setup": {
       "title": "إعداد المدرسة",
@@ -680,7 +715,10 @@
       "removeTitle": "إزالة الموظف",
       "removeDesc": "هل أنت متأكد من إزالة <strong>{{name}}</strong> من هذه المدرسة؟",
       "alreadyExists": "هذا المستخدم موجود بالفعل في هذه المدرسة.",
-      "belongsToAnotherSchool": "هذا المستخدم ينتمي إلى مدرسة أخرى. يرجى التواصل مع مسؤول المنصة."
+      "belongsToAnotherSchool": "هذا المستخدم ينتمي إلى مدرسة أخرى. يرجى التواصل مع مسؤول المنصة.",
+      "role": "الدور",
+      "roleCashCollector": "محصل نقدي",
+      "roleSchoolAdmin": "مسؤول مدرسة"
     },
     "grades": {
       "title": "المراحل والشعب",

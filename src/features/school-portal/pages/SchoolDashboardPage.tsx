@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
-import { Users, Receipt, AlertTriangle, TrendingUp, Plus, Eye, ArrowRight, Clock } from 'lucide-react';
+import { Users, Receipt, AlertTriangle, TrendingUp, Plus, Eye, ArrowRight, Clock, Banknote } from 'lucide-react';
 import { useAuthStore, selectUser } from '@/stores';
 import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContext';
 import { useSchoolDashboard, useSchoolSetupStatus } from '@/features/school-portal/api';
 import { ROUTES } from '@/config';
+import { PERMISSIONS } from '@/constants';
+import { usePermissions } from '@/hooks';
 import { Button, Card, Badge } from '@/components/ui';
 import { Spinner } from '@/components/ui';
 import type { RecentFeeInstance } from '@/types/school-portal.types';
@@ -15,8 +17,13 @@ export default function SchoolDashboardPage() {
   const navigate = useNavigate();
   const user = useAuthStore(selectUser);
   const { schoolId } = useSchoolContext();
+  const { hasAllPermissions } = usePermissions();
   const { data: dashboard, isLoading } = useSchoolDashboard(schoolId ?? undefined);
   const { data: setupStatus } = useSchoolSetupStatus(schoolId ?? undefined);
+  const canViewCashCollection = hasAllPermissions([
+    PERMISSIONS.CashCollections.View,
+    PERMISSIONS.Fees.View,
+  ]);
 
   // Auto-redirect to setup wizard if school is not configured and wizard hasn't been completed
   useEffect(() => {
@@ -107,6 +114,12 @@ export default function SchoolDashboardPage() {
               <Eye className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
               {t('schoolPortal.dashboard.viewOverdue')}
             </Button>
+            {canViewCashCollection && (
+              <Button variant="outline" onClick={() => navigate(ROUTES.SCHOOL.CASH_COLLECTION)}>
+                <Banknote className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+                {t('schoolPortal.nav.cashCollection')}
+              </Button>
+            )}
           </div>
 
           {/* Two-column: Fee breakdown + Recent activity */}

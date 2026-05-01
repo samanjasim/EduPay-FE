@@ -7,8 +7,7 @@ import { useUsers } from '@/features/users/api';
 import { useRoles } from '@/features/roles/api';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
-import { ROUTES } from '@/config';
-import { shouldRedirectToSchoolPortal } from '@/components/guards/SchoolAdminGuard';
+import { getSchoolPortalDefaultRoute } from '@/components/guards/SchoolAdminGuard';
 
 function StatCard({
   icon: Icon,
@@ -49,10 +48,11 @@ export default function DashboardPage() {
   const { t } = useTranslation();
   const user = useAuthStore(selectUser);
   const { hasPermission } = usePermissions();
+  const schoolPortalDefaultRoute = getSchoolPortalDefaultRoute(user);
 
-  // Redirect school admins (who are not also platform admins) to school portal
-  if (shouldRedirectToSchoolPortal(user)) {
-    return <Navigate to={ROUTES.SCHOOL.DASHBOARD} replace />;
+  // Redirect school staff (who are not also platform admins) to their staff portal.
+  if (schoolPortalDefaultRoute) {
+    return <Navigate to={schoolPortalDefaultRoute} replace />;
   }
 
   const canViewUsers = hasPermission(PERMISSIONS.Users.View);

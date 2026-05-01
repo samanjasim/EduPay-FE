@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import {
   Users, Receipt, ShoppingCart, LayoutDashboard,
   AlertTriangle, Clock, CheckCircle2, GraduationCap,
-  Calendar, XCircle, Filter, TrendingUp,
+  Calendar, XCircle, Filter, TrendingUp, Download,
 } from 'lucide-react';
 import {
   Card, CardContent, CardHeader, CardTitle,
-  Badge, Spinner, Select, Pagination,
+  Badge, Spinner, Select, Pagination, Button,
 } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useParentDashboard, useParentChildren, useParentFees, useParentOrders } from '../api';
@@ -16,6 +16,7 @@ import { useUser } from '@/features/users/api';
 import { ROUTES } from '@/config';
 import { cn } from '@/utils';
 import { format } from 'date-fns';
+import { ordersApi } from '@/features/orders/api';
 
 type Tab = 'overview' | 'children' | 'fees' | 'orders';
 
@@ -312,8 +313,9 @@ function FeesTab({ parentUserId }: { parentUserId: string }) {
                       <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('parent.student')}</th>
                       <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('parent.amount')}</th>
                       <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('parent.dueDate')}</th>
-                      <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('common.status')}</th>
-                    </tr>
+	                      <th className="px-4 pb-3 text-start text-xs font-medium uppercase tracking-wide text-text-muted">{t('common.status')}</th>
+	                      <th className="px-4 pb-3 text-end text-xs font-medium uppercase tracking-wide text-text-muted">{t('common.actions')}</th>
+	                    </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
                     {fees.map((fee) => (
@@ -413,12 +415,22 @@ function OrdersTab({ parentUserId }: { parentUserId: string }) {
                         <td className="px-4 py-3.5"><Badge variant="outline" size="sm">{order.type}</Badge></td>
                         <td className="px-4 py-3.5 font-medium text-text-primary">{fmt(order.totalAmount)} {order.currency}</td>
                         <td className="px-4 py-3.5 text-text-muted">{format(new Date(order.paidAt ?? order.createdAt), 'MMM d, yyyy')}</td>
-                        <td className="px-4 py-3.5">
-                          <Badge variant={orderStatusVariant(order.status)} size="sm">
-                            <span className="flex items-center gap-1">{orderStatusIcon(order.status)}{order.status}</span>
-                          </Badge>
-                        </td>
-                      </tr>
+	                        <td className="px-4 py-3.5">
+	                          <Badge variant={orderStatusVariant(order.status)} size="sm">
+	                            <span className="flex items-center gap-1">{orderStatusIcon(order.status)}{order.status}</span>
+	                          </Badge>
+	                        </td>
+	                        <td className="px-4 py-3.5 text-end">
+	                          <Button
+	                            variant="ghost"
+	                            size="sm"
+	                            aria-label={t('orders.downloadReceipt')}
+	                            onClick={() => ordersApi.downloadReceipt(order.orderId, order.receiptNumber)}
+	                          >
+	                            <Download className="h-4 w-4" />
+	                          </Button>
+	                        </td>
+	                      </tr>
                     ))}
                   </tbody>
                 </table>

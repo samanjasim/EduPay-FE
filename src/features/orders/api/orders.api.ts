@@ -23,4 +23,19 @@ export const ordersApi = {
     );
     return response.data.data;
   },
+
+  downloadReceipt: async (id: string, receiptNumber?: string): Promise<void> => {
+    const response = await apiClient.get(API_ENDPOINTS.ORDERS.RECEIPT(id), {
+      responseType: 'blob',
+    });
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `receipt-${receiptNumber || id}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  },
 };

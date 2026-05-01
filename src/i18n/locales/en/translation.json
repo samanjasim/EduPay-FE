@@ -25,6 +25,7 @@
     "createdAt": "Created",
     "showing": "Showing {{start}}-{{end}} of {{total}}",
     "close": "Close",
+    "view": "View",
     "viewAll": "View all",
     "saved": "Saved!",
     "operationFailed": "Operation failed"
@@ -420,7 +421,8 @@
     "gwStatusSuccessful": "Successful",
     "gwStatusFailed": "Failed",
     "gwStatusTimeout": "Timeout",
-    "txRef": "Txn Ref"
+    "txRef": "Txn Ref",
+    "downloadReceipt": "Download Receipt"
   },
   "wallets": {
     "title": "Wallets",
@@ -509,6 +511,9 @@
     "applyDiscount": "Apply Discount",
     "waiveFee": "Waive Fee",
     "cancelFee": "Cancel Fee",
+    "recordCashPayment": "Record Cash Payment",
+    "cashAmountLabel": "Cash Amount",
+    "cashNoteLabel": "Cash Note",
     "discountAmountLabel": "Discount Amount",
     "reason": "Reason",
     "waiveConfirmation": "Are you sure you want to waive this fee? This action cannot be undone.",
@@ -603,6 +608,7 @@
       "grades": "Grades",
       "students": "Students",
       "fees": "Fees",
+      "cashCollection": "Cash Collection",
       "payments": "Payments",
       "reports": "Reports",
       "staff": "Staff",
@@ -628,8 +634,37 @@
     "payments": {
       "comingSoonDesc": "Payment tracking, cash collections, and receipt management will be available here soon."
     },
+    "cashCollection": {
+      "title": "Cash Collection",
+      "subtitle": "Find unpaid student fees and record cash payments",
+      "pending": "Pending",
+      "overdue": "Overdue",
+      "pendingQueue": "Pending Queue",
+      "overdueQueue": "Overdue Queue",
+      "visibleOutstanding": "Visible Outstanding",
+      "visibleFees": "Visible Fees",
+      "searchPlaceholder": "Search student or fee",
+      "viewReport": "View Report",
+      "emptyTitle": "No fees to collect",
+      "emptyDescription": "Pending and overdue fees will appear here.",
+      "collect": "Collect"
+    },
     "reports": {
-      "comingSoonDesc": "Fee collection reports, overdue aging, and financial summaries will be available here soon."
+      "comingSoonDesc": "Fee collection reports, overdue aging, and financial summaries will be available here soon.",
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "cashCollected": "Cash Collected",
+      "payments": "Payments",
+      "collectors": "Collectors",
+      "collectorBreakdown": "Collector Breakdown",
+      "collector": "Collector",
+      "cashPayments": "Cash Payments",
+      "receipt": "Receipt",
+      "student": "Student",
+      "amount": "Amount",
+      "collectedAt": "Collected At",
+      "noCashPayments": "No cash payments",
+      "noCashPaymentsDesc": "Cash collections for the selected dates will appear here."
     },
     "setup": {
       "title": "School Setup",
@@ -680,7 +715,10 @@
       "removeTitle": "Remove Staff Member",
       "removeDesc": "Are you sure you want to remove <strong>{{name}}</strong> from this school?",
       "alreadyExists": "This user is already part of this school.",
-      "belongsToAnotherSchool": "This user belongs to another school. Please contact the platform administrator."
+      "belongsToAnotherSchool": "This user belongs to another school. Please contact the platform administrator.",
+      "role": "Role",
+      "roleCashCollector": "Cash Collector",
+      "roleSchoolAdmin": "School Admin"
     },
     "grades": {
       "title": "Grades & Sections",

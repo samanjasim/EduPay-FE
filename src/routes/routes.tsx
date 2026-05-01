@@ -59,6 +59,7 @@ const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
 const SchoolDashboardPage = lazy(() => import('@/features/school-portal/pages/SchoolDashboardPage'));
 const SchoolPaymentsPage = lazy(() => import('@/features/school-portal/pages/SchoolPaymentsPage'));
 const SchoolReportsPage = lazy(() => import('@/features/school-portal/pages/SchoolReportsPage'));
+const SchoolCashCollectionPage = lazy(() => import('@/features/school-portal/pages/SchoolCashCollectionPage'));
 const SchoolSettingsPage = lazy(() => import('@/features/school-portal/pages/SchoolSettingsPage'));
 const SetupWizardPage = lazy(() => import('@/features/school-portal/pages/SetupWizardPage'));
 const SchoolStudentsPage = lazy(() => import('@/features/students/pages/SchoolStudentsPage'));
@@ -105,6 +106,18 @@ export const routes: RouteObject[] = [
               { path: ROUTES.SCHOOL.GRADES.DETAIL, element: <SchoolGradeDetailPage /> },
               { path: ROUTES.SCHOOL.STUDENTS.LIST, element: <SchoolStudentsPage /> },
               { path: ROUTES.SCHOOL.STUDENTS.DETAIL, element: <SchoolStudentDetailPage /> },
+              {
+                element: (
+                  <PermissionGuard
+                    permissions={[PERMISSIONS.CashCollections.View, PERMISSIONS.Fees.View]}
+                    mode="all"
+                    redirectTo={ROUTES.SCHOOL.DASHBOARD}
+                  />
+                ),
+                children: [
+                  { path: ROUTES.SCHOOL.CASH_COLLECTION, element: <SchoolCashCollectionPage /> },
+                ],
+              },
               { path: ROUTES.SCHOOL.FEES, element: <SchoolFeesPage /> },
               { path: ROUTES.SCHOOL.FEE_STRUCTURES.DETAIL, element: <FeeStructureDetailPage /> },
               { path: ROUTES.SCHOOL.FEE_INSTANCES.DETAIL, element: <FeeInstanceDetailPage /> },

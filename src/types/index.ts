@@ -11,6 +11,7 @@ export * from './fee.types';
 export * from './school-portal.types';
 export * from './product.types';
 export * from './order.types';
+export * from './report.types';
 export * from './notification.types';
 export * from './file.types';
 export * from './subscription.types';

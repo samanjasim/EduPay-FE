@@ -6,6 +6,7 @@ import { queryKeys } from '@/lib/query/keys';
 import { useAuthStore, useUIStore } from '@/stores';
 import { storage } from '@/utils';
 import { ROUTES } from '@/config';
+import { getSchoolPortalDefaultRoute } from '@/components/guards';
 import type { LoginCredentials, RegisterData, ChangePasswordData } from '@/types';
 
 export function useCurrentUser() {
@@ -40,7 +41,7 @@ export function useLogin() {
       login(fullUser, tokens);
       queryClient.setQueryData(queryKeys.auth.me(), fullUser);
       toast.success(`Welcome back, ${fullUser.firstName}!`);
-      navigate(ROUTES.DASHBOARD);
+      navigate(getSchoolPortalDefaultRoute(fullUser) ?? ROUTES.DASHBOARD);
     },
     onError: () => {
       setLoading(false);

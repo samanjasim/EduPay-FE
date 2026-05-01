@@ -6,10 +6,9 @@ import { useSchoolContext } from '@/features/school-portal/hooks/useSchoolContex
 const PLATFORM_ADMIN_ROLES = ['SuperAdmin', 'Admin'];
 
 export function SchoolAdminGuard() {
-  const { isLoading, isSchoolAdmin, schoolId } = useSchoolContext();
+  const { isLoading, isSchoolStaff, schoolId } = useSchoolContext();
 
-  // If not a school admin, redirect to main dashboard
-  if (!isSchoolAdmin) {
+  if (!isSchoolStaff) {
     return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 
@@ -23,11 +22,21 @@ export function SchoolAdminGuard() {
 
 /**
  * Checks if a user should be redirected to the school portal.
- * Returns true if user is SchoolAdmin and NOT also a platform admin.
+ * Returns true if user is school staff and NOT also a platform admin.
  */
 export function shouldRedirectToSchoolPortal(user: { roles?: string[] } | null): boolean {
-  if (!user?.roles) return false;
-  const isSchoolAdmin = user.roles.includes('SchoolAdmin');
+  return getSchoolPortalDefaultRoute(user) !== null;
+}
+
+export function getSchoolPortalDefaultRoute(user: { roles?: string[] } | null): string | null {
+  if (!user?.roles) return null;
+  const isSchoolStaff = user.roles.includes('SchoolAdmin') || user.roles.includes('CashCollector');
   const isPlatformAdmin = user.roles.some((r) => PLATFORM_ADMIN_ROLES.includes(r));
-  return isSchoolAdmin && !isPlatformAdmin;
+  if (!isSchoolStaff || isPlatformAdmin) {
+    return null;
+  }
+
+  return user.roles.includes('CashCollector')
+    ? ROUTES.SCHOOL.CASH_COLLECTION
+    : ROUTES.SCHOOL.DASHBOARD;
 }
