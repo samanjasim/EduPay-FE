@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Receipt, Download, ShoppingBag } from 'lucide-react';
+// Note: Parent role does NOT have Orders.View permission, so the receipt
+// number must NOT link to /orders/{id}. We keep parents on a download-only
+// receipt path (PDF blob via API) and a non-navigating display of the receipt
+// number. See finding I4 in tests/e2e/playwright-product-flows.md.
 import {
   Card,
   CardContent,
@@ -117,12 +121,22 @@ export default function ParentProductOrdersPage() {
                       {list.map((o) => (
                         <tr key={o.id} className="hover:bg-hover/50 transition-colors">
                           <td className="px-4 py-3">
-                            <Link
-                              to={ROUTES.ORDERS.getDetail(o.id)}
-                              className="font-mono text-xs text-primary-600 hover:underline"
-                            >
-                              {o.receiptNumber}
-                            </Link>
+                            {o.status === 'Paid' ? (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  ordersApi.downloadReceipt(o.id, o.receiptNumber)
+                                }
+                                className="font-mono text-xs text-primary-600 hover:underline"
+                                title={t('parentProducts.orders.receipt')}
+                              >
+                                {o.receiptNumber}
+                              </button>
+                            ) : (
+                              <span className="font-mono text-xs text-text-secondary">
+                                {o.receiptNumber}
+                              </span>
+                            )}
                           </td>
                           <td className="px-4 py-3 text-text-secondary">
                             {o.totalAmount.toLocaleString()} {o.currency}
