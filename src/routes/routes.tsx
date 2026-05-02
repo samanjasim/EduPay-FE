@@ -48,6 +48,27 @@ const ProductsListPage = lazy(() => import('@/features/products/pages/ProductsLi
 const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
 const ProductCreatePage = lazy(() => import('@/features/products/pages/ProductCreatePage'));
 const ProductEditPage = lazy(() => import('@/features/products/pages/ProductEditPage'));
+const ProductManualPurchasePage = lazy(
+  () => import('@/features/products/pages/ProductManualPurchasePage')
+);
+const ProductPurchasesPage = lazy(
+  () => import('@/features/products/pages/ProductPurchasesPage')
+);
+const ProductPurchaseStatsPage = lazy(
+  () => import('@/features/products/pages/ProductPurchaseStatsPage')
+);
+const ParentProductCatalogPage = lazy(
+  () => import('@/features/parents/pages/ParentProductCatalogPage')
+);
+const ParentProductDetailPage = lazy(
+  () => import('@/features/parents/pages/ParentProductDetailPage')
+);
+const ParentProductOrdersPage = lazy(
+  () => import('@/features/parents/pages/ParentProductOrdersPage')
+);
+const ParentPurchaseResultPage = lazy(
+  () => import('@/features/parents/pages/ParentPurchaseResultPage')
+);
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const WalletsListPage = lazy(() => import('@/features/wallets/pages/WalletsListPage'));
 const WalletDetailPage = lazy(() => import('@/features/wallets/pages/WalletDetailPage'));
@@ -125,6 +146,68 @@ export const routes: RouteObject[] = [
               { path: ROUTES.SCHOOL.REPORTS, element: <SchoolReportsPage /> },
               { path: ROUTES.SCHOOL.STAFF, element: <SchoolStaffPage /> },
               { path: ROUTES.SCHOOL.SETTINGS, element: <SchoolSettingsPage /> },
+
+              // School Products: catalog management (Task 9 pages, school-scoped)
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.View} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.LIST,
+                    element: <ProductsListPage />,
+                  },
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.DETAIL,
+                    element: <ProductDetailPage />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.Create} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.CREATE,
+                    element: <ProductCreatePage />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.Update} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.EDIT,
+                    element: <ProductEditPage />,
+                  },
+                ],
+              },
+
+              // School Product Purchases: history, stats, manual sale (Task 10)
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.View} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.PURCHASES,
+                    element: <ProductPurchasesPage />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.ViewStats} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.STATS,
+                    element: <ProductPurchaseStatsPage />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.Create} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.MANUAL_PURCHASE,
+                    element: <ProductManualPurchasePage />,
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -232,6 +315,25 @@ export const routes: RouteObject[] = [
 
           // Parent Fees (self-service)
           { path: ROUTES.PARENT_FEES, element: <ParentFeeDashboardPage /> },
+
+          // Parent Products (self-service catalog).
+          // AuthGuard already wraps these via the parent <AuthGuard /> block.
+          {
+            path: ROUTES.PARENT_PRODUCTS.CATALOG,
+            element: <ParentProductCatalogPage />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.DETAIL,
+            element: <ParentProductDetailPage />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.ORDERS,
+            element: <ParentProductOrdersPage />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.PURCHASE_RESULT,
+            element: <ParentPurchaseResultPage />,
+          },
 
           // Fee Structures
           {

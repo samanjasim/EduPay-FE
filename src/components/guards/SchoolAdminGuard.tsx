@@ -30,13 +30,21 @@ export function shouldRedirectToSchoolPortal(user: { roles?: string[] } | null):
 
 export function getSchoolPortalDefaultRoute(user: { roles?: string[] } | null): string | null {
   if (!user?.roles) return null;
-  const isSchoolStaff = user.roles.includes('SchoolAdmin') || user.roles.includes('CashCollector');
+  const isSchoolStaff =
+    user.roles.includes('SchoolAdmin') ||
+    user.roles.includes('CashCollector') ||
+    user.roles.includes('StoreStaff');
   const isPlatformAdmin = user.roles.some((r) => PLATFORM_ADMIN_ROLES.includes(r));
   if (!isSchoolStaff || isPlatformAdmin) {
     return null;
   }
 
-  return user.roles.includes('CashCollector')
-    ? ROUTES.SCHOOL.CASH_COLLECTION
-    : ROUTES.SCHOOL.DASHBOARD;
+  if (user.roles.includes('CashCollector')) {
+    return ROUTES.SCHOOL.CASH_COLLECTION;
+  }
+  // StoreStaff (without SchoolAdmin) lands on Manual Purchase — their primary task.
+  if (user.roles.includes('StoreStaff') && !user.roles.includes('SchoolAdmin')) {
+    return ROUTES.SCHOOL.PRODUCTS.MANUAL_PURCHASE;
+  }
+  return ROUTES.SCHOOL.DASHBOARD;
 }

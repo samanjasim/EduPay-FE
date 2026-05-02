@@ -95,6 +95,27 @@ export function useParentChildren(parentUserId: string) {
   });
 }
 
+/**
+ * Parent self-service: list the current user's linked children. Hits the
+ * unprotected `/Parents/children` endpoint (Authorize, no permission policy)
+ * so the Parent role can resolve their own family without `Students.ManageParents`.
+ *
+ * Use this in parent-facing screens (catalog, product detail) instead of
+ * `useParentChildren(userId)` which requires staff-grade permissions.
+ */
+export function useMyChildren(enabled: boolean = true) {
+  return useQuery<ParentChild[]>({
+    queryKey: ['parent', 'me', 'children'],
+    queryFn: async () => {
+      const response = await apiClient.get<ApiResponse<ParentChild[]>>(
+        API_ENDPOINTS.PARENTS.CHILDREN
+      );
+      return response.data.data;
+    },
+    enabled,
+  });
+}
+
 export function useParentFees(parentUserId: string, params: FeesParams) {
   return useQuery<PaginatedResponse<ParentFee>>({
     queryKey: ['parent', parentUserId, 'fees', params],

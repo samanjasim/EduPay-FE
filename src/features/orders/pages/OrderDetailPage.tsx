@@ -13,6 +13,7 @@ import {
 import { Card, CardContent, Badge, Spinner, Button } from '@/components/ui';
 import { PageHeader, InfoField } from '@/components/common';
 import { ordersApi, useOrder } from '../api';
+import { OrderDetailPurchaseSection } from '../components/OrderDetailPurchaseSection';
 import { ROUTES } from '@/config';
 import type {
   OrderStatus,
@@ -138,6 +139,9 @@ export default function OrderDetailPage() {
           </InfoField>
         </CardContent>
       </Card>
+
+      {/* Purchase-specific snapshot + audit + cancel button */}
+      {isPurchase && <OrderDetailPurchaseSection order={order} />}
 
       {/* Wallet context — shown for top-ups AND for any order that has a wallet linked */}
       {order.wallet && (

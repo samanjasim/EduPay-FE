@@ -65,6 +65,16 @@ export const ROUTES = {
   // Parent Fees (self-service)
   PARENT_FEES: '/parent/fees',
 
+  // Parent Products (self-service catalog)
+  PARENT_PRODUCTS: {
+    CATALOG: '/parent/products',
+    DETAIL: '/parent/products/:id',
+    ORDERS: '/parent/products/orders',
+    PURCHASE_RESULT: '/parent/products/result/:orderId',
+    getDetail: (id: string) => `/parent/products/${id}`,
+    getResult: (orderId: string) => `/parent/products/result/${orderId}`,
+  },
+
   // Fee Types
   FEE_TYPES: {
     LIST: '/fee-types',
@@ -161,5 +171,16 @@ export const ROUTES = {
     REPORTS: '/school/reports',
     STAFF: '/school/staff',
     SETTINGS: '/school/settings',
+    PRODUCTS: {
+      LIST: '/school/products',
+      CREATE: '/school/products/new',
+      EDIT: '/school/products/:id/edit',
+      DETAIL: '/school/products/:id',
+      PURCHASES: '/school/products/purchases',
+      MANUAL_PURCHASE: '/school/products/manual-purchase',
+      STATS: '/school/products/stats',
+      getDetail: (id: string) => `/school/products/${id}`,
+      getEdit: (id: string) => `/school/products/${id}/edit`,
+    },
   },
 } as const;

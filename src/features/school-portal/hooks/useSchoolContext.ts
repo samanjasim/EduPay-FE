@@ -13,7 +13,10 @@ export function useSchoolContext() {
 
   const isSchoolAdmin = user?.roles?.includes('SchoolAdmin') ?? false;
   const isCashCollector = user?.roles?.includes('CashCollector') ?? false;
-  const isSchoolStaff = isSchoolAdmin || isCashCollector;
+  const isStoreStaff = user?.roles?.includes('StoreStaff') ?? false;
+  // StoreStaff is school-scoped (records product purchases) and shares the
+  // same school context resolution as SchoolAdmin/CashCollector.
+  const isSchoolStaff = isSchoolAdmin || isCashCollector || isStoreStaff;
 
   const { data: school, isLoading, error } = useQuery<SchoolDto>({
     queryKey: SCHOOL_CONTEXT_KEY,
@@ -36,6 +39,7 @@ export function useSchoolContext() {
     error,
     isSchoolAdmin,
     isCashCollector,
+    isStoreStaff,
     isSchoolStaff,
   };
 }

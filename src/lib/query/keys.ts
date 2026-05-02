@@ -122,6 +122,14 @@ export const queryKeys = {
     list: <T extends object>(filters?: T) => [...queryKeys.products.lists(), filters] as const,
     details: () => [...queryKeys.products.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.products.details(), id] as const,
+    parentCatalog: <T extends object>(childId: string, filters?: T) =>
+      [...queryKeys.products.all, 'parent', childId, filters] as const,
+    parentDetail: (childId: string, productId: string) =>
+      [...queryKeys.products.all, 'parent', childId, productId] as const,
+    parentOrders: <T extends object>(filters?: T) =>
+      [...queryKeys.products.all, 'parent-orders', filters] as const,
+    stats: <T extends object>(filters?: T) =>
+      [...queryKeys.products.all, 'stats', filters] as const,
   },
 
   orders: {

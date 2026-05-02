@@ -72,6 +72,25 @@ export interface OrderWalletDto {
   status: string;
 }
 
+/**
+ * Purchase-specific fields surfaced on Type=Purchase orders.
+ * Mirrors BE OrderPurchaseDetailDto.
+ */
+export type OrderPurchaseSource = 'Online' | 'Manual';
+export type OrderPurchasePaidByType = 'Parent' | 'Student';
+export type OrderPurchasePaymentSource = 'Cash' | 'Gateway' | 'ParentWallet' | 'StudentWallet';
+
+export interface OrderPurchaseDetailDto {
+  purchaseSource: string;
+  paidByType: string;
+  paymentSource: string;
+  paidByUserId: string | null;
+  paidByUserName: string | null;
+  recordedByUserId: string;
+  recordedByUserName: string | null;
+  note: string | null;
+}
+
 export interface OrderDetailDto {
   id: string;
   schoolId: string;
@@ -91,6 +110,7 @@ export interface OrderDetailDto {
   items: OrderItemDetailDto[];
   payments: OrderPaymentDto[];
   wallet: OrderWalletDto | null;
+  purchase: OrderPurchaseDetailDto | null;
 }
 
 // ─── Legacy alias (kept in case other code imports this name) ───

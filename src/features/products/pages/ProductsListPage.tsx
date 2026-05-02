@@ -1,65 +1,70 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Package, Plus, Search, Tag, School } from 'lucide-react';
+import { Plus, Search, Tag, School, Image as ImageIcon, GraduationCap, CalendarDays } from 'lucide-react';
 import { Card, CardContent, Badge, Button, Input, Select, Spinner, Pagination } from '@/components/ui';
-import { PageHeader, EmptyState } from '@/components/common';
-import { useProducts } from '../api';
+import { PageHeader } from '@/components/common';
+import { EmptyCatalogState } from '../components/EmptyCatalogState';
+import { useProductSummaries } from '../api';
 import { useSchools } from '@/features/schools/api';
+import { useGrades } from '@/features/grades/api';
 import { useDebounce, usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
-import type { ProductType, ProductStatus, ProductListParams } from '@/types';
+import type { ProductSummaryDto, ProductStatus, ProductListFilters } from '@/types';
+import { format } from 'date-fns';
 
 const statusBadgeVariant = (status: ProductStatus) => {
   const map: Record<ProductStatus, 'warning' | 'success' | 'default'> = {
     Draft: 'warning',
     Active: 'success',
+    Disabled: 'default',
     Archived: 'default',
   };
   return map[status];
 };
 
-const STATUS_KEY_MAP: Record<ProductStatus, string> = {
-  Draft: 'products.statusDraft',
-  Active: 'products.statusActive',
-  Archived: 'products.statusArchived',
-};
-
-const typeBadgeVariant = (_type: ProductType) => 'outline' as const;
-
-const TYPE_KEY_MAP: Record<ProductType, string> = {
-  Activity: 'products.typeActivity',
-  Trip: 'products.typeTrip',
-  Uniform: 'products.typeUniform',
-  Books: 'products.typeBooks',
-  Lab: 'products.typeLab',
-  Transport: 'products.typeTransport',
-  Other: 'products.typeOther',
-};
-
 const PAGE_SIZE = 9;
 
+function pickLocalizedName(p: ProductSummaryDto, lang: string): string {
+  if (lang.startsWith('ar') && p.nameAr) return p.nameAr;
+  if (lang.startsWith('ku') && p.nameKu) return p.nameKu;
+  return p.nameEn;
+}
+
+function formatPriceRange(min: number, max: number, currency: string, lang: string) {
+  const fmt = new Intl.NumberFormat(lang, {
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  });
+  if (min === max) return fmt.format(min);
+  return `${fmt.format(min)} – ${fmt.format(max)}`;
+}
+
 export default function ProductsListPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language || 'en';
   const { hasPermission } = usePermissions();
   const [selectedSchoolId, setSelectedSchoolId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [gradeFilter, setGradeFilter] = useState('');
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(searchTerm, 300);
 
-  // Fetch schools for the selector
   const { data: schoolsData } = useSchools();
   const schools = schoolsData?.data ?? [];
 
-  // Auto-select first school
   useEffect(() => {
     if (!selectedSchoolId && schools.length > 0) {
       setSelectedSchoolId(schools[0].id);
     }
   }, [schools, selectedSchoolId]);
+
+  const { data: gradesData } = useGrades({ pageSize: 200 });
+  const grades = gradesData?.data ?? [];
 
   const schoolOptions = schools.map((s) => ({ value: s.id, label: s.name }));
 
@@ -78,50 +83,50 @@ export default function ProductsListPage() {
     { value: '', label: t('products.allStatuses') },
     { value: 'Draft', label: t('products.statusDraft') },
     { value: 'Active', label: t('products.statusActive') },
+    { value: 'Disabled', label: t('products.statusDisabled') },
     { value: 'Archived', label: t('products.statusArchived') },
   ];
 
-  const params: ProductListParams = {
+  const gradeOptions = [
+    { value: '', label: t('products.allGrades') },
+    ...grades.map((g) => ({ value: g.id, label: g.name })),
+  ];
+
+  const params: ProductListFilters = {
     schoolId: selectedSchoolId,
     pageNumber: page,
     pageSize: PAGE_SIZE,
     ...(debouncedSearch && { searchTerm: debouncedSearch }),
-    ...(typeFilter && { type: typeFilter as ProductType }),
+    ...(typeFilter && { type: typeFilter }),
     ...(statusFilter && { status: statusFilter as ProductStatus }),
+    ...(gradeFilter && { gradeId: gradeFilter }),
   };
 
-  const { data, isLoading } = useProducts(params);
+  const { data, isLoading } = useProductSummaries(params);
   const products = data?.data ?? [];
   const pagination = data?.pagination;
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setPage(1);
-  };
+  const filtersActive = !!(debouncedSearch || typeFilter || statusFilter || gradeFilter);
 
-  const handleTypeChange = (value: string) => {
-    setTypeFilter(value);
+  const clearFilters = () => {
+    setSearchTerm('');
+    setTypeFilter('');
+    setStatusFilter('');
+    setGradeFilter('');
     setPage(1);
-  };
-
-  const handleStatusChange = (value: string) => {
-    setStatusFilter(value);
-    setPage(1);
-  };
-
-  const formatPrice = (price: number, currency: string) => {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(price);
   };
 
   return (
     <div className="space-y-6">
       <PageHeader
         title={t('products.title')}
-        subtitle={t('products.allProducts')}
+        subtitle={t('products.subtitle')}
         actions={
           hasPermission(PERMISSIONS.Products.Create) ? (
             <Link to={ROUTES.PRODUCTS.CREATE}>
-              <Button leftIcon={<Plus className="h-4 w-4" />}>{t('products.createProduct')}</Button>
+              <Button leftIcon={<Plus className="h-4 w-4" />}>
+                {t('products.createProduct')}
+              </Button>
             </Link>
           ) : undefined
         }
@@ -131,13 +136,15 @@ export default function ProductsListPage() {
       <Card>
         <CardContent className="py-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            {/* School Selector */}
             <div className="flex items-center gap-2 sm:max-w-[240px]">
               <School className="h-4 w-4 text-text-muted shrink-0" />
               <Select
                 options={schoolOptions}
                 value={selectedSchoolId}
-                onChange={(val) => { setSelectedSchoolId(val); setPage(1); }}
+                onChange={(val) => {
+                  setSelectedSchoolId(val);
+                  setPage(1);
+                }}
                 className="flex-1"
               />
             </div>
@@ -145,22 +152,45 @@ export default function ProductsListPage() {
               <Input
                 placeholder={t('common.search')}
                 value={searchTerm}
-                onChange={handleSearchChange}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setPage(1);
+                }}
                 leftIcon={<Search className="h-4 w-4" />}
               />
             </div>
             <Select
               options={typeOptions}
               value={typeFilter}
-              onChange={handleTypeChange}
+              onChange={(v) => {
+                setTypeFilter(v);
+                setPage(1);
+              }}
               className="sm:max-w-[180px]"
             />
             <Select
               options={statusOptions}
               value={statusFilter}
-              onChange={handleStatusChange}
+              onChange={(v) => {
+                setStatusFilter(v);
+                setPage(1);
+              }}
               className="sm:max-w-[180px]"
             />
+            <Select
+              options={gradeOptions}
+              value={gradeFilter}
+              onChange={(v) => {
+                setGradeFilter(v);
+                setPage(1);
+              }}
+              className="sm:max-w-[180px]"
+            />
+            {filtersActive && (
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
+                {t('products.clearFilters')}
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -171,60 +201,77 @@ export default function ProductsListPage() {
           <Spinner size="lg" />
         </div>
       ) : products.length === 0 ? (
-        <EmptyState icon={Package} title={t('common.noResults')} />
+        <EmptyCatalogState
+          variant={filtersActive ? 'noMatches' : 'noProducts'}
+          canCreate={hasPermission(PERMISSIONS.Products.Create)}
+          onClearFilters={filtersActive ? clearFilters : undefined}
+        />
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <Link key={product.id} to={ROUTES.PRODUCTS.getDetail(product.id)}>
-                <Card className="hover:shadow-soft-md transition-all duration-200 cursor-pointer h-full hover:border-primary-200 dark:hover:border-primary-500/30">
-                  <CardContent className="py-5">
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-500/20">
-                        <Package className="h-5 w-5 text-primary-600 dark:text-primary-400" />
-                      </div>
-                      <Badge variant={statusBadgeVariant(product.status)} size="sm">
-                        {t(STATUS_KEY_MAP[product.status])}
-                      </Badge>
-                    </div>
-
-                    <h3 className="font-semibold text-text-primary">{product.name}</h3>
-                    {product.description && (
-                      <p className="mt-1 text-sm text-text-muted line-clamp-2">{product.description}</p>
-                    )}
-
-                    <div className="mt-3 flex items-center gap-2">
-                      <Badge variant={typeBadgeVariant(product.type)} size="sm">
-                        <Tag className="mr-1 h-3 w-3" />
-                        {t(TYPE_KEY_MAP[product.type])}
-                      </Badge>
-                      <span className="text-sm font-medium text-text-primary">
-                        {formatPrice(product.price, product.currency)}
-                      </span>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-                      <div className="flex items-center gap-3 text-xs text-text-muted">
-                        <span>
-                          {product.academicYearStart}–{product.academicYearEnd}
-                        </span>
-                        {product.applicableGrade && (
-                          <Badge variant="outline" size="sm">
-                            {product.applicableGrade}
-                            {product.applicableSection ? ` - ${product.applicableSection}` : ''}
-                          </Badge>
+            {products.map((product) => {
+              const title = pickLocalizedName(product, lang);
+              return (
+                <Link key={product.id} to={ROUTES.PRODUCTS.getDetail(product.id)}>
+                  <Card className="h-full cursor-pointer transition-all duration-200 hover:border-primary-200 hover:shadow-soft-md dark:hover:border-primary-500/30">
+                    <CardContent className="p-0">
+                      {/* Image / placeholder */}
+                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-xl bg-surface-100 dark:bg-surface-elevated">
+                        {product.primaryImageFileId ? (
+                          <img
+                            src={`/api/Files/${product.primaryImageFileId}/download`}
+                            alt={title}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center">
+                            <ImageIcon className="h-10 w-10 text-text-muted" />
+                          </div>
                         )}
+                        <div className="absolute top-2 ltr:right-2 rtl:left-2">
+                          <Badge variant={statusBadgeVariant(product.status)} size="sm">
+                            {t(`products.status${product.status}`)}
+                          </Badge>
+                        </div>
                       </div>
-                      {product.maxQuantity != null && (
-                        <span className="text-xs text-text-muted">
-                          {t('products.maxQty')}: {product.maxQuantity}
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+
+                      <div className="p-4">
+                        <div className="flex items-start justify-between gap-2">
+                          <h3 className="line-clamp-2 font-semibold text-text-primary">{title}</h3>
+                        </div>
+
+                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                          <Badge variant="outline" size="sm">
+                            <Tag className="ltr:mr-1 rtl:ml-1 h-3 w-3" />
+                            {t(`products.type${product.type}`)}
+                          </Badge>
+                          {product.applicableGradeName && (
+                            <Badge variant="outline" size="sm">
+                              <GraduationCap className="ltr:mr-1 rtl:ml-1 h-3 w-3" />
+                              {product.applicableGradeName}
+                            </Badge>
+                          )}
+                          {product.availableUntil && (
+                            <Badge variant="info" size="sm">
+                              <CalendarDays className="ltr:mr-1 rtl:ml-1 h-3 w-3" />
+                              {t('products.availableUntilShort', {
+                                date: format(new Date(product.availableUntil), 'MMM d'),
+                              })}
+                            </Badge>
+                          )}
+                        </div>
+
+                        <div className="mt-3 border-t border-border pt-3">
+                          <span className="text-base font-semibold text-text-primary">
+                            {formatPriceRange(product.minPrice, product.maxPrice, product.currency, lang)}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
 
           {pagination && pagination.totalPages > 1 && (
@@ -234,6 +281,7 @@ export default function ProductsListPage() {
           )}
         </>
       )}
+
     </div>
   );
 }
