@@ -75,7 +75,9 @@
     "products": "Products",
     "wallets": "Wallets",
     "orders": "Orders",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "parentCatalog": "Catalog",
+    "parentOrders": "My Orders"
   },
   "header": {
     "logout": "Logout",
@@ -615,7 +617,11 @@
       "payments": "Payments",
       "reports": "Reports",
       "staff": "Staff",
-      "settings": "Settings"
+      "settings": "Settings",
+      "products": "Products",
+      "productPurchases": "Product Purchases",
+      "productStats": "Purchase Stats",
+      "manualPurchase": "Manual Purchase"
     },
     "dashboard": {
       "welcome": "Welcome, {{name}}!",
@@ -902,7 +908,25 @@
     "readRecipients": "Read",
     "unreadRecipients": "Unread",
     "searchRecipients": "Search recipients...",
-    "noRecipients": "No recipients found"
+    "noRecipients": "No recipients found",
+    "purchase": {
+      "checkoutCreated": {
+        "title": "Purchase started",
+        "body": "We started your purchase of {{productName}}. We'll confirm shortly."
+      },
+      "settled": {
+        "title": "Purchase confirmed",
+        "body": "Your receipt is {{receiptNumber}} for {{amount}}."
+      },
+      "failed": {
+        "title": "Purchase failed",
+        "body": "We couldn't process your purchase of {{productName}}. Please try again."
+      },
+      "cancelled": {
+        "title": "Purchase cancelled",
+        "body": "Your purchase of {{productName}} has been cancelled."
+      }
+    }
   },
   "send": {
     "title": "Send Notification",
@@ -1391,6 +1415,31 @@
       "downloadReceipt": "Download receipt",
       "tryAgain": "Try again",
       "backToOrders": "Back to my orders"
+    },
+    "detail": {
+      "backToCatalog": "Back to catalog",
+      "checkoutTitle": "Buy now",
+      "variantLabel": "Choose an option",
+      "noVariants": "This product is not available for purchase right now.",
+      "quantityLabel": "Quantity",
+      "quantityHint": "Maximum {{max}} per purchase",
+      "paymentMethodLabel": "Payment method",
+      "payWallet": "Wallet",
+      "payGateway": "Online payment",
+      "gatewayHint": "You'll be redirected to",
+      "totalLabel": "Total",
+      "buyNow": "Buy now",
+      "purchaseSuccess": "Purchase confirmed",
+      "thumbnailAria": "Image {{index}}",
+      "notFoundTitle": "Product not found",
+      "notFoundDesc": "This product may no longer be available.",
+      "errNoChild": "Please select a child first.",
+      "errNoVariant": "Please pick an option.",
+      "errQuantityRequired": "Quantity must be at least 1.",
+      "errMaxQuantity": "Quantity exceeds the maximum allowed.",
+      "errInsufficientBalance": "Your wallet doesn't have enough balance for this purchase.",
+      "errCurrencyMismatch": "Wallet currency doesn't match this product.",
+      "errGeneric": "We couldn't complete the purchase. Please try again."
     }
   },
   "notifications.purchase": {

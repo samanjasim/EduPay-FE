@@ -75,7 +75,9 @@
     "products": "بەرهەمەکان",
     "wallets": "جزدانەکان",
     "orders": "داواکاریەکان",
-    "collapse": "کچکردن"
+    "collapse": "کچکردن",
+    "parentCatalog": "بەرهەمەکان",
+    "parentOrders": "داواکارییەکانم"
   },
   "header": {
     "logout": "دەرچوون",
@@ -615,7 +617,11 @@
       "payments": "پارەدانەکان",
       "reports": "ڕاپۆرتەکان",
       "staff": "ستاف",
-      "settings": "ڕێکخستنەکان"
+      "settings": "ڕێکخستنەکان",
+      "products": "بەرهەمەکان",
+      "productPurchases": "کڕینی بەرهەمەکان",
+      "productStats": "ئامارەکانی کڕین",
+      "manualPurchase": "تۆمارکردنی کڕینی دەستی"
     },
     "dashboard": {
       "welcome": "بەخێربێیت، {{name}}!",
@@ -1204,6 +1210,51 @@
       "downloadReceipt": "داگرتنی وەسڵ",
       "tryAgain": "هەوڵدانەوە",
       "backToOrders": "گەڕانەوە بۆ داواکارییەکانم"
+    },
+    "detail": {
+      "backToCatalog": "گەڕانەوە بۆ بەرهەمەکان",
+      "checkoutTitle": "ئێستا بکڕە",
+      "variantLabel": "هەڵبژاردنێک هەڵبژێرە",
+      "noVariants": "ئەم بەرهەمە لە ئێستادا بەردەست نییە بۆ کڕین.",
+      "quantityLabel": "بڕ",
+      "quantityHint": "زۆرترین {{max}} بۆ هەر کڕینێک",
+      "paymentMethodLabel": "ڕێگەی پارەدان",
+      "payWallet": "جزدان",
+      "payGateway": "پارەدانی ئۆنڵاین",
+      "gatewayHint": "ئاراستە دەکرێیت بۆ",
+      "totalLabel": "کۆی گشتی",
+      "buyNow": "ئێستا بکڕە",
+      "purchaseSuccess": "کڕین پشتڕاستکرایەوە",
+      "thumbnailAria": "وێنەی {{index}}",
+      "notFoundTitle": "بەرهەمەکە نەدۆزرایەوە",
+      "notFoundDesc": "ڕەنگە ئەم بەرهەمە چیتر بەردەست نەبێت.",
+      "errNoChild": "تکایە سەرەتا منداڵێک هەڵبژێرە.",
+      "errNoVariant": "تکایە یەکێک لە هەڵبژاردنەکان دیاری بکە.",
+      "errQuantityRequired": "بڕەکە دەبێت لانیکەم 1 بێت.",
+      "errMaxQuantity": "بڕەکە لە سنووری ڕێگەپێدراو زیاترە.",
+      "errInsufficientBalance": "باڵانسی جزدانەکەت تەواو نییە بۆ ئەم کڕینە.",
+      "errCurrencyMismatch": "دراوی جزدان لەگەڵ ئەم بەرهەمە جیاوازە.",
+      "errGeneric": "نەمانتوانی کڕینەکە تەواو بکەین. تکایە دیسان هەوڵبدە."
+    }
+  },
+  "notifications": {
+    "purchase": {
+      "checkoutCreated": {
+        "title": "کڕین دەستی پێکرد",
+        "body": "کڕینی {{productName}} دەستی پێکرد. زوو پشتڕاست دەکرێتەوە."
+      },
+      "settled": {
+        "title": "کڕین پشتڕاستکرایەوە",
+        "body": "ژمارەی وەسڵ {{receiptNumber}} بە بڕی {{amount}}."
+      },
+      "failed": {
+        "title": "کڕین سەرکەوتوو نەبوو",
+        "body": "نەمانتوانی کڕینی {{productName}} پرۆسێس بکەین. تکایە دیسان هەوڵبدە."
+      },
+      "cancelled": {
+        "title": "کڕین هەڵوەشایەوە",
+        "body": "کڕینی {{productName}} هەڵوەشایەوە."
+      }
     }
   },
   "notifications.purchase": {

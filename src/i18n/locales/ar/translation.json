@@ -75,7 +75,9 @@
     "products": "المنتجات",
     "wallets": "المحافظ",
     "orders": "الطلبات",
-    "collapse": "طي"
+    "collapse": "طي",
+    "parentCatalog": "المتجر",
+    "parentOrders": "طلباتي"
   },
   "header": {
     "logout": "تسجيل الخروج",
@@ -615,7 +617,11 @@
       "payments": "المدفوعات",
       "reports": "التقارير",
       "staff": "الكادر",
-      "settings": "الإعدادات"
+      "settings": "الإعدادات",
+      "products": "المنتجات",
+      "productPurchases": "مشتريات المنتجات",
+      "productStats": "إحصائيات المشتريات",
+      "manualPurchase": "تسجيل شراء يدوي"
     },
     "dashboard": {
       "welcome": "مرحباً، {{name}}!",
@@ -1204,6 +1210,51 @@
       "downloadReceipt": "تنزيل الإيصال",
       "tryAgain": "حاول مرة أخرى",
       "backToOrders": "العودة إلى طلباتي"
+    },
+    "detail": {
+      "backToCatalog": "الرجوع إلى المتجر",
+      "checkoutTitle": "اشترِ الآن",
+      "variantLabel": "اختر الخيار المناسب",
+      "noVariants": "هذا المنتج غير متاح للشراء حالياً.",
+      "quantityLabel": "الكمية",
+      "quantityHint": "الحد الأقصى {{max}} لكل عملية شراء",
+      "paymentMethodLabel": "طريقة الدفع",
+      "payWallet": "المحفظة",
+      "payGateway": "الدفع الإلكتروني",
+      "gatewayHint": "ستتم إعادة توجيهك إلى",
+      "totalLabel": "الإجمالي",
+      "buyNow": "اشترِ الآن",
+      "purchaseSuccess": "تم تأكيد عملية الشراء",
+      "thumbnailAria": "صورة {{index}}",
+      "notFoundTitle": "المنتج غير موجود",
+      "notFoundDesc": "قد يكون هذا المنتج لم يعد متاحاً.",
+      "errNoChild": "يرجى اختيار طفل أولاً.",
+      "errNoVariant": "يرجى اختيار أحد الخيارات.",
+      "errQuantityRequired": "يجب أن تكون الكمية على الأقل 1.",
+      "errMaxQuantity": "الكمية تتجاوز الحد المسموح.",
+      "errInsufficientBalance": "رصيد محفظتك غير كافٍ لإتمام هذه العملية.",
+      "errCurrencyMismatch": "عملة المحفظة لا تطابق عملة هذا المنتج.",
+      "errGeneric": "تعذّر إتمام عملية الشراء. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "notifications": {
+    "purchase": {
+      "checkoutCreated": {
+        "title": "بدأ الشراء",
+        "body": "بدأنا عملية شرائك لـ {{productName}}، وسنؤكد قريباً."
+      },
+      "settled": {
+        "title": "تم تأكيد الشراء",
+        "body": "رقم الإيصال {{receiptNumber}} بمبلغ {{amount}}."
+      },
+      "failed": {
+        "title": "فشل الشراء",
+        "body": "تعذّر إتمام عملية شرائك لـ {{productName}}. يرجى المحاولة مرة أخرى."
+      },
+      "cancelled": {
+        "title": "تم إلغاء الشراء",
+        "body": "تم إلغاء عملية شرائك لـ {{productName}}."
+      }
     }
   },
   "notifications.purchase": {
