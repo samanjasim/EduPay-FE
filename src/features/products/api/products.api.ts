@@ -11,6 +11,7 @@ import type {
   ProductImageDto,
   ParentCatalogFilters,
   ProductSummaryDto,
+  ProductListFilters,
   ProductDetailDto,
   CheckoutRequest,
   ProductCheckoutResultDto,
@@ -31,8 +32,34 @@ export const productsApi = {
     return response.data;
   },
 
+  /**
+   * Fetches the catalog list as ProductSummaryDto (multilingual + price range +
+   * primary image). Same /Products endpoint, but typed for the richer DTO that
+   * the catalog purchase loop slice serves.
+   */
+  getProductSummaries: async (
+    params?: ProductListFilters
+  ): Promise<PaginatedResponse<ProductSummaryDto>> => {
+    const response = await apiClient.get<PaginatedResponse<ProductSummaryDto>>(
+      API_ENDPOINTS.PRODUCTS.LIST,
+      { params }
+    );
+    return response.data;
+  },
+
   getProductById: async (id: string): Promise<ProductDto> => {
     const response = await apiClient.get<ApiResponse<ProductDto>>(API_ENDPOINTS.PRODUCTS.DETAIL(id));
+    return response.data.data;
+  },
+
+  /**
+   * Fetches the full product detail (variants + images + multilingual fields)
+   * via the same /Products/{id} endpoint. Server returns the richer
+   * ProductDetailDto for staff scope; the legacy ProductDto getter is kept
+   * for back-compat with older callers.
+   */
+  getProductDetailById: async (id: string): Promise<ProductDetailDto> => {
+    const response = await apiClient.get<ApiResponse<ProductDetailDto>>(API_ENDPOINTS.PRODUCTS.DETAIL(id));
     return response.data.data;
   },
 

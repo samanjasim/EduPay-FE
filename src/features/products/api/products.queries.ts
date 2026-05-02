@@ -4,6 +4,7 @@ import { productsApi } from './products.api';
 import { queryKeys } from '@/lib/query';
 import type {
   ProductListParams,
+  ProductListFilters,
   CreateProductData,
   UpdateProductData,
   UpdateProductStatusData,
@@ -27,10 +28,35 @@ export function useProducts(params?: ProductListParams) {
   });
 }
 
+/**
+ * Fetches the catalog list as ProductSummaryDto (the multilingual + price-range
+ * shape used by the new staff catalog grid).
+ */
+export function useProductSummaries(params?: ProductListFilters) {
+  return useQuery({
+    queryKey: [...queryKeys.products.list(params), 'summaries'],
+    queryFn: () => productsApi.getProductSummaries(params),
+    placeholderData: keepPreviousData,
+    enabled: !!params?.schoolId,
+  });
+}
+
 export function useProduct(id: string) {
   return useQuery({
     queryKey: queryKeys.products.detail(id),
     queryFn: () => productsApi.getProductById(id),
+    enabled: !!id,
+  });
+}
+
+/**
+ * Fetches the rich ProductDetailDto (variants + images + multilingual fields)
+ * for staff catalog management screens.
+ */
+export function useProductDetail(id: string) {
+  return useQuery({
+    queryKey: [...queryKeys.products.detail(id), 'full'],
+    queryFn: () => productsApi.getProductDetailById(id),
     enabled: !!id,
   });
 }
