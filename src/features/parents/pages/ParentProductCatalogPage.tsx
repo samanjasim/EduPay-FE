@@ -14,7 +14,7 @@ import {
 } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { EmptyParentCatalogState } from '@/features/products/components/EmptyParentCatalogState';
-import { useParentChildren } from '@/features/parents/api';
+import { useMyChildren } from '@/features/parents/api';
 import { useParentCatalog } from '@/features/products/api';
 import { useDebounce } from '@/hooks';
 import { useAuthStore } from '@/stores';
@@ -44,8 +44,9 @@ export default function ParentProductCatalogPage() {
   const user = useAuthStore((s) => s.user);
   const parentUserId = user?.id ?? '';
 
-  const { data: children, isLoading: childrenLoading } =
-    useParentChildren(parentUserId);
+  // Parent self-service: hits `/Parents/children` (no parentUserId path param),
+  // which is open to any authenticated user and returns the caller's children.
+  const { data: children, isLoading: childrenLoading } = useMyChildren(!!parentUserId);
 
   // The active child id is "explicit if the user chose one, otherwise the
   // first child once they load". Computing this at render time keeps the

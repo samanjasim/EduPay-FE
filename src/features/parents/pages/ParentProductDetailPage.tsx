@@ -31,7 +31,7 @@ import {
   useParentProductDetail,
   useParentCheckout,
 } from '@/features/products/api';
-import { useParentChildren } from '@/features/parents/api';
+import { useMyChildren } from '@/features/parents/api';
 import { useAuthStore } from '@/stores';
 import { ROUTES } from '@/config';
 import type {
@@ -101,7 +101,9 @@ export default function ParentProductDetailPage() {
 
   const user = useAuthStore((s) => s.user);
   const parentUserId = user?.id ?? '';
-  const { data: children } = useParentChildren(parentUserId);
+  // Parent self-service: hits `/Parents/children` (no path param) so a Parent
+  // can resolve their own children without `Students.ManageParents`.
+  const { data: children } = useMyChildren(!!parentUserId);
 
   // Resolve active child: explicit query param wins; otherwise first linked child.
   const queryChildId = searchParams.get('childId') ?? '';
