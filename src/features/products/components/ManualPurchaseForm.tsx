@@ -24,7 +24,7 @@ import {
   Textarea,
   Badge,
 } from '@/components/ui';
-import { useStudents } from '@/features/students/api';
+import { useStudents, useStudent } from '@/features/students/api';
 import { useParents } from '@/features/parents/api';
 import { useProductSummaries, useProductDetail, useRecordManualPurchase } from '../api';
 import { useDebounce, useUserRole } from '@/hooks';
@@ -153,15 +153,69 @@ export function ManualPurchaseForm({
   const [parentSearch, setParentSearch] = useState('');
   const debouncedParentSearch = useDebounce(parentSearch, 250);
 
-  // Parent picker is needed when payer is Parent + paying via ParentWallet.
-  const needsParentPicker =
-    payerType === 'Parent' && paymentSource === 'ParentWallet';
+  // Parent picker is needed whenever the payer is the Parent — the BE
+  // requires a known PayerUserId for both Cash-from-Parent and ParentWallet
+  // (domain invariant: ProductPurchaseRecord with paidByType=Parent must have
+  // a non-null PaidByUserId). Without the picker, "Cash from Parent" submits
+  // with no user id and the BE rejects with "Parent payer must have a known
+  // user id." (finding I7).
+  const needsParentPicker = payerType === 'Parent';
 
+  // Two parallel sources of "candidate parents" depending on caller role:
+  //
+  //   1. For roles WITH `Students.ManageParents` (SchoolAdmin, SuperAdmin) we
+  //      hit the school-scoped /Parents search so the picker can browse any
+  //      parent. We only fire this when actually needed (payer=Parent).
+  //   2. For roles WITHOUT that permission (CashCollector, StoreStaff) we
+  //      fall back to the parents already linked to the selected student,
+  //      which the StudentDto returns to anyone with `Students.View`.
+  //
+  // The selected-student parents are always included regardless of role —
+  // they're the most likely candidates for "cash from THIS student's parent".
   const { data: parentsData } = useParents({
     pageSize: 20,
     ...(debouncedParentSearch ? { searchTerm: debouncedParentSearch } : {}),
   });
-  const parents = parentsData?.data ?? [];
+  const { data: studentDetail } = useStudent(studentId);
+  type ParentOption = {
+    parentUserId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  const studentParents = useMemo<ParentOption[]>(() => {
+    const linked = studentDetail?.parents ?? [];
+    return linked.map((p) => {
+      const [firstName, ...rest] = (p.parentName ?? '').split(' ');
+      return {
+        parentUserId: p.parentUserId,
+        firstName: firstName ?? '',
+        lastName: rest.join(' '),
+        // No email available on the linked-parent dto; show the relation
+        // ("Father"/"Mother"/"Guardian") in the slot the picker uses for the
+        // secondary line.
+        email: (p.relation as string) ?? '',
+      };
+    });
+  }, [studentDetail]);
+  // Merge sources, deduping by parentUserId. Linked parents come first so
+  // they're always discoverable even when /Parents search is empty/forbidden.
+  const parents = useMemo<ParentOption[]>(() => {
+    const merged: ParentOption[] = [...studentParents];
+    const seen = new Set(studentParents.map((p) => p.parentUserId));
+    for (const p of parentsData?.data ?? []) {
+      if (!seen.has(p.parentUserId)) {
+        merged.push({
+          parentUserId: p.parentUserId,
+          firstName: p.firstName ?? '',
+          lastName: p.lastName ?? '',
+          email: p.email ?? '',
+        });
+        seen.add(p.parentUserId);
+      }
+    }
+    return merged;
+  }, [studentParents, parentsData]);
 
   // ── Note ──
   const [note, setNote] = useState('');
