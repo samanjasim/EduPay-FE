@@ -5,8 +5,8 @@ import { queryKeys } from '@/lib/query';
 import type {
   ProductListParams,
   ProductListFilters,
-  CreateProductData,
-  UpdateProductData,
+  CreateProductRequest,
+  UpdateProductRequest,
   UpdateProductStatusData,
   UpdateProductVariantsRequest,
   UploadProductImageOptions,
@@ -64,7 +64,7 @@ export function useProductDetail(id: string) {
 export function useCreateProduct() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateProductData) => productsApi.createProduct(data),
+    mutationFn: (data: CreateProductRequest) => productsApi.createProduct(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: queryKeys.products.all }); toast.success('Product created'); },
   });
 }
@@ -72,7 +72,7 @@ export function useCreateProduct() {
 export function useUpdateProduct() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: UpdateProductData }) => productsApi.updateProduct(id, data),
+    mutationFn: ({ id, data }: { id: string; data: UpdateProductRequest }) => productsApi.updateProduct(id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: queryKeys.products.all }); toast.success('Product updated'); },
   });
 }

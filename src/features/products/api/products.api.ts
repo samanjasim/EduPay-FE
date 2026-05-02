@@ -2,8 +2,8 @@ import { apiClient } from '@/lib/axios';
 import { API_ENDPOINTS } from '@/config';
 import type {
   ProductDto,
-  CreateProductData,
-  UpdateProductData,
+  CreateProductRequest,
+  UpdateProductRequest,
   UpdateProductStatusData,
   ProductListParams,
   UpdateProductVariantsRequest,
@@ -63,12 +63,12 @@ export const productsApi = {
     return response.data.data;
   },
 
-  createProduct: async (data: CreateProductData): Promise<string> => {
+  createProduct: async (data: CreateProductRequest): Promise<string> => {
     const response = await apiClient.post<ApiResponse<string>>(API_ENDPOINTS.PRODUCTS.LIST, data);
     return response.data.data;
   },
 
-  updateProduct: async (id: string, data: UpdateProductData): Promise<void> => {
+  updateProduct: async (id: string, data: UpdateProductRequest): Promise<void> => {
     await apiClient.put(API_ENDPOINTS.PRODUCTS.DETAIL(id), data);
   },
 

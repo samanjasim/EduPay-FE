@@ -266,37 +266,44 @@ export interface UploadProductImageOptions {
   sortOrder?: number;
 }
 
-// ─── Legacy create/update (kept for back-compat with existing pages) ───
+// ─── Create/update product (multilingual + variant-aware) ───
+//
+// These match BE EduPay.Api.Controllers.ProductsController.{CreateProductRequest,UpdateProductRequest}.
+// Create implicitly creates a single default variant priced at `defaultVariantPrice`;
+// Update never touches variant prices (those are managed by the variant builder).
 
-export interface CreateProductData {
+export interface CreateProductRequest {
   schoolId: string;
-  name: string;
-  description?: string;
-  type: ProductType;
-  price: number;
+  nameEn: string;
+  nameAr?: string | null;
+  nameKu?: string | null;
+  description?: string | null;
+  type: string;
   currency: string;
-  academicYearStart: number;
-  academicYearEnd: number;
-  applicableGrade?: string;
-  applicableSection?: string;
-  maxQuantity?: number;
-  availableFrom?: string;
-  availableUntil?: string;
+  academicYearId: string;
+  defaultVariantPrice: number;
+  applicableGradeId?: string | null;
+  applicableSectionId?: string | null;
+  maxQuantityPerPurchase?: number | null;
+  maxQuantityPerStudent?: number | null;
+  availableFrom?: string | null;
+  availableUntil?: string | null;
 }
 
-export interface UpdateProductData {
-  name: string;
-  description?: string;
-  type: ProductType;
-  price: number;
+export interface UpdateProductRequest {
+  nameEn: string;
+  nameAr?: string | null;
+  nameKu?: string | null;
+  description?: string | null;
+  type: string;
   currency: string;
-  academicYearStart: number;
-  academicYearEnd: number;
-  applicableGrade?: string;
-  applicableSection?: string;
-  maxQuantity?: number;
-  availableFrom?: string;
-  availableUntil?: string;
+  academicYearId: string;
+  applicableGradeId?: string | null;
+  applicableSectionId?: string | null;
+  maxQuantityPerPurchase?: number | null;
+  maxQuantityPerStudent?: number | null;
+  availableFrom?: string | null;
+  availableUntil?: string | null;
 }
 
 export interface UpdateProductStatusData {

@@ -12,8 +12,8 @@ import { useCreateProduct, useUpdateProduct } from '../api';
 import type {
   ProductDetailDto,
   ProductType,
-  CreateProductData,
-  UpdateProductData,
+  CreateProductRequest,
+  UpdateProductRequest,
 } from '@/types';
 
 // ─── form shape ───
@@ -206,59 +206,58 @@ export function ProductForm({
   const noVariants = !product || (product.variants?.length ?? 0) === 0;
 
   const onSubmit = async (values: ProductFormValues) => {
+    // BE expects either a date-only string (yyyy-MM-dd) or null. Empty form
+    // fields collapse to null; valid date inputs are passed through unchanged.
+    const toDateOrNull = (v: string | null | undefined) =>
+      v && v.trim() ? v : null;
+    const toStringOrNull = (v: string | null | undefined) =>
+      v && v.trim() ? v.trim() : null;
+
     if (isCreate) {
-      // Default price is required when there are no variants (Create implicit single variant)
+      // Default price is required when creating (BE always materializes a default
+      // single variant priced at this value).
       if (values.defaultPrice == null || Number.isNaN(values.defaultPrice)) {
-        // RHF zod allows nullable; we error out manually
         return;
       }
-      const academicYear = academicYears.find((y) => y.id === values.academicYearId);
-      const data: CreateProductData = {
+      const data: CreateProductRequest = {
         schoolId: values.schoolId,
-        // Legacy DTO uses single name; we serialize the EN name primarily but keep
-        // multilingual values in the description blob if BE later needs them.
-        // (Task 8 wired the new multilingual product DTO; legacy create endpoint
-        //  is the only Create wired up — see products.api.ts createProduct.)
-        name: values.nameEn,
-        description: values.description ?? undefined,
+        nameEn: values.nameEn.trim(),
+        nameAr: toStringOrNull(values.nameAr),
+        nameKu: toStringOrNull(values.nameKu),
+        description: toStringOrNull(values.description),
         type: values.type,
-        price: values.defaultPrice,
         currency: values.currency,
-        academicYearStart: academicYear ? Number((academicYear as { startYear?: number }).startYear ?? new Date().getFullYear()) : new Date().getFullYear(),
-        academicYearEnd: academicYear ? Number((academicYear as { endYear?: number }).endYear ?? new Date().getFullYear() + 1) : new Date().getFullYear() + 1,
-        applicableGrade: values.applicableGradeId || undefined,
-        applicableSection: values.applicableSectionId || undefined,
-        maxQuantity: values.maxQuantityPerStudent ?? undefined,
-        availableFrom: values.availableFrom || undefined,
-        availableUntil: values.availableUntil || undefined,
+        academicYearId: values.academicYearId,
+        defaultVariantPrice: values.defaultPrice,
+        applicableGradeId: values.applicableGradeId || null,
+        applicableSectionId: values.applicableSectionId || null,
+        maxQuantityPerPurchase: values.maxQuantityPerPurchase ?? null,
+        maxQuantityPerStudent: values.maxQuantityPerStudent ?? null,
+        availableFrom: toDateOrNull(values.availableFrom),
+        availableUntil: toDateOrNull(values.availableUntil),
       };
       const id = await createMut.mutateAsync(data);
       onCreated?.(id);
       return;
     }
 
-    // Edit mode — use legacy endpoint (Task 8 only wired this; new
-    // multilingual update is queued for a follow-up).
-    const academicYear = academicYears.find((y) => y.id === values.academicYearId);
-    const data: UpdateProductData = {
-      name: values.nameEn,
-      description: values.description ?? undefined,
+    // Edit mode — multilingual update. BE rejects price changes via this
+    // endpoint once variants exist; variant prices are managed in the variant
+    // builder, not here.
+    const data: UpdateProductRequest = {
+      nameEn: values.nameEn.trim(),
+      nameAr: toStringOrNull(values.nameAr),
+      nameKu: toStringOrNull(values.nameKu),
+      description: toStringOrNull(values.description),
       type: values.type,
-      // price isn't editable here in edit mode unless no variants exist;
-      // when variants exist, variant builder owns prices. Send a 0 placeholder.
-      price: values.defaultPrice ?? (product?.variants?.[0]?.finalPrice ?? 0),
       currency: values.currency,
-      academicYearStart: academicYear
-        ? Number((academicYear as { startYear?: number }).startYear ?? new Date().getFullYear())
-        : new Date().getFullYear(),
-      academicYearEnd: academicYear
-        ? Number((academicYear as { endYear?: number }).endYear ?? new Date().getFullYear() + 1)
-        : new Date().getFullYear() + 1,
-      applicableGrade: values.applicableGradeId || undefined,
-      applicableSection: values.applicableSectionId || undefined,
-      maxQuantity: values.maxQuantityPerStudent ?? undefined,
-      availableFrom: values.availableFrom || undefined,
-      availableUntil: values.availableUntil || undefined,
+      academicYearId: values.academicYearId,
+      applicableGradeId: values.applicableGradeId || null,
+      applicableSectionId: values.applicableSectionId || null,
+      maxQuantityPerPurchase: values.maxQuantityPerPurchase ?? null,
+      maxQuantityPerStudent: values.maxQuantityPerStudent ?? null,
+      availableFrom: toDateOrNull(values.availableFrom),
+      availableUntil: toDateOrNull(values.availableUntil),
     };
     await updateMut.mutateAsync({ id: product!.id, data });
     onSaved?.();
