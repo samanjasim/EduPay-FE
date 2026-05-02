@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Receipt, Search } from 'lucide-react';
 import { format } from 'date-fns';
 import {
@@ -45,8 +45,13 @@ export default function OrdersListPage() {
   const isPlatformAdmin =
     user?.roles?.includes('SuperAdmin') || user?.roles?.includes('Admin');
 
+  // Allow deep-linking to a pre-filtered view, e.g. /orders?type=Purchase from
+  // the product purchase history page.
+  const [searchParams] = useSearchParams();
+  const initialType = searchParams.get('type') ?? '';
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [typeFilter, setTypeFilter] = useState<string>('');
+  const [typeFilter, setTypeFilter] = useState<string>(initialType);
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(searchTerm, 300);

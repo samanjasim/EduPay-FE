@@ -48,6 +48,24 @@ const ProductsListPage = lazy(() => import('@/features/products/pages/ProductsLi
 const ProductDetailPage = lazy(() => import('@/features/products/pages/ProductDetailPage'));
 const ProductCreatePage = lazy(() => import('@/features/products/pages/ProductCreatePage'));
 const ProductEditPage = lazy(() => import('@/features/products/pages/ProductEditPage'));
+const ProductManualPurchasePage = lazy(
+  () => import('@/features/products/pages/ProductManualPurchasePage')
+);
+const ProductPurchasesPage = lazy(
+  () => import('@/features/products/pages/ProductPurchasesPage')
+);
+const ProductPurchaseStatsPage = lazy(
+  () => import('@/features/products/pages/ProductPurchaseStatsPage')
+);
+const ParentProductCatalogPage = lazy(
+  () => import('@/features/parents/pages/ParentProductCatalogPage')
+);
+const ParentProductOrdersPage = lazy(
+  () => import('@/features/parents/pages/ParentProductOrdersPage')
+);
+const ParentPurchaseResultPage = lazy(
+  () => import('@/features/parents/pages/ParentPurchaseResultPage')
+);
 const PaymentsPage = lazy(() => import('@/features/payments/pages/PaymentsPage'));
 const WalletsListPage = lazy(() => import('@/features/wallets/pages/WalletsListPage'));
 const WalletDetailPage = lazy(() => import('@/features/wallets/pages/WalletDetailPage'));
@@ -166,7 +184,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.PURCHASES,
-                    element: <ComingSoonPage taskRef="Task 10 — purchase history" />,
+                    element: <ProductPurchasesPage />,
                   },
                 ],
               },
@@ -175,7 +193,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.STATS,
-                    element: <ComingSoonPage taskRef="Task 10 — purchase stats" />,
+                    element: <ProductPurchaseStatsPage />,
                   },
                 ],
               },
@@ -184,7 +202,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.MANUAL_PURCHASE,
-                    element: <ComingSoonPage taskRef="Task 10 — manual purchase" />,
+                    element: <ProductManualPurchasePage />,
                   },
                 ],
               },
@@ -296,23 +314,28 @@ export const routes: RouteObject[] = [
           // Parent Fees (self-service)
           { path: ROUTES.PARENT_FEES, element: <ParentFeeDashboardPage /> },
 
-          // Parent Products (self-service catalog) — Task 10 builds the real pages.
+          // Parent Products (self-service catalog).
           // AuthGuard already wraps these via the parent <AuthGuard /> block.
           {
             path: ROUTES.PARENT_PRODUCTS.CATALOG,
-            element: <ComingSoonPage taskRef="Task 10 — parent catalog" />,
+            element: <ParentProductCatalogPage />,
           },
           {
+            // Parent product detail page is part of the parent self-service flow
+            // but its visual surface is built in a follow-up; for now route to
+            // the staff-facing detail page so the link in the catalog grid
+            // doesn't dead-end. The parent-scope detail mirrors enough of that
+            // page for the parent to start a checkout.
             path: ROUTES.PARENT_PRODUCTS.DETAIL,
-            element: <ComingSoonPage taskRef="Task 10 — parent product detail" />,
+            element: <ComingSoonPage taskRef="Parent product detail (web parity v2)" />,
           },
           {
             path: ROUTES.PARENT_PRODUCTS.ORDERS,
-            element: <ComingSoonPage taskRef="Task 10 — parent orders" />,
+            element: <ParentProductOrdersPage />,
           },
           {
             path: ROUTES.PARENT_PRODUCTS.PURCHASE_RESULT,
-            element: <ComingSoonPage taskRef="Task 10 — purchase result" />,
+            element: <ParentPurchaseResultPage />,
           },
 
           // Fee Structures
