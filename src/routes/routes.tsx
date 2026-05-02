@@ -75,7 +75,6 @@ const WalletDetailPage = lazy(() => import('@/features/wallets/pages/WalletDetai
 const OrdersListPage = lazy(() => import('@/features/orders/pages/OrdersListPage'));
 const OrderDetailPage = lazy(() => import('@/features/orders/pages/OrderDetailPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
-const ComingSoonPage = lazy(() => import('@/routes/ComingSoonPage'));
 
 // School Portal pages (lazy-loaded)
 const SchoolDashboardPage = lazy(() => import('@/features/school-portal/pages/SchoolDashboardPage'));
@@ -148,17 +147,17 @@ export const routes: RouteObject[] = [
               { path: ROUTES.SCHOOL.STAFF, element: <SchoolStaffPage /> },
               { path: ROUTES.SCHOOL.SETTINGS, element: <SchoolSettingsPage /> },
 
-              // School Products: catalog management (Task 9 builds the real pages)
+              // School Products: catalog management (Task 9 pages, school-scoped)
               {
                 element: <PermissionGuard permission={PERMISSIONS.Products.View} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.LIST,
-                    element: <ComingSoonPage taskRef="Task 9 — catalog list" />,
+                    element: <ProductsListPage />,
                   },
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.DETAIL,
-                    element: <ComingSoonPage taskRef="Task 9 — catalog detail" />,
+                    element: <ProductDetailPage />,
                   },
                 ],
               },
@@ -167,7 +166,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.CREATE,
-                    element: <ComingSoonPage taskRef="Task 9 — catalog create" />,
+                    element: <ProductCreatePage />,
                   },
                 ],
               },
@@ -176,7 +175,7 @@ export const routes: RouteObject[] = [
                 children: [
                   {
                     path: ROUTES.SCHOOL.PRODUCTS.EDIT,
-                    element: <ComingSoonPage taskRef="Task 9 — catalog edit" />,
+                    element: <ProductEditPage />,
                   },
                 ],
               },
