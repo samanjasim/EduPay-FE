@@ -14,6 +14,8 @@ export interface User {
   lastLoginAt?: string;
   createdAt?: string;
   updatedAt?: string;
+  hasSeenParentOnboarding?: boolean;
+  parentOnboardingVersion?: string | null;
 }
 
 export interface UpdateUserData {

@@ -10,6 +10,12 @@ export const API_ENDPOINTS = {
     REFRESH_TOKEN: '/Auth/refresh-token',
     ME: '/Auth/me',
     CHANGE_PASSWORD: '/Auth/change-password',
+    OTP_REQUEST: '/Auth/otp/request',
+    OTP_VERIFY: '/Auth/otp/verify',
+  },
+  ONBOARDING: {
+    PARENT: '/Onboarding/parent',
+    PARENT_COMPLETE: '/Onboarding/parent/complete',
   },
   USERS: {
     LIST: '/Users',

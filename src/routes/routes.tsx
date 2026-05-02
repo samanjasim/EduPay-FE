@@ -9,6 +9,7 @@ import { PERMISSIONS } from '@/constants';
 
 // Lazy-loaded pages
 const LandingPage = lazy(() => import('@/features/landing/pages/LandingPage'));
+const ParentOnboardingPage = lazy(() => import('@/features/onboarding/pages/ParentOnboardingPage'));
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -74,6 +75,9 @@ export const routes: RouteObject[] = [
   // The page itself redirects authenticated users to ROUTES.DASHBOARD,
   // so guests see marketing while signed-in users go straight to the app.
   { path: ROUTES.LANDING, element: <LandingPage /> },
+
+  // Parent onboarding — anonymous (the carousel handles the post-auth completion flow internally)
+  { path: ROUTES.PARENT.ONBOARDING, element: <ParentOnboardingPage /> },
 
   // Public auth routes (guests only)
   {

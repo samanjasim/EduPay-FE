@@ -10,6 +10,20 @@ import type {
   ApiResponse,
 } from '@/types';
 
+export interface RequestOtpPayload {
+  phoneE164: string;
+}
+
+export interface RequestOtpResult {
+  expiresAt: string;
+  resendAvailableInSeconds: number;
+}
+
+export interface VerifyOtpPayload {
+  phoneE164: string;
+  code: string;
+}
+
 export const authApi = {
   login: async (credentials: LoginCredentials): Promise<LoginResponse> => {
     const response = await apiClient.post<ApiResponse<LoginResponse>>(
@@ -42,5 +56,21 @@ export const authApi = {
 
   changePassword: async (data: ChangePasswordData): Promise<void> => {
     await apiClient.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data);
+  },
+
+  requestOtp: async (payload: RequestOtpPayload): Promise<RequestOtpResult> => {
+    const response = await apiClient.post<ApiResponse<RequestOtpResult>>(
+      API_ENDPOINTS.AUTH.OTP_REQUEST,
+      payload
+    );
+    return response.data.data;
+  },
+
+  verifyOtp: async (payload: VerifyOtpPayload): Promise<LoginResponse> => {
+    const response = await apiClient.post<ApiResponse<LoginResponse>>(
+      API_ENDPOINTS.AUTH.OTP_VERIFY,
+      payload
+    );
+    return response.data.data;
   },
 };

@@ -52,7 +52,21 @@
     "createPassword": "Create a password",
     "confirmYourPassword": "Confirm your password",
     "brandTitle": "Welcome to EduPay",
-    "brandSubtitle": "Simplifying school payments for Iraqi families while empowering educational institutions with modern financial tools."
+    "brandSubtitle": "Simplifying school payments for Iraqi families while empowering educational institutions with modern financial tools.",
+    "phone": "Phone",
+    "signInMethod": "Sign-in method",
+    "otp": {
+      "sendCode": "Send code",
+      "verify": "Verify",
+      "resend": "Resend code",
+      "resendIn": "Resend in {{seconds}}s",
+      "sentTo": "We sent a 6-digit code to {{phone}}.",
+      "changeNumber": "Change number",
+      "invalidPhone": "Enter a valid phone number with country code (e.g. +9647xxxxxxxxx).",
+      "invalidCode": "The code is incorrect. Try again.",
+      "phoneHint": "We'll send a 6-digit code via WhatsApp.",
+      "requestFailed": "Couldn't send the code. Try again."
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -1483,5 +1497,12 @@
     "language": {
       "label": "Language"
     }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "continue": "Continue",
+    "getStarted": "Get Started",
+    "iAlreadyHaveAccount": "I already have an account",
+    "loadError": "Couldn't load onboarding. Try again."
   }
 }

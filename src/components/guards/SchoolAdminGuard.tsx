@@ -40,3 +40,15 @@ export function getSchoolPortalDefaultRoute(user: { roles?: string[] } | null): 
     ? ROUTES.SCHOOL.CASH_COLLECTION
     : ROUTES.SCHOOL.DASHBOARD;
 }
+
+const PARENT_ONLY_NON_PRIVILEGED_ROLES = ['SuperAdmin', 'Admin', 'SchoolAdmin', 'CashCollector', 'Student'];
+
+/**
+ * Returns true if the user has the Parent role and no admin/staff role.
+ * Such users land on the parent portal (and the onboarding flow on first login).
+ */
+export function isParentOnly(user: { roles?: string[] } | null): boolean {
+  if (!user?.roles?.length) return false;
+  if (!user.roles.includes('Parent')) return false;
+  return !user.roles.some((r) => PARENT_ONLY_NON_PRIVILEGED_ROLES.includes(r));
+}

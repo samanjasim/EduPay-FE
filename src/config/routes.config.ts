@@ -9,6 +9,11 @@ export const ROUTES = {
   // Dashboard
   DASHBOARD: '/dashboard',
 
+  // Parent self-service
+  PARENT: {
+    ONBOARDING: '/parent/onboarding',
+  },
+
   // Users
   USERS: {
     LIST: '/users',
