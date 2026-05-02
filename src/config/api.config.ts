@@ -94,11 +94,11 @@ export const API_ENDPOINTS = {
     FEES: (parentUserId: string) => `/Parents/${parentUserId}/fees`,
     FEE_DASHBOARD: (parentUserId: string) => `/Parents/${parentUserId}/fees/dashboard`,
     ORDERS: (parentUserId: string) => `/Parents/${parentUserId}/orders`,
-    CHILDREN_PRODUCTS: (childId: string) => `/Parents/children/${childId}/products`,
+    CHILDREN_PRODUCTS: (childId: string) => `/Parents/me/children/${childId}/products`,
     CHILDREN_PRODUCT_DETAIL: (childId: string, productId: string) =>
-      `/Parents/children/${childId}/products/${productId}`,
-    PRODUCT_CHECKOUT: '/Parents/product-checkouts',
-    PRODUCT_ORDERS: '/Parents/product-orders',
+      `/Parents/me/children/${childId}/products/${productId}`,
+    PRODUCT_CHECKOUT: '/Parents/me/product-checkouts',
+    PRODUCT_ORDERS: '/Parents/me/product-orders',
     PRODUCT_ORDER_CANCEL: (orderId: string) => `/Parents/me/product-orders/${orderId}/cancel`,
   },
   NOTIFICATIONS: {
