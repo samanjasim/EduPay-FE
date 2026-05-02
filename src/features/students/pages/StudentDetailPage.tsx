@@ -365,12 +365,13 @@ function EnrollParentModal({
   ];
 
   const onSubmit = (data: EnrollParentFormData) => {
+    // Phone is now required by both schema and BE; guarded by zod above.
     const payload = {
       email: data.email,
       relation: data.relation as ParentRelation,
       firstName: data.firstName || null,
       lastName: data.lastName || null,
-      phoneNumber: data.phoneNumber || null,
+      phoneNumber: data.phoneNumber!,
       password: data.password || null,
     };
     enrollParent(
@@ -392,6 +393,9 @@ function EnrollParentModal({
     <Modal isOpen={isOpen} onClose={onClose} title={t('parents.enrollParent')} size="lg">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <p className="text-sm text-text-muted">{t('parents.enrollHint')}</p>
+        <div className="rounded-md bg-blue-50 p-3 text-xs text-blue-900 dark:bg-blue-900/20 dark:text-blue-200">
+          {t('parents.enrollSmsHint')}
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label={t('parents.email')} type="email" error={errors.email?.message} {...register('email')} />
           <Select
@@ -409,14 +413,16 @@ function EnrollParentModal({
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label={t('parents.phoneNumber')}
+            label={`${t('parents.phoneNumber')} *`}
             placeholder="+9647XXXXXXXXX"
+            hint={t('parents.phoneRequiredHelp')}
             error={errors.phoneNumber?.message}
             {...register('phoneNumber')}
           />
           <Input
-            label={t('parents.password')}
+            label={`${t('parents.password')} (${t('common.optional')})`}
             type={showPassword ? 'text' : 'password'}
+            hint={t('parents.passwordOptionalHelp')}
             error={errors.password?.message}
             rightIcon={
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="hover:text-text-primary">

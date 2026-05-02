@@ -27,12 +27,25 @@ export interface ParentFeeItemDto {
   currency: string;
 }
 
+/**
+ * Per-fee-type rollup across all the parent's children.
+ * Sorted by totalOutstanding descending — saves the FE from grouping client-side.
+ */
+export interface ParentFeeDashboardCategoryDto {
+  feeType: string;
+  dueCount: number;
+  totalDue: number;
+  totalPaid: number;
+  totalOutstanding: number;
+}
+
 export interface ParentFeeDashboardDto {
   children: ParentChildFeeDto[];
   totalOutstanding: number;
   totalPaid: number;
   totalOverdue: number;
   currency: string;
+  byCategory: ParentFeeDashboardCategoryDto[];
 }
 
 export const parentFeesApi = {

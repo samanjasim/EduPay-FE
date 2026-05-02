@@ -251,6 +251,12 @@ function ChildrenTab({ parentUserId }: { parentUserId: string }) {
                 <span className="font-medium text-text-primary">{format(new Date(child.linkedAt), 'MMM d, yyyy')}</span>
               </div>
             </div>
+            <div className="mt-3 flex items-center justify-between rounded-md bg-amber-50 px-2.5 py-2 text-xs dark:bg-amber-500/10">
+              <span className="text-text-muted">{t('parent.outstandingAmount')}</span>
+              <span className="font-semibold text-amber-700 dark:text-amber-300">
+                {child.outstandingAmountIqd.toLocaleString()} {child.currency}
+              </span>
+            </div>
           </CardContent>
         </Card>
       ))}

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Wallet, ChevronDown, ChevronUp } from 'lucide-react';
+import { Wallet, ChevronDown, ChevronUp, Layers } from 'lucide-react';
 import {
   Card, CardContent, Badge, Spinner,
 } from '@/components/ui';
 import { PageHeader, EmptyState } from '@/components/common';
 import { useParentFees } from '../hooks/useParentFees';
+import type { ParentFeeDashboardCategoryDto } from '../api/parentFees.api';
 
 const STATUS_BADGE_VARIANT: Record<string, 'default' | 'success' | 'warning' | 'error'> = {
   Pending: 'warning',
@@ -70,11 +71,86 @@ export default function ParentFeeDashboardPage() {
         />
       </div>
 
+      {/* Per-fee-type rollup (NEW: backed by /Parents/my-fees → byCategory) */}
+      {data.byCategory && data.byCategory.length > 0 && (
+        <ByCategorySection categories={data.byCategory} currency={data.currency} />
+      )}
+
       {/* Children Fee Cards */}
       {data.children.map((child) => (
         <ChildFeeCard key={child.studentId} child={child} />
       ))}
     </div>
+  );
+}
+
+function ByCategorySection({
+  categories,
+  currency,
+}: {
+  categories: ParentFeeDashboardCategoryDto[];
+  currency: string;
+}) {
+  const { t } = useTranslation();
+  // Largest outstanding for relative bar widths
+  const maxOutstanding = Math.max(...categories.map((c) => c.totalOutstanding), 1);
+
+  return (
+    <Card>
+      <CardContent className="p-4">
+        <div className="mb-3 flex items-center gap-2">
+          <Layers className="h-4 w-4 text-text-muted" />
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+            {t('parentFees.byCategory')}
+          </h3>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((cat) => {
+            const pct = (cat.totalOutstanding / maxOutstanding) * 100;
+            const fullyPaid = cat.totalOutstanding === 0 && cat.totalPaid > 0;
+            return (
+              <div
+                key={cat.feeType}
+                className="rounded-lg border border-border bg-card-bg p-3"
+              >
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium text-text-primary">{cat.feeType}</span>
+                  {fullyPaid ? (
+                    <Badge variant="success" size="sm">
+                      {t('parentFees.allPaid')}
+                    </Badge>
+                  ) : (
+                    <Badge
+                      variant={cat.totalOutstanding > 0 ? 'warning' : 'default'}
+                      size="sm"
+                    >
+                      {cat.dueCount} {t('parentFees.due')}
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-lg font-semibold text-amber-600 dark:text-amber-400">
+                  {cat.totalOutstanding.toLocaleString()} {currency}
+                </p>
+                <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-border">
+                  <div
+                    className="h-full bg-amber-500"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+                <div className="mt-2 flex justify-between text-xs text-text-muted">
+                  <span>
+                    {t('parentFees.totalDue')}: {cat.totalDue.toLocaleString()}
+                  </span>
+                  <span>
+                    {t('parentFees.totalPaid')}: {cat.totalPaid.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 

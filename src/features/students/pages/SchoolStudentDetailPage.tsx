@@ -436,12 +436,22 @@ function EnrollParentModal({
         <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300">
           {t('parents.enrollHint')}
         </div>
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+          {t('parents.enrollSmsHint')}
+        </div>
 
-        {/* Required: Email + Relation */}
+        {/* Required: Email + Phone + Relation */}
         <div>
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-text-muted">{t('validation.required', { field: '' }).replace(' is required', '')}</p>
           <div className="space-y-3">
             <Input label={t('users.email')} type="email" {...register('email')} error={errors.email?.message} placeholder="parent@example.com" />
+            <Input
+              label={`${t('users.phone')} *`}
+              {...register('phoneNumber')}
+              error={errors.phoneNumber?.message}
+              placeholder="+9647701234567"
+              hint={t('parents.phoneRequiredHelp')}
+            />
             <div>
               <label className="mb-1.5 block text-sm font-medium text-text-primary">{t('students.relation')}</label>
               <div className="flex gap-4">
@@ -457,7 +467,7 @@ function EnrollParentModal({
           </div>
         </div>
 
-        {/* Optional: New account fields */}
+        {/* Optional: New account fields (password optional — parent sets via OTP) */}
         <div className="border-t border-border pt-4">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-text-muted">
             {t('parents.newAccountFields')}
@@ -468,8 +478,14 @@ function EnrollParentModal({
               <Input label={t('users.firstName')} {...register('firstName')} error={errors.firstName?.message} />
               <Input label={t('users.lastName')} {...register('lastName')} error={errors.lastName?.message} />
             </div>
-            <Input label={t('users.phone')} {...register('phoneNumber')} error={errors.phoneNumber?.message} placeholder="+9647701234567" />
-            <Input label={t('auth.password')} type="password" {...register('password')} error={errors.password?.message} placeholder="Min 8 characters" />
+            <Input
+              label={`${t('auth.password')} (${t('common.optional')})`}
+              type="password"
+              {...register('password')}
+              error={errors.password?.message}
+              placeholder={t('parents.passwordOptionalPlaceholder')}
+              hint={t('parents.passwordOptionalHelp')}
+            />
           </div>
         </div>
 
