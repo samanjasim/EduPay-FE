@@ -10,9 +10,6 @@ export const API_ENDPOINTS = {
     REFRESH_TOKEN: '/Auth/refresh-token',
     ME: '/Auth/me',
     CHANGE_PASSWORD: '/Auth/change-password',
-    OTP_REQUEST: '/Auth/otp/request',
-    OTP_VERIFY: '/Auth/otp/verify',
-    PASSWORD_SET: '/Auth/password/set',
   },
   USERS: {
     LIST: '/Users',
@@ -89,7 +86,6 @@ export const API_ENDPOINTS = {
     LIST: '/Parents',
     DETAIL: (parentUserId: string) => `/Parents/${parentUserId}`,
     CHILDREN: '/Parents/children',
-    HOME: '/Parents/home',
     MY_FEES: '/Parents/my-fees',
     MY_FEE_ITEMS: '/Parents/my-fees/items',
     MY_ORDERS: '/Parents/my-orders',

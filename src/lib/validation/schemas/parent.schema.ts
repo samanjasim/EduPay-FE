@@ -18,13 +18,11 @@ export const enrollParentSchema = (t: TFunction) =>
       .max(100, t('validation.maxLength', { field: t('parents.lastName'), max: 100 }))
       .optional()
       .or(z.literal('')),
-    // Phone is now REQUIRED — it's the parent's identifier for OTP login
     phoneNumber: z
       .string()
-      .min(1, t('validation.required', { field: t('parents.phoneNumber') }))
-      .regex(/^\+?[1-9]\d{6,14}$/, t('validation.invalidPhone')),
-    // Password is optional — admin can leave it blank and the parent will set
-    // their own via the mobile app's OTP flow
+      .regex(/^\+?[1-9]\d{6,14}$/, t('validation.invalidPhone'))
+      .optional()
+      .or(z.literal('')),
     password: z
       .string()
       .min(8, t('validation.minLength', { field: t('parents.password'), min: 8 }))

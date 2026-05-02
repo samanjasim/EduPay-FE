@@ -41,10 +41,6 @@ type ParentChild = {
   relation: string;
   status: string;
   linkedAt: string;
-  /** Outstanding amount (Pending + Overdue) for this child, in IQD. */
-  outstandingAmountIqd: number;
-  /** ISO currency code, "IQD" for v1. */
-  currency: string;
 };
 
 type ParentFee = {

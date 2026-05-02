@@ -4,14 +4,11 @@ import type { UpdateUserData } from './user.types';
 export type UpdateParentData = UpdateUserData;
 
 // Enroll = atomic create-or-reuse + link
-// Phone is now REQUIRED (becomes the parent's OTP login identifier).
-// Password is OPTIONAL — when omitted, the parent sets it themselves on
-// first OTP login via the mobile app.
 export interface EnrollParentData {
   firstName?: string | null;
   lastName?: string | null;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string | null;
   password?: string | null;
   relation: ParentRelation;
 }
