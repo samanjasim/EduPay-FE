@@ -54,6 +54,7 @@ const WalletDetailPage = lazy(() => import('@/features/wallets/pages/WalletDetai
 const OrdersListPage = lazy(() => import('@/features/orders/pages/OrdersListPage'));
 const OrderDetailPage = lazy(() => import('@/features/orders/pages/OrderDetailPage'));
 const NotFoundPage = lazy(() => import('@/routes/NotFoundPage'));
+const ComingSoonPage = lazy(() => import('@/routes/ComingSoonPage'));
 
 // School Portal pages (lazy-loaded)
 const SchoolDashboardPage = lazy(() => import('@/features/school-portal/pages/SchoolDashboardPage'));
@@ -125,6 +126,68 @@ export const routes: RouteObject[] = [
               { path: ROUTES.SCHOOL.REPORTS, element: <SchoolReportsPage /> },
               { path: ROUTES.SCHOOL.STAFF, element: <SchoolStaffPage /> },
               { path: ROUTES.SCHOOL.SETTINGS, element: <SchoolSettingsPage /> },
+
+              // School Products: catalog management (Task 9 builds the real pages)
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.View} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.LIST,
+                    element: <ComingSoonPage taskRef="Task 9 — catalog list" />,
+                  },
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.DETAIL,
+                    element: <ComingSoonPage taskRef="Task 9 — catalog detail" />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.Create} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.CREATE,
+                    element: <ComingSoonPage taskRef="Task 9 — catalog create" />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.Products.Update} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.EDIT,
+                    element: <ComingSoonPage taskRef="Task 9 — catalog edit" />,
+                  },
+                ],
+              },
+
+              // School Product Purchases: history, stats, manual sale (Task 10)
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.View} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.PURCHASES,
+                    element: <ComingSoonPage taskRef="Task 10 — purchase history" />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.ViewStats} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.STATS,
+                    element: <ComingSoonPage taskRef="Task 10 — purchase stats" />,
+                  },
+                ],
+              },
+              {
+                element: <PermissionGuard permission={PERMISSIONS.ProductPurchases.Create} redirectTo={ROUTES.SCHOOL.DASHBOARD} />,
+                children: [
+                  {
+                    path: ROUTES.SCHOOL.PRODUCTS.MANUAL_PURCHASE,
+                    element: <ComingSoonPage taskRef="Task 10 — manual purchase" />,
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -232,6 +295,25 @@ export const routes: RouteObject[] = [
 
           // Parent Fees (self-service)
           { path: ROUTES.PARENT_FEES, element: <ParentFeeDashboardPage /> },
+
+          // Parent Products (self-service catalog) — Task 10 builds the real pages.
+          // AuthGuard already wraps these via the parent <AuthGuard /> block.
+          {
+            path: ROUTES.PARENT_PRODUCTS.CATALOG,
+            element: <ComingSoonPage taskRef="Task 10 — parent catalog" />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.DETAIL,
+            element: <ComingSoonPage taskRef="Task 10 — parent product detail" />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.ORDERS,
+            element: <ComingSoonPage taskRef="Task 10 — parent orders" />,
+          },
+          {
+            path: ROUTES.PARENT_PRODUCTS.PURCHASE_RESULT,
+            element: <ComingSoonPage taskRef="Task 10 — purchase result" />,
+          },
 
           // Fee Structures
           {

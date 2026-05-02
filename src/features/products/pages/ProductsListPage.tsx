@@ -15,6 +15,7 @@ const statusBadgeVariant = (status: ProductStatus) => {
   const map: Record<ProductStatus, 'warning' | 'success' | 'default'> = {
     Draft: 'warning',
     Active: 'success',
+    Disabled: 'default',
     Archived: 'default',
   };
   return map[status];
@@ -23,6 +24,7 @@ const statusBadgeVariant = (status: ProductStatus) => {
 const STATUS_KEY_MAP: Record<ProductStatus, string> = {
   Draft: 'products.statusDraft',
   Active: 'products.statusActive',
+  Disabled: 'products.statusDisabled',
   Archived: 'products.statusArchived',
 };
 

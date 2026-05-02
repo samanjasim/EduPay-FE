@@ -873,6 +873,7 @@
     "typeOther": "هیتر",
     "statusDraft": "ڕەشنووس",
     "statusActive": "چالاک",
+    "statusDisabled": "ناچالاک",
     "statusArchived": "ئەرشیفکراو",
     "name": "ناو",
     "price": "نرخ",

@@ -21,6 +21,8 @@ import {
   Package,
   FileText,
   Layers,
+  ShoppingCart,
+  ScrollText,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -72,6 +74,12 @@ export function Sidebar() {
       : []),
     ...((isParent || hasPermission(PERMISSIONS.Fees.View))
       ? [{ label: t('nav.myFees'), icon: Wallet, path: ROUTES.PARENT_FEES }]
+      : []),
+    ...(isParent
+      ? [
+          { label: t('nav.parentCatalog', 'Catalog'), icon: ShoppingCart, path: ROUTES.PARENT_PRODUCTS.CATALOG },
+          { label: t('nav.parentOrders', 'My Orders'), icon: ScrollText, path: ROUTES.PARENT_PRODUCTS.ORDERS },
+        ]
       : []),
     ...(hasPermission(PERMISSIONS.Products.View)
       ? [{ label: t('nav.products'), icon: Package, path: ROUTES.PRODUCTS.LIST }]

@@ -11,6 +11,10 @@ import {
   BookOpen,
   UserCog,
   Banknote,
+  Package,
+  ShoppingBag,
+  TrendingUp,
+  HandCoins,
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useUIStore, selectSidebarCollapsed } from '@/stores';
@@ -46,6 +50,10 @@ export function SchoolSidebar({ schoolName }: SchoolSidebarProps) {
     { label: t('schoolPortal.nav.students'), icon: Users, path: ROUTES.SCHOOL.STUDENTS.LIST, show: hasPermission(PERMISSIONS.Students.View) },
     { label: t('schoolPortal.nav.cashCollection'), icon: Banknote, path: ROUTES.SCHOOL.CASH_COLLECTION, show: canViewCashCollection },
     { label: t('schoolPortal.nav.fees'), icon: Receipt, path: ROUTES.SCHOOL.FEES, show: hasPermission(PERMISSIONS.Fees.View) && (canManageFees || !canRecordCash) },
+    { label: t('schoolPortal.nav.products', 'Products'), icon: Package, path: ROUTES.SCHOOL.PRODUCTS.LIST, show: hasPermission(PERMISSIONS.Products.View) },
+    { label: t('schoolPortal.nav.productPurchases', 'Product Purchases'), icon: ShoppingBag, path: ROUTES.SCHOOL.PRODUCTS.PURCHASES, show: hasPermission(PERMISSIONS.ProductPurchases.View) },
+    { label: t('schoolPortal.nav.productStats', 'Purchase Stats'), icon: TrendingUp, path: ROUTES.SCHOOL.PRODUCTS.STATS, show: hasPermission(PERMISSIONS.ProductPurchases.ViewStats) },
+    { label: t('schoolPortal.nav.manualPurchase', 'Manual Purchase'), icon: HandCoins, path: ROUTES.SCHOOL.PRODUCTS.MANUAL_PURCHASE, show: hasPermission(PERMISSIONS.ProductPurchases.Create) },
     { label: t('schoolPortal.nav.reports'), icon: BarChart3, path: ROUTES.SCHOOL.REPORTS, show: hasPermission(PERMISSIONS.CashCollections.View) },
     { label: t('schoolPortal.nav.staff'), icon: UserCog, path: ROUTES.SCHOOL.STAFF, show: hasPermission(PERMISSIONS.Schools.ManageAdmins) },
     { label: t('schoolPortal.nav.settings'), icon: Settings, path: ROUTES.SCHOOL.SETTINGS, show: hasPermission(PERMISSIONS.Schools.ManageSettings) },

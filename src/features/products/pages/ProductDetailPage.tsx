@@ -15,7 +15,7 @@ import { format } from 'date-fns';
 import type { ProductStatus } from '@/types';
 
 const statusVariant = (s: ProductStatus) =>
-  ({ Draft: 'warning', Active: 'success', Archived: 'default' } as const)[s] ?? 'default';
+  ({ Draft: 'warning', Active: 'success', Disabled: 'default', Archived: 'default' } as const)[s] ?? 'default';
 
 export default function ProductDetailPage() {
   const { t } = useTranslation();

@@ -94,6 +94,12 @@ export const API_ENDPOINTS = {
     FEES: (parentUserId: string) => `/Parents/${parentUserId}/fees`,
     FEE_DASHBOARD: (parentUserId: string) => `/Parents/${parentUserId}/fees/dashboard`,
     ORDERS: (parentUserId: string) => `/Parents/${parentUserId}/orders`,
+    CHILDREN_PRODUCTS: (childId: string) => `/Parents/me/children/${childId}/products`,
+    CHILDREN_PRODUCT_DETAIL: (childId: string, productId: string) =>
+      `/Parents/me/children/${childId}/products/${productId}`,
+    PRODUCT_CHECKOUT: '/Parents/me/product-checkouts',
+    PRODUCT_ORDERS: '/Parents/me/product-orders',
+    PRODUCT_ORDER_CANCEL: (orderId: string) => `/Parents/me/product-orders/${orderId}/cancel`,
   },
   NOTIFICATIONS: {
     LIST: '/Notifications',
@@ -126,6 +132,13 @@ export const API_ENDPOINTS = {
     LIST: '/Products',
     DETAIL: (id: string) => `/Products/${id}`,
     STATUS: (id: string) => `/Products/${id}/status`,
+    VARIANTS: (id: string) => `/Products/${id}/variants`,
+    IMAGES: (id: string) => `/Products/${id}/images`,
+    IMAGE: (productId: string, imageId: string) => `/Products/${productId}/images/${imageId}`,
+  },
+  PRODUCT_PURCHASES: {
+    MANUAL: '/ProductPurchases/manual',
+    STATS: '/ProductPurchases/stats',
   },
   WALLETS: {
     LIST: '/Wallets',
@@ -144,6 +157,7 @@ export const API_ENDPOINTS = {
     LIST: '/Orders',
     DETAIL: (id: string) => `/Orders/${id}`,
     RECEIPT: (id: string) => `/Orders/${id}/receipt`,
+    CANCEL: (id: string) => `/Orders/${id}/cancel`,
   },
   REPORTS: {
     CASH_RECONCILIATION: '/Reports/cash-reconciliation',

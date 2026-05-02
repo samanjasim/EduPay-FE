@@ -1060,6 +1060,7 @@
     "typeOther": "Other",
     "statusDraft": "Draft",
     "statusActive": "Active",
+    "statusDisabled": "Disabled",
     "statusArchived": "Archived",
     "name": "Name",
     "price": "Price",

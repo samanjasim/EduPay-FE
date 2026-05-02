@@ -873,6 +873,7 @@
     "typeOther": "أخرى",
     "statusDraft": "مسودة",
     "statusActive": "نشط",
+    "statusDisabled": "معطل",
     "statusArchived": "مؤرشف",
     "name": "الاسم",
     "price": "السعر",

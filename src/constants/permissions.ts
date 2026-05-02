@@ -97,6 +97,12 @@ export const PERMISSIONS = {
     Create: 'Orders.Create',
     Cancel: 'Orders.Cancel',
   },
+  ProductPurchases: {
+    View: 'ProductPurchases.View',
+    Create: 'ProductPurchases.Create',
+    ViewStats: 'ProductPurchases.ViewStats',
+    Cancel: 'ProductPurchases.Cancel',
+  },
   Notifications: {
     View: 'Notifications.View',
     Send: 'Notifications.Send',
