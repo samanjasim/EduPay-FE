@@ -4,12 +4,16 @@ import { ROUTES } from '@/config';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { SchoolLayout } from '@/components/layout/SchoolLayout';
+import { ParentLayout } from '@/components/layout/ParentLayout';
 import { AuthGuard, GuestGuard, PermissionGuard, SchoolAdminGuard } from '@/components/guards';
 import { PERMISSIONS } from '@/constants';
 
 // Lazy-loaded pages
 const LandingPage = lazy(() => import('@/features/landing/pages/LandingPage'));
 const ParentOnboardingPage = lazy(() => import('@/features/onboarding/pages/ParentOnboardingPage'));
+const ParentDashboardPage = lazy(() => import('@/features/parents/pages/ParentDashboardPage'));
+const ParentChildDetailPage = lazy(() => import('@/features/parents/pages/ParentChildDetailPage'));
+const ParentProfilePage = lazy(() => import('@/features/parents/pages/ParentProfilePage'));
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -97,6 +101,16 @@ export const routes: RouteObject[] = [
   {
     element: <AuthGuard />,
     children: [
+      // Parent self-service portal — Phase 2 (parent-only users; admins keep their portals).
+      {
+        element: <ParentLayout />,
+        children: [
+          { path: ROUTES.PARENT.DASHBOARD, element: <ParentDashboardPage /> },
+          { path: ROUTES.PARENT.CHILD_DETAIL, element: <ParentChildDetailPage /> },
+          { path: ROUTES.PARENT.PROFILE, element: <ParentProfilePage /> },
+        ],
+      },
+
       // School Admin Portal
       {
         element: <SchoolAdminGuard />,

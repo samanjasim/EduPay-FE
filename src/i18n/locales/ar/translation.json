@@ -868,7 +868,102 @@
     "noOrders": "لا توجد طلبات",
     "receiptNumber": "رقم الإيصال",
     "type": "النوع",
-    "date": "التاريخ"
+    "date": "التاريخ",
+    "header": {
+      "hello": "مرحباً",
+      "notifications": "الإشعارات",
+      "profile": "الملف الشخصي",
+      "unreadBadge": "{{count}} غير مقروء"
+    },
+    "nav": {
+      "title": "تنقّل وليّ الأمر",
+      "home": "الرئيسية",
+      "discover": "استكشاف",
+      "rewards": "المكافآت",
+      "activity": "النشاط",
+      "profile": "حسابي"
+    },
+    "due": {
+      "title": "مستحقّ هذا الشهر",
+      "payAll": "ادفع الكل",
+      "pendingCount_one": "دفعة واحدة معلّقة",
+      "pendingCount_other": "{{count}} دفعة معلّقة"
+    },
+    "categories": {
+      "tuition": "الأقساط",
+      "transport": "النقل",
+      "activities": "الأنشطة",
+      "canteen": "المقصف",
+      "noDue": "لا مستحقات",
+      "dueCount_one": "مستحق واحد",
+      "dueCount_other": "{{count}} مستحق",
+      "unseen": "نشاط جديد"
+    },
+    "upcoming": {
+      "title": "دفعات قادمة",
+      "seeAll": "عرض الكل",
+      "empty": "لا توجد دفعات قادمة — كل شيء على ما يرام.",
+      "due": "الاستحقاق {{date}}",
+      "installment": "القسط {{index}}/{{total}}",
+      "pay": "ادفع"
+    },
+    "rewards": {
+      "title": "نقاطك",
+      "points": "نقطة",
+      "redeem": "استبدل"
+    },
+    "pay": {
+      "title": "دفع القسط",
+      "amount": "المبلغ",
+      "method": "اختر طريقة الدفع",
+      "wallet": "محفظة الطالب",
+      "walletHint": "ادفع من رصيد محفظة الطفل.",
+      "gateway": "بطاقة",
+      "gatewayHint": "ادفع بكي كارد أو زين كاش أو FIB.",
+      "confirm": "ادفع {{amount}} {{currency}}"
+    },
+    "child": {
+      "back": "رجوع للرئيسية",
+      "outstanding": "متبقّي",
+      "paid": "مدفوع",
+      "overdue": "متأخّر",
+      "feesTitle": "الأقساط",
+      "noFees": "لا توجد أقساط في هذا التصنيف.",
+      "clearFilter": "إلغاء التصفية",
+      "receiptsTitle": "إيصالات حديثة",
+      "status": {
+        "pending": "قيد الدفع",
+        "overdue": "متأخر",
+        "paid": "مدفوع",
+        "waived": "معفى",
+        "cancelled": "ملغي"
+      }
+    },
+    "profile": {
+      "back": "رجوع",
+      "phoneTitle": "رقم الهاتف",
+      "passwordTitle": "كلمة المرور",
+      "prefsTitle": "التفضيلات",
+      "currentPhone": "الرقم الحالي",
+      "changePhone": "تغيير الرقم",
+      "newPhone": "الرقم الجديد",
+      "verifyAndUpdate": "تأكيد وتحديث",
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "updatePassword": "تحديث كلمة المرور",
+      "language": "اللغة",
+      "theme": "المظهر",
+      "themes": {
+        "light": "فاتح",
+        "dark": "داكن",
+        "system": "النظام"
+      },
+      "signOut": "تسجيل الخروج"
+    },
+    "dashboard": {
+      "loadError": "تعذر تحميل لوحتك. حاول مرة أخرى."
+    }
   },
   "products": {
     "title": "المنتجات",

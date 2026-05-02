@@ -12,6 +12,8 @@ export const API_ENDPOINTS = {
     CHANGE_PASSWORD: '/Auth/change-password',
     OTP_REQUEST: '/Auth/otp/request',
     OTP_VERIFY: '/Auth/otp/verify',
+    CHANGE_PHONE_REQUEST: '/Auth/me/phone/request',
+    CHANGE_PHONE_VERIFY: '/Auth/me/phone/verify',
   },
   ONBOARDING: {
     PARENT: '/Onboarding/parent',
@@ -95,6 +97,9 @@ export const API_ENDPOINTS = {
     MY_FEES: '/Parents/my-fees',
     MY_FEE_ITEMS: '/Parents/my-fees/items',
     MY_ORDERS: '/Parents/my-orders',
+    ME_DASHBOARD: '/Parents/me/dashboard',
+    ME_CHILD_DETAIL: (childId: string) => `/Parents/me/children/${childId}`,
+    ME_MARK_FEE_TYPE_SEEN: (feeTypeId: string) => `/Parents/me/fee-types/${feeTypeId}/mark-seen`,
     DASHBOARD: (parentUserId: string) => `/Parents/${parentUserId}/dashboard`,
     CHILDREN_FOR_PARENT: (parentUserId: string) => `/Parents/${parentUserId}/children`,
     FEES: (parentUserId: string) => `/Parents/${parentUserId}/fees`,

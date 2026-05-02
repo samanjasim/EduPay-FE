@@ -868,7 +868,102 @@
     "noOrders": "هیچ داواکارییەک نەدۆزرایەوە",
     "receiptNumber": "ژمارەی وەسڵ",
     "type": "جۆر",
-    "date": "بەروار"
+    "date": "بەروار",
+    "header": {
+      "hello": "سڵاو",
+      "notifications": "ئاگاداریەکان",
+      "profile": "پرۆفایل",
+      "unreadBadge": "{{count}} نەخوێندراو"
+    },
+    "nav": {
+      "title": "ڕێنیشاندەری دایک و باوک",
+      "home": "سەرەکی",
+      "discover": "دۆزینەوە",
+      "rewards": "خەڵاتەکان",
+      "activity": "چالاکی",
+      "profile": "پرۆفایل"
+    },
+    "due": {
+      "title": "پێویستی ئەم مانگە",
+      "payAll": "هەمووی بدە",
+      "pendingCount_one": "یەک پارەدانی چاوەڕوانکراو",
+      "pendingCount_other": "{{count}} پارەدانی چاوەڕوانکراو"
+    },
+    "categories": {
+      "tuition": "قیست",
+      "transport": "گواستنەوە",
+      "activities": "چالاکی",
+      "canteen": "کافیتیریا",
+      "noDue": "هیچ نییە",
+      "dueCount_one": "یەک پێویست",
+      "dueCount_other": "{{count}} پێویست",
+      "unseen": "چالاکی نوێ"
+    },
+    "upcoming": {
+      "title": "پارەدانە داهاتووەکان",
+      "seeAll": "هەموو ببینە",
+      "empty": "پارەدانی داهاتوو نییە — هەموو شت ئاسایە.",
+      "due": "بەرواری {{date}}",
+      "installment": "بەشی {{index}}/{{total}}",
+      "pay": "بدە"
+    },
+    "rewards": {
+      "title": "خاڵەکانت",
+      "points": "خاڵ",
+      "redeem": "ئاڵوگۆڕ بکە"
+    },
+    "pay": {
+      "title": "پارەدانی قیست",
+      "amount": "بڕ",
+      "method": "شێوازی پارەدان هەڵبژێرە",
+      "wallet": "جزدان",
+      "walletHint": "لە جزدانی منداڵەکەت بدە.",
+      "gateway": "کارت",
+      "gatewayHint": "بە Qi Card، ZainCash یان FIB پارە بدە.",
+      "confirm": "{{amount}} {{currency}} بدە"
+    },
+    "child": {
+      "back": "گەڕانەوە بۆ سەرەکی",
+      "outstanding": "ماوە",
+      "paid": "دراوە",
+      "overdue": "دواکەوتوو",
+      "feesTitle": "قیستەکان",
+      "noFees": "هیچ قیستێک لەم بەشە نییە.",
+      "clearFilter": "پاککردنەوەی فلتەر",
+      "receiptsTitle": "پسوولە تازەکان",
+      "status": {
+        "pending": "چاوەڕوان",
+        "overdue": "دواکەوتوو",
+        "paid": "دراوە",
+        "waived": "بەخۆڕایی",
+        "cancelled": "هەڵوەشاوە"
+      }
+    },
+    "profile": {
+      "back": "گەڕانەوە",
+      "phoneTitle": "ژمارەی مۆبایل",
+      "passwordTitle": "وشەی نهێنی",
+      "prefsTitle": "هەڵبژاردنەکان",
+      "currentPhone": "ژمارەی ئێستا",
+      "changePhone": "گۆڕینی ژمارە",
+      "newPhone": "ژمارەی نوێ",
+      "verifyAndUpdate": "پشتڕاستکردنەوە و نوێکردنەوە",
+      "currentPassword": "وشەی نهێنی ئێستا",
+      "newPassword": "وشەی نهێنی نوێ",
+      "confirmPassword": "دووبارە وشەی نهێنی",
+      "updatePassword": "نوێکردنەوەی وشەی نهێنی",
+      "language": "زمان",
+      "theme": "ڕووکار",
+      "themes": {
+        "light": "ڕووناک",
+        "dark": "تاریک",
+        "system": "سیستەم"
+      },
+      "signOut": "دەرچوون"
+    },
+    "dashboard": {
+      "loadError": "نەتوانرا داشبۆردەکەت بار بکرێت."
+    }
   },
   "products": {
     "title": "بەرهەمەکان",

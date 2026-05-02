@@ -12,6 +12,10 @@ export const ROUTES = {
   // Parent self-service
   PARENT: {
     ONBOARDING: '/parent/onboarding',
+    DASHBOARD: '/parent',
+    CHILD_DETAIL: '/parent/children/:id',
+    PROFILE: '/parent/profile',
+    getChildDetail: (id: string) => `/parent/children/${id}`,
   },
 
   // Users

@@ -868,7 +868,102 @@
     "noOrders": "No orders found",
     "receiptNumber": "Receipt #",
     "type": "Type",
-    "date": "Date"
+    "date": "Date",
+    "header": {
+      "hello": "Hello",
+      "notifications": "Notifications",
+      "profile": "Profile",
+      "unreadBadge": "{{count}} unread"
+    },
+    "nav": {
+      "title": "Parent navigation",
+      "home": "Home",
+      "discover": "Discover",
+      "rewards": "Rewards",
+      "activity": "Activity",
+      "profile": "Profile"
+    },
+    "due": {
+      "title": "Due this month",
+      "payAll": "Pay all",
+      "pendingCount_one": "{{count}} pending payment",
+      "pendingCount_other": "{{count}} pending payments"
+    },
+    "categories": {
+      "tuition": "Tuition",
+      "transport": "Transport",
+      "activities": "Activities",
+      "canteen": "Canteen",
+      "noDue": "No dues",
+      "dueCount_one": "{{count}} due",
+      "dueCount_other": "{{count}} due",
+      "unseen": "New activity"
+    },
+    "upcoming": {
+      "title": "Upcoming payments",
+      "seeAll": "See all",
+      "empty": "No upcoming payments — you're all caught up.",
+      "due": "Due {{date}}",
+      "installment": "INST. {{index}}/{{total}}",
+      "pay": "Pay"
+    },
+    "rewards": {
+      "title": "Your rewards",
+      "points": "points",
+      "redeem": "Redeem"
+    },
+    "pay": {
+      "title": "Pay fee",
+      "amount": "Amount",
+      "method": "Choose payment method",
+      "wallet": "Wallet",
+      "walletHint": "Pay from your child's wallet balance.",
+      "gateway": "Gateway",
+      "gatewayHint": "Pay with Qi Card, ZainCash or FIB.",
+      "confirm": "Pay {{amount}} {{currency}}"
+    },
+    "child": {
+      "back": "Back to home",
+      "outstanding": "Outstanding",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "feesTitle": "Fees",
+      "noFees": "No fees in this category.",
+      "clearFilter": "Clear filter",
+      "receiptsTitle": "Recent receipts",
+      "status": {
+        "pending": "Pending",
+        "overdue": "Overdue",
+        "paid": "Paid",
+        "waived": "Waived",
+        "cancelled": "Cancelled"
+      }
+    },
+    "profile": {
+      "back": "Back",
+      "phoneTitle": "Phone number",
+      "passwordTitle": "Password",
+      "prefsTitle": "Preferences",
+      "currentPhone": "Current phone",
+      "changePhone": "Change phone",
+      "newPhone": "New phone",
+      "verifyAndUpdate": "Verify and update",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "updatePassword": "Update password",
+      "language": "Language",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "signOut": "Sign out"
+    },
+    "dashboard": {
+      "loadError": "Couldn't load your dashboard. Try again."
+    }
   },
   "notifications": {
     "title": "Notifications",
