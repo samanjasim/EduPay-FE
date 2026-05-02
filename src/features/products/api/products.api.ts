@@ -18,7 +18,6 @@ import type {
   ManualPurchaseRequest,
   ProductStatsFilters,
   ProductPurchaseStatsDto,
-  OrderDetailDto,
   OrderSummaryDto,
   ApiResponse,
   PaginatedResponse,
@@ -128,15 +127,15 @@ export const productsApi = {
   },
 
   cancelParentProductOrder: async (orderId: string, reason?: string): Promise<void> => {
-    await apiClient.post(API_ENDPOINTS.PARENTS.PRODUCT_ORDER_CANCEL(orderId), { reason });
+    await apiClient.patch(API_ENDPOINTS.PARENTS.PRODUCT_ORDER_CANCEL(orderId), { reason });
   },
 
   // ─── Manual purchase + stats (school staff) ───
 
-  recordManualPurchase: async (payload: ManualPurchaseRequest): Promise<OrderDetailDto> => {
-    const response = await apiClient.post<ApiResponse<OrderDetailDto>>(
+  recordManualPurchase: async (payload: ManualPurchaseRequest): Promise<ProductCheckoutResultDto> => {
+    const response = await apiClient.post<ApiResponse<ProductCheckoutResultDto>>(
       API_ENDPOINTS.PRODUCT_PURCHASES.MANUAL,
-      payload
+      payload,
     );
     return response.data.data;
   },

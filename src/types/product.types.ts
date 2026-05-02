@@ -218,11 +218,12 @@ export interface ParentCatalogFilters {
 }
 
 export interface ProductStatsFilters {
-  schoolId?: string;
-  from?: string;
-  to?: string;
+  dateFrom?: string;
+  dateTo?: string;
   productId?: string;
   gradeId?: string;
+  sectionId?: string;
+  paymentMethod?: string;
 }
 
 export interface ParentProductOrderFilters {
