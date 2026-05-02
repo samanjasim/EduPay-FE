@@ -1241,19 +1241,19 @@
     "purchase": {
       "checkoutCreated": {
         "title": "بدأ الشراء",
-        "body": "بدأنا عملية شرائك لـ {{productName}}، وسنؤكد قريباً."
+        "body": "بدأنا عملية شراء بقيمة {{amount}} {{currency}}. سنؤكدها قريباً."
       },
       "settled": {
         "title": "تم تأكيد الشراء",
-        "body": "رقم الإيصال {{receiptNumber}} بمبلغ {{amount}}."
+        "body": "تم تأكيد شراء بقيمة {{amount}} {{currency}} للطالب {{studentName}}."
       },
       "failed": {
         "title": "فشل الشراء",
-        "body": "تعذّر إتمام عملية شرائك لـ {{productName}}. يرجى المحاولة مرة أخرى."
+        "body": "تعذّر إتمام عملية الشراء. يرجى المحاولة مرة أخرى أو التواصل مع المدرسة."
       },
       "cancelled": {
         "title": "تم إلغاء الشراء",
-        "body": "تم إلغاء عملية شرائك لـ {{productName}}."
+        "body": "تم إلغاء عملية الشراء للطالب {{studentName}}."
       }
     }
   },

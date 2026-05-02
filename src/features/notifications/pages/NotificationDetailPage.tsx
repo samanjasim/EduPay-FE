@@ -9,6 +9,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, Badge, Spinner, Button, Input } from '@/components/ui';
 import { PageHeader } from '@/components/common';
 import { useNotification, useNotificationRecipients, useMarkAsRead } from '../api';
+import { localizeNotificationText } from '../utils/localizeNotification';
 import { ROUTES } from '@/config';
 import { cn } from '@/utils';
 import { format, formatDistanceToNow } from 'date-fns';
@@ -80,7 +81,9 @@ export default function NotificationDetailPage() {
               {notification.isRead ? <MailOpen className="h-6 w-6 text-text-muted" /> : <Mail className="h-6 w-6 text-primary-600 dark:text-primary-400" />}
             </div>
             <div className="min-w-0 flex-1">
-              <h1 className="text-2xl font-bold text-text-primary">{notification.title}</h1>
+              <h1 className="text-2xl font-bold text-text-primary">
+                {localizeNotificationText(notification.title, t)}
+              </h1>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <Badge variant={ch.variant} size="sm"><ChIcon className="h-3 w-3 ltr:mr-1 rtl:ml-1" />{ch.label}</Badge>
                 {ref && RefIcon && <Badge variant={ref.variant} size="sm"><RefIcon className="h-3 w-3 ltr:mr-1 rtl:ml-1" />{ref.label}</Badge>}
@@ -106,7 +109,9 @@ export default function NotificationDetailPage() {
         <CardHeader><CardTitle>{t('notifications.messageBody')}</CardTitle></CardHeader>
         <CardContent>
           <div className="rounded-lg border border-border bg-hover/20 p-5">
-            <p className="text-text-primary whitespace-pre-wrap leading-relaxed">{notification.body}</p>
+            <p className="text-text-primary whitespace-pre-wrap leading-relaxed">
+              {localizeNotificationText(notification.body, t)}
+            </p>
           </div>
         </CardContent>
       </Card>

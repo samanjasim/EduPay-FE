@@ -12,6 +12,7 @@ import {
   useNotifications, useSentNotifications, useUnreadCount,
   useMarkAsRead, useMarkAllAsRead,
 } from '../api';
+import { localizeNotificationText } from '../utils/localizeNotification';
 import { usePermissions } from '@/hooks';
 import { PERMISSIONS } from '@/constants';
 import { ROUTES } from '@/config';
@@ -271,8 +272,14 @@ function SentTab() {
                           </div>
                         </td>
                         <td className="px-4 py-3.5">
-                          <p className="font-medium text-text-primary truncate max-w-[200px]">{item.title}</p>
-                          {isExpanded && <p className="mt-1 text-xs text-text-secondary whitespace-pre-wrap">{item.body}</p>}
+                          <p className="font-medium text-text-primary truncate max-w-[200px]">
+                            {localizeNotificationText(item.title, t)}
+                          </p>
+                          {isExpanded && (
+                            <p className="mt-1 text-xs text-text-secondary whitespace-pre-wrap">
+                              {localizeNotificationText(item.body, t)}
+                            </p>
+                          )}
                         </td>
                         <td className="px-4 py-3.5">
                           <Badge variant={ch.variant} size="sm"><ChIcon className="h-3 w-3 ltr:mr-1 rtl:ml-1" />{t(`notifications.${ch.label}`)}</Badge>
@@ -321,6 +328,8 @@ function NotificationCard({ notification, onMarkAsRead, isMarkingRead }: { notif
   const ref = notification.referenceType ? refConfig[notification.referenceType] : null;
   const ChIcon = ch.icon;
   const RefIcon = ref?.icon;
+  const localizedTitle = localizeNotificationText(notification.title, t);
+  const localizedBody = localizeNotificationText(notification.body, t);
 
   return (
     <Card
@@ -335,10 +344,10 @@ function NotificationCard({ notification, onMarkAsRead, isMarkingRead }: { notif
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h3 className={cn('text-sm', notification.isRead ? 'font-medium text-text-primary' : 'font-semibold text-text-primary')}>
-                {notification.title}
+                {localizedTitle}
                 {!notification.isRead && <span className="ml-2 inline-block h-2 w-2 rounded-full bg-primary-500" />}
               </h3>
-              <p className="mt-1 text-sm text-text-secondary line-clamp-2">{notification.body}</p>
+              <p className="mt-1 text-sm text-text-secondary line-clamp-2">{localizedBody}</p>
             </div>
             {!notification.isRead && (
               <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); onMarkAsRead(); }} disabled={isMarkingRead} className="shrink-0 text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-500/10">{t('notifications.markAsRead')}</Button>

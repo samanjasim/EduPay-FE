@@ -912,19 +912,19 @@
     "purchase": {
       "checkoutCreated": {
         "title": "Purchase started",
-        "body": "We started your purchase of {{productName}}. We'll confirm shortly."
+        "body": "We started a purchase for {{amount}} {{currency}}. We'll confirm shortly."
       },
       "settled": {
         "title": "Purchase confirmed",
-        "body": "Your receipt is {{receiptNumber}} for {{amount}}."
+        "body": "Purchase of {{amount}} {{currency}} for {{studentName}} has been confirmed."
       },
       "failed": {
         "title": "Purchase failed",
-        "body": "We couldn't process your purchase of {{productName}}. Please try again."
+        "body": "We couldn't process your purchase. Please try again or contact the school."
       },
       "cancelled": {
         "title": "Purchase cancelled",
-        "body": "Your purchase of {{productName}} has been cancelled."
+        "body": "Purchase for {{studentName}} has been cancelled."
       }
     }
   },
