@@ -189,7 +189,7 @@ export default function ParentProductCatalogPage() {
                   return (
                     <Link
                       key={p.id}
-                      to={ROUTES.PARENT_PRODUCTS.getDetail(p.id)}
+                      to={`${ROUTES.PARENT_PRODUCTS.getDetail(p.id)}?childId=${activeChildId}`}
                     >
                       <Card className="h-full cursor-pointer transition-all duration-200 hover:border-primary-200 hover:shadow-soft-md dark:hover:border-primary-500/30">
                         <CardContent className="p-0">

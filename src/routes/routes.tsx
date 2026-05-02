@@ -60,6 +60,9 @@ const ProductPurchaseStatsPage = lazy(
 const ParentProductCatalogPage = lazy(
   () => import('@/features/parents/pages/ParentProductCatalogPage')
 );
+const ParentProductDetailPage = lazy(
+  () => import('@/features/parents/pages/ParentProductDetailPage')
+);
 const ParentProductOrdersPage = lazy(
   () => import('@/features/parents/pages/ParentProductOrdersPage')
 );
@@ -321,13 +324,8 @@ export const routes: RouteObject[] = [
             element: <ParentProductCatalogPage />,
           },
           {
-            // Parent product detail page is part of the parent self-service flow
-            // but its visual surface is built in a follow-up; for now route to
-            // the staff-facing detail page so the link in the catalog grid
-            // doesn't dead-end. The parent-scope detail mirrors enough of that
-            // page for the parent to start a checkout.
             path: ROUTES.PARENT_PRODUCTS.DETAIL,
-            element: <ComingSoonPage taskRef="Parent product detail (web parity v2)" />,
+            element: <ParentProductDetailPage />,
           },
           {
             path: ROUTES.PARENT_PRODUCTS.ORDERS,
